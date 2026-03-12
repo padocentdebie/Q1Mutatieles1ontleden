@@ -2,64 +2,84 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Interactief Digibord - Zinsontleding</title>
+    <title>Realtime Klaslokaal - Full Stack Editie</title>
     <style>
         :root { --primary: #2c3e50; --accent: #e74c3c; --bg: #ecf0f1; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; }
-        .screen { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1400px; margin: 0 auto; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--primary); }
+        .screen { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1450px; margin: 0 auto; min-height: 85vh; }
         
-        /* Stap 1 */
-        .whiteboard-container { position: relative; background: #fff; border: 5px solid #333; border-radius: 10px; margin-top: 20px; }
-        #displaySentence { position: absolute; top: 20px; left: 20px; font-size: 3.5rem; pointer-events: none; z-index: 1; font-weight: bold; }
-        canvas { display: block; width: 100%; height: 500px; touch-action: none; position: relative; z-index: 2; }
-        #sentenceInput { width: 100%; font-size: 2rem; padding: 10px; margin-bottom: 10px; border: 2px solid var(--primary); }
+        /* Scherm 1: Multi-zin & Whiteboard */
+        .input-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 20px; background: #dfe6e9; padding: 20px; border-radius: 12px; }
+        .input-bar input { padding: 12px; border: 2px solid var(--primary); border-radius: 8px; font-size: 1.1rem; }
+        .input-bar label { font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; }
 
-        /* Stap 2 */
-        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
-        .column { background: #f8f9fa; border: 2px solid #ddd; padding: 15px; border-radius: 10px; }
-        .column h3 { background: var(--primary); color: white; margin: -15px -15px 15px -15px; padding: 10px; font-size: 1rem; text-align: center; }
-        .column input { width: 90%; font-size: 1.1rem; padding: 5px; margin-bottom: 5px; }
+        .whiteboard-container { position: relative; background: #fff; border: 5px solid #333; border-radius: 12px; height: 500px; overflow: hidden; }
+        #displaySentence { position: absolute; top: 30px; left: 30px; font-size: 3.5rem; font-weight: 800; z-index: 1; pointer-events: none; display: flex; flex-direction: column; gap: 10px; color: #2c3e50; }
+        canvas { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
 
-        /* Stap 3 */
-        #dragContainer { min-height: 100px; padding: 20px; background: #eee; border-radius: 10px; display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
-        .draggable { padding: 10px 20px; font-size: 1.3rem; background: var(--accent); color: white; cursor: grab; border-radius: 8px; user-select: none; }
-        .drop-zone { min-height: 150px; border: 5px dashed var(--primary); border-radius: 15px; padding: 20px; background: #fff; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 2.5rem; }
-        .dropped-word { background: #dcdde1; padding: 5px 15px; border-radius: 5px; border: 1px solid #7f8c8d; }
+        /* Scherm 2: Live Kolommen */
+        .live-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; min-height: 600px; margin-top: 20px; }
+        .column-zone { background: #f9f9f9; border: 3px dashed #bdc3c7; border-radius: 12px; padding: 15px; position: relative; min-height: 550px; }
+        .column-zone h3 { background: var(--primary); color: white; margin: -15px -15px 15px -15px; padding: 12px; text-align: center; border-radius: 9px 9px 0 0; }
+        .col-add-input { width: calc(100% - 20px); margin-bottom: 15px; padding: 10px; border: 1px dashed var(--primary); border-radius: 6px; }
 
-        .btn-next { background: #27ae60; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; float: right; margin-top: 20px; font-weight: bold; }
+        /* Blokjes */
+        .word-card { 
+            padding: 12px 18px; background: var(--accent); color: white; border-radius: 8px; 
+            cursor: move; position: absolute; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            font-size: 1.3rem; z-index: 10; white-space: nowrap;
+        }
+
+        .nav-bar { display: flex; justify-content: space-between; margin-top: 25px; }
+        button { padding: 15px 30px; font-weight: bold; border-radius: 8px; cursor: pointer; border: none; }
+        .btn-clear { background: #95a5a6; color: white; }
+        .btn-next { background: #27ae60; color: white; }
     </style>
 </head>
 <body>
 
     <div id="screen1" class="screen">
-        <h2>1. De Zin & Het Whiteboard</h2>
-        <input type="text" id="sentenceInput" placeholder="Typ hier de zin die ontleed moet worden...">
+        <h2>1. Whiteboard (Voeg zinnen toe met Enter)</h2>
+        <input type="text" id="sentenceInput" placeholder="Typ een zin en druk op Enter..." onkeydown="handleSentenceEnter(event)" 
+               style="width:100%; font-size: 1.8rem; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: 2px solid var(--primary);">
+        
+        <div class="input-bar">
+            <div><label>Onderwerp</label><input type="text" placeholder="Typ & Enter..." onkeydown="handleWordEnter(event, 0)"></div>
+            <div><label>PV</label><input type="text" placeholder="Typ & Enter..." onkeydown="handleWordEnter(event, 1)"></div>
+            <div><label>LV</label><input type="text" placeholder="Typ & Enter..." onkeydown="handleWordEnter(event, 2)"></div>
+            <div><label>MV</label><input type="text" placeholder="Typ & Enter..." onkeydown="handleWordEnter(event, 3)"></div>
+            <div><label>Gezegde</label><input type="text" placeholder="Typ & Enter..." onkeydown="handleWordEnter(event, 4)"></div>
+        </div>
+
         <div class="whiteboard-container">
             <div id="displaySentence"></div>
             <canvas id="drawingCanvas"></canvas>
         </div>
-        <button onclick="clearDrawing()" style="margin-top:10px;">Wis tekening</button>
-        <button class="btn-next" onclick="showScreen(2)">Naar de Kolommen →</button>
+        
+        <div class="nav-bar">
+            <button class="btn-clear" onclick="clearAllData()">Reset Alles</button>
+            <button class="btn-next" onclick="showScreen(2)">Naar de Live Analyse →</button>
+        </div>
     </div>
 
     <div id="screen2" class="screen" style="display:none;">
-        <h2>2. Vul de kolommen (Realtime)</h2>
-        <div class="grid-container" id="analysisGrid"></div>
-        <button class="btn-next" onclick="showScreen(3)">Maak de zinnen →</button>
-    </div>
-
-    <div id="screen3" class="screen" style="display:none;">
-        <h2>3. Hilarische Zinnen Bouwen</h2>
-        <p>Sleep woorden naar het vak. De woorden bovenin blijven staan!</p>
-        <div id="dragContainer"></div>
-        <div class="drop-zone" id="sentenceBuilder" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <button class="btn-next" onclick="clearSentence()">Zin wissen</button>
-        <button class="btn-next" style="margin-right:10px;" onclick="showScreen(1)">Terug naar start</button>
+        <h2>2. Hilarische Analyse</h2>
+        <div class="live-grid" id="liveGrid">
+            <div class="column-zone" id="zone-0" ondragover="allowDrop(event)" ondrop="handleDrop(event, 0)"><h3>Onderwerp</h3><input type="text" class="col-add-input" placeholder="+ Voeg toe..." onkeydown="handleWordEnter(event, 0)"></div>
+            <div class="column-zone" id="zone-1" ondragover="allowDrop(event)" ondrop="handleDrop(event, 1)"><h3>PV</h3><input type="text" class="col-add-input" placeholder="+ Voeg toe..." onkeydown="handleWordEnter(event, 1)"></div>
+            <div class="column-zone" id="zone-2" ondragover="allowDrop(event)" ondrop="handleDrop(event, 2)"><h3>LV</h3><input type="text" class="col-add-input" placeholder="+ Voeg toe..." onkeydown="handleWordEnter(event, 2)"></div>
+            <div class="column-zone" id="zone-3" ondragover="allowDrop(event)" ondrop="handleDrop(event, 3)"><h3>MV</h3><input type="text" class="col-add-input" placeholder="+ Voeg toe..." onkeydown="handleWordEnter(event, 3)"></div>
+            <div class="column-zone" id="zone-4" ondragover="allowDrop(event)" ondrop="handleDrop(event, 4)"><h3>Gezegde</h3><input type="text" class="col-add-input" placeholder="+ Voeg toe..." onkeydown="handleWordEnter(event, 4)"></div>
+        </div>
+        <div class="nav-bar">
+            <button onclick="showScreen(1)">← Terug naar Whiteboard</button>
+            <button class="btn-clear" onclick="clearWords()">Wis blokjes</button>
+        </div>
     </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, set, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getDatabase, ref, set, onValue, push, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyC-Of0AUOd-kVo2RKxYc-68Gr-RO4HdRk0",
@@ -74,108 +94,86 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // --- SCREEN 1 LOGICA ---
-    const canvas = document.getElementById('drawingCanvas');
-    const ctx = canvas.getContext('2d');
-    const displaySentence = document.getElementById('displaySentence');
-    const sentenceInput = document.getElementById('sentenceInput');
-    
-    canvas.width = 1340; // Hardcoded voor stabiliteit op digibord
-    canvas.height = 500;
-
-    sentenceInput.oninput = () => set(ref(db, 'shared/sentence'), sentenceInput.value);
-    onValue(ref(db, 'shared/sentence'), (s) => {
-        const val = s.val() || "";
-        sentenceInput.value = val;
-        displaySentence.innerText = val;
-    });
-
-    let drawing = false;
-    canvas.onmousedown = () => drawing = true;
-    window.onmouseup = () => { drawing = false; ctx.beginPath(); };
-    canvas.onmousemove = (e) => {
-        if (!drawing) return;
-        const rect = canvas.getBoundingClientRect();
-        push(ref(db, 'shared/drawing'), { x: e.clientX - rect.left, y: e.clientY - rect.top });
+    // --- ZINNEN & WOORDEN ---
+    window.handleSentenceEnter = (e) => {
+        if (e.key === "Enter" && e.target.value.trim() !== "") {
+            push(ref(db, 'shared/sentences'), e.target.value);
+            e.target.value = "";
+        }
     };
 
-    onValue(ref(db, 'shared/drawing'), (snapshot) => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = "red";
-        snapshot.forEach((child) => {
-            const pt = child.val();
-            ctx.lineTo(pt.x, pt.y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(pt.x, pt.y);
-        });
+    onValue(ref(db, 'shared/sentences'), s => {
+        const div = document.getElementById('displaySentence');
+        div.innerHTML = "";
+        const data = s.val();
+        if(data) Object.values(data).forEach(t => { const z = document.createElement('div'); z.innerText = t; div.appendChild(z); });
     });
 
-    window.clearDrawing = () => remove(ref(db, 'shared/drawing'));
-
-    // --- SCREEN 2 LOGICA ---
-    const cols = ["Onderwerp", "Persoonsvorm", "Lijdend Voorwerp", "Meewerkend Voorwerp", "Gezegde"];
-    const grid = document.getElementById('analysisGrid');
-    cols.forEach((name, ci) => {
-        const d = document.createElement('div');
-        d.className = 'column';
-        d.innerHTML = `<h3>${name}</h3>`;
-        for(let i=0; i<10; i++) {
-            const inp = document.createElement('input');
-            inp.dataset.path = `c${ci}r${i}`;
-            inp.oninput = (e) => set(ref(db, 'shared/table/'+e.target.dataset.path), e.target.value);
-            d.appendChild(inp);
+    window.handleWordEnter = (e, zoneIdx) => {
+        if (e.key === "Enter" && e.target.value.trim() !== "") {
+            push(ref(db, 'shared/words'), { text: e.target.value, x: 20, y: 80 + (Math.random()*50), zone: zoneIdx });
+            e.target.value = "";
         }
-        grid.appendChild(d);
-    });
+    };
 
-    onValue(ref(db, 'shared/table'), (s) => {
-        const data = s.val() || {};
-        document.querySelectorAll('#analysisGrid input').forEach(inp => {
-            inp.value = data[inp.dataset.path] || "";
+    // --- WHITEBOARD TEKENEN ---
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1400; canvas.height = 500;
+
+    let drawing = false, strokeId = null;
+    canvas.onmousedown = (e) => { drawing = true; strokeId = "s_"+Date.now(); };
+    window.onmouseup = () => { drawing = false; strokeId = null; };
+    canvas.onmousemove = (e) => {
+        if(!drawing) return;
+        const r = canvas.getBoundingClientRect();
+        push(ref(db, `shared/drawing/${strokeId}`), { x: e.clientX - r.left, y: e.clientY - r.top });
+    };
+
+    onValue(ref(db, 'shared/drawing'), s => {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.lineWidth=6; ctx.strokeStyle="#e74c3c"; ctx.lineCap="round"; ctx.lineJoin="round";
+        const data = s.val();
+        if(data) Object.values(data).forEach(st => {
+            ctx.beginPath();
+            const pts = Object.values(st);
+            pts.forEach((p, i) => { if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); });
+            ctx.stroke();
         });
     });
 
-    // --- SCREEN 3 LOGICA ---
+    // --- DRAG & DROP LOGICA ---
+    let draggedId = null;
+    onValue(ref(db, 'shared/words'), (snapshot) => {
+        const data = snapshot.val();
+        document.querySelectorAll('.word-card').forEach(el => { if (!data || !data[el.id]) el.remove(); });
+        if(!data) return;
+        Object.keys(data).forEach(id => {
+            let el = document.getElementById(id);
+            if (!el) {
+                el = document.createElement('div'); el.id = id; el.className = 'word-card'; el.draggable = true;
+                el.ondragstart = () => { draggedId = id; };
+                document.getElementById('zone-' + data[id].zone).appendChild(el);
+            }
+            el.innerText = data[id].text; el.style.left = data[id].x + "px"; el.style.top = data[id].y + "px";
+            const targetZone = document.getElementById('zone-' + data[id].zone);
+            if (el.parentElement !== targetZone) targetZone.appendChild(el);
+        });
+    });
+
+    window.allowDrop = (e) => e.preventDefault();
+    window.handleDrop = (e, zoneIdx) => {
+        e.preventDefault();
+        const rect = document.getElementById('zone-' + zoneIdx).getBoundingClientRect();
+        update(ref(db, 'shared/words/' + draggedId), { x: e.clientX - rect.left - 40, y: e.clientY - rect.top - 20, zone: zoneIdx });
+    };
+
     window.showScreen = (n) => {
         document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
         document.getElementById('screen'+n).style.display = 'block';
-        if(n === 3) loadWords();
     };
-
-    function loadWords() {
-        const container = document.getElementById('dragContainer');
-        container.innerHTML = "";
-        onValue(ref(db, 'shared/table'), (s) => {
-            const data = s.val();
-            if(!data) return;
-            container.innerHTML = ""; // Refresh list
-            Object.values(data).forEach(word => {
-                if(word.trim()){
-                    const div = document.createElement('div');
-                    div.className = 'draggable';
-                    div.draggable = true;
-                    div.innerText = word;
-                    div.ondragstart = (e) => e.dataTransfer.setData("text", e.target.innerText);
-                    container.appendChild(div);
-                }
-            });
-        }, { onlyOnce: true });
-    }
-
-    window.allowDrop = (e) => e.preventDefault();
-    window.drop = (e) => {
-        e.preventDefault();
-        const word = e.dataTransfer.getData("text");
-        const div = document.createElement('div');
-        div.className = 'dropped-word';
-        div.innerText = word;
-        document.getElementById('sentenceBuilder').appendChild(div);
-    };
-
-    window.clearSentence = () => document.getElementById('sentenceBuilder').innerHTML = "";
-
+    window.clearAllData = () => { if(confirm("Echt alles wissen?")) remove(ref(db, 'shared')); };
+    window.clearWords = () => { if(confirm("Alleen woorden wissen?")) remove(ref(db, 'shared/words')); };
 </script>
 </body>
 </html>
