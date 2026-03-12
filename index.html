@@ -2,63 +2,59 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digibord Realtime Interactie</title>
+    <title>Interactief Digibord - Zinsontleding</title>
     <style>
         :root { --primary: #2c3e50; --accent: #e74c3c; --bg: #ecf0f1; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--primary); }
-        
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; }
         .screen { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1400px; margin: 0 auto; }
-        h2 { font-size: 2.5rem; border-bottom: 4px solid var(--primary); padding-bottom: 10px; margin-top: 0; }
+        
+        /* Stap 1 */
+        .whiteboard-container { position: relative; background: #fff; border: 5px solid #333; border-radius: 10px; margin-top: 20px; }
+        #displaySentence { position: absolute; top: 20px; left: 20px; font-size: 3.5rem; pointer-events: none; z-index: 1; font-weight: bold; }
+        canvas { display: block; width: 100%; height: 500px; touch-action: none; position: relative; z-index: 2; }
+        #sentenceInput { width: 100%; font-size: 2rem; padding: 10px; margin-bottom: 10px; border: 2px solid var(--primary); }
 
-        /* Stap 1: Groot Bord */
-        #sentenceInput { width: 100%; font-size: 3rem; padding: 15px; border: 3px solid var(--primary); border-radius: 10px; margin-bottom: 20px; box-sizing: border-box; }
-        canvas { background: #fff; border: 5px solid #333; border-radius: 10px; cursor: crosshair; display: block; width: 100%; height: 500px; touch-action: none; }
+        /* Stap 2 */
+        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
+        .column { background: #f8f9fa; border: 2px solid #ddd; padding: 15px; border-radius: 10px; }
+        .column h3 { background: var(--primary); color: white; margin: -15px -15px 15px -15px; padding: 10px; font-size: 1rem; text-align: center; }
+        .column input { width: 90%; font-size: 1.1rem; padding: 5px; margin-bottom: 5px; }
 
-        /* Stap 2: Analyse Kolommen */
-        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 20px; }
-        .column { background: #f8f9fa; border: 2px solid #ddd; padding: 15px; border-radius: 10px; text-align: center; }
-        .column h3 { font-size: 1.2rem; min-height: 3em; display: flex; align-items: center; justify-content: center; background: var(--primary); color: white; margin: -15px -15px 15px -15px; border-radius: 8px 8px 0 0; }
-        .column input { width: 90%; font-size: 1.2rem; padding: 8px; margin-bottom: 8px; border: 1px solid #ccc; border-radius: 5px; }
+        /* Stap 3 */
+        #dragContainer { min-height: 100px; padding: 20px; background: #eee; border-radius: 10px; display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+        .draggable { padding: 10px 20px; font-size: 1.3rem; background: var(--accent); color: white; cursor: grab; border-radius: 8px; user-select: none; }
+        .drop-zone { min-height: 150px; border: 5px dashed var(--primary); border-radius: 15px; padding: 20px; background: #fff; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 2.5rem; }
+        .dropped-word { background: #dcdde1; padding: 5px 15px; border-radius: 5px; border: 1px solid #7f8c8d; }
 
-        /* Stap 3: Hilarische Zinnen */
-        #dragContainer { min-height: 150px; padding: 20px; background: #eee; border-radius: 10px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
-        .draggable { padding: 15px 25px; font-size: 1.5rem; background: var(--accent); color: white; cursor: grab; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        .drop-zone { min-height: 200px; border: 5px dashed var(--primary); border-radius: 15px; padding: 30px; font-size: 3rem; line-height: 1.6; display: flex; flex-wrap: wrap; align-items: center; gap: 15px; background: #fff; }
-
-        /* Knoppen */
-        .controls { margin-bottom: 15px; display: flex; gap: 10px; }
-        button { padding: 15px 30px; font-size: 1.2rem; font-weight: bold; cursor: pointer; border: none; border-radius: 8px; transition: 0.2s; }
-        .btn-clear { background: #95a5a6; color: white; }
-        .btn-next { background: #27ae60; color: white; float: right; margin-top: 20px; }
-        button:hover { opacity: 0.8; transform: translateY(-2px); }
+        .btn-next { background: #27ae60; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; float: right; margin-top: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div id="screen1" class="screen">
-        <h2>1. Typ & Teken de zin</h2>
-        <div class="controls">
-            <button class="btn-clear" onclick="clearData()">Wis Alles</button>
+        <h2>1. De Zin & Het Whiteboard</h2>
+        <input type="text" id="sentenceInput" placeholder="Typ hier de zin die ontleed moet worden...">
+        <div class="whiteboard-container">
+            <div id="displaySentence"></div>
+            <canvas id="drawingCanvas"></canvas>
         </div>
-        <input type="text" id="sentenceInput" placeholder="Typ hier de zin voor de klas...">
-        <canvas id="drawingCanvas"></canvas>
-        <button class="btn-next" onclick="showScreen(2)">Naar de Analyse →</button>
+        <button onclick="clearDrawing()" style="margin-top:10px;">Wis tekening</button>
+        <button class="btn-next" onclick="showScreen(2)">Naar de Kolommen →</button>
     </div>
 
     <div id="screen2" class="screen" style="display:none;">
-        <h2>2. Verdeel in zinsdelen</h2>
+        <h2>2. Vul de kolommen (Realtime)</h2>
         <div class="grid-container" id="analysisGrid"></div>
-        <button class="btn-next" onclick="showScreen(3)">Maak Hilarische Zinnen →</button>
+        <button class="btn-next" onclick="showScreen(3)">Maak de zinnen →</button>
     </div>
 
     <div id="screen3" class="screen" style="display:none;">
-        <h2>3. Sleep & Lach</h2>
+        <h2>3. Hilarische Zinnen Bouwen</h2>
+        <p>Sleep woorden naar het vak. De woorden bovenin blijven staan!</p>
         <div id="dragContainer"></div>
-        <div class="drop-zone" id="sentenceBuilder" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <span style="color: #ccc; font-size: 1.5rem;">Sleep de zinsdelen hieronder om een nieuwe zin te bouwen...</span>
-        </div>
-        <button class="btn-next" onclick="showScreen(1)">Terug naar start</button>
+        <div class="drop-zone" id="sentenceBuilder" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <button class="btn-next" onclick="clearSentence()">Zin wissen</button>
+        <button class="btn-next" style="margin-right:10px;" onclick="showScreen(1)">Terug naar start</button>
     </div>
 
 <script type="module">
@@ -78,21 +74,23 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Canvas Setup
+    // --- SCREEN 1 LOGICA ---
     const canvas = document.getElementById('drawingCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth;
+    const displaySentence = document.getElementById('displaySentence');
+    const sentenceInput = document.getElementById('sentenceInput');
+    
+    canvas.width = 1340; // Hardcoded voor stabiliteit op digibord
     canvas.height = 500;
+
+    sentenceInput.oninput = () => set(ref(db, 'shared/sentence'), sentenceInput.value);
+    onValue(ref(db, 'shared/sentence'), (s) => {
+        const val = s.val() || "";
+        sentenceInput.value = val;
+        displaySentence.innerText = val;
+    });
+
     let drawing = false;
-
-    // --- REALTIME SYNC ---
-
-    // 1. Zin sync
-    const inputField = document.getElementById('sentenceInput');
-    inputField.oninput = () => set(ref(db, 'shared/sentence'), inputField.value);
-    onValue(ref(db, 'shared/sentence'), (s) => inputField.value = s.val() || "");
-
-    // 2. Tekenen sync (Dikke lijnen voor digibord)
     canvas.onmousedown = () => drawing = true;
     window.onmouseup = () => { drawing = false; ctx.beginPath(); };
     canvas.onmousemove = (e) => {
@@ -103,9 +101,8 @@
 
     onValue(ref(db, 'shared/drawing'), (snapshot) => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.lineWidth = 6;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#e74c3c';
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "red";
         snapshot.forEach((child) => {
             const pt = child.val();
             ctx.lineTo(pt.x, pt.y);
@@ -115,44 +112,47 @@
         });
     });
 
-    // 3. Tabel sync
-    const columns = ["Onderwerp", "Persoonsvorm", "Lijdend Voorwerp", "Meewerkend Voorwerp", "Gezegde"];
+    window.clearDrawing = () => remove(ref(db, 'shared/drawing'));
+
+    // --- SCREEN 2 LOGICA ---
+    const cols = ["Onderwerp", "Persoonsvorm", "Lijdend Voorwerp", "Meewerkend Voorwerp", "Gezegde"];
     const grid = document.getElementById('analysisGrid');
-    columns.forEach((name, colIdx) => {
-        const div = document.createElement('div');
-        div.className = 'column';
-        div.innerHTML = `<h3>${name}</h3>`;
-        for (let i = 0; i < 10; i++) {
+    cols.forEach((name, ci) => {
+        const d = document.createElement('div');
+        d.className = 'column';
+        d.innerHTML = `<h3>${name}</h3>`;
+        for(let i=0; i<10; i++) {
             const inp = document.createElement('input');
-            inp.dataset.path = `c${colIdx}r${i}`;
-            inp.oninput = (e) => set(ref(db, 'shared/table/' + e.target.dataset.path), e.target.value);
-            div.appendChild(inp);
+            inp.dataset.path = `c${ci}r${i}`;
+            inp.oninput = (e) => set(ref(db, 'shared/table/'+e.target.dataset.path), e.target.value);
+            d.appendChild(inp);
         }
-        grid.appendChild(div);
+        grid.appendChild(d);
     });
 
-    onValue(ref(db, 'shared/table'), (snapshot) => {
-        const data = snapshot.val() || {};
+    onValue(ref(db, 'shared/table'), (s) => {
+        const data = s.val() || {};
         document.querySelectorAll('#analysisGrid input').forEach(inp => {
             inp.value = data[inp.dataset.path] || "";
         });
     });
 
-    // --- INTERFACE FUNCTIES ---
+    // --- SCREEN 3 LOGICA ---
     window.showScreen = (n) => {
         document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
-        document.getElementById('screen' + n).style.display = 'block';
-        if (n === 3) loadDraggables();
+        document.getElementById('screen'+n).style.display = 'block';
+        if(n === 3) loadWords();
     };
 
-    function loadDraggables() {
+    function loadWords() {
         const container = document.getElementById('dragContainer');
         container.innerHTML = "";
-        onValue(ref(db, 'shared/table'), (snapshot) => {
-            const data = snapshot.val();
+        onValue(ref(db, 'shared/table'), (s) => {
+            const data = s.val();
             if(!data) return;
+            container.innerHTML = ""; // Refresh list
             Object.values(data).forEach(word => {
-                if(word.trim()) {
+                if(word.trim()){
                     const div = document.createElement('div');
                     div.className = 'draggable';
                     div.draggable = true;
@@ -168,16 +168,14 @@
     window.drop = (e) => {
         e.preventDefault();
         const word = e.dataTransfer.getData("text");
-        const builder = document.getElementById('sentenceBuilder');
-        if(builder.querySelector('span')) builder.innerHTML = ""; // Clear placeholder
-        builder.innerHTML += `<span>${word}</span> `;
+        const div = document.createElement('div');
+        div.className = 'dropped-word';
+        div.innerText = word;
+        document.getElementById('sentenceBuilder').appendChild(div);
     };
 
-    window.clearData = () => {
-        if(confirm("Weet je zeker dat je alles wilt wissen?")) {
-            remove(ref(db, 'shared'));
-        }
-    };
+    window.clearSentence = () => document.getElementById('sentenceBuilder').innerHTML = "";
+
 </script>
 </body>
 </html>
