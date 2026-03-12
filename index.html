@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digibord Realtime Interactie</title>
+    <style>
+        :root { --primary: #2c3e50; --accent: #e74c3c; --bg: #ecf0f1; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--primary); }
+        
+        .screen { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1400px; margin: 0 auto; }
+        h2 { font-size: 2.5rem; border-bottom: 4px solid var(--primary); padding-bottom: 10px; margin-top: 0; }
+
+        /* Stap 1: Groot Bord */
+        #sentenceInput { width: 100%; font-size: 3rem; padding: 15px; border: 3px solid var(--primary); border-radius: 10px; margin-bottom: 20px; box-sizing: border-box; }
+        canvas { background: #fff; border: 5px solid #333; border-radius: 10px; cursor: crosshair; display: block; width: 100%; height: 500px; touch-action: none; }
+
+        /* Stap 2: Analyse Kolommen */
+        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 20px; }
+        .column { background: #f8f9fa; border: 2px solid #ddd; padding: 15px; border-radius: 10px; text-align: center; }
+        .column h3 { font-size: 1.2rem; min-height: 3em; display: flex; align-items: center; justify-content: center; background: var(--primary); color: white; margin: -15px -15px 15px -15px; border-radius: 8px 8px 0 0; }
+        .column input { width: 90%; font-size: 1.2rem; padding: 8px; margin-bottom: 8px; border: 1px solid #ccc; border-radius: 5px; }
+
+        /* Stap 3: Hilarische Zinnen */
+        #dragContainer { min-height: 150px; padding: 20px; background: #eee; border-radius: 10px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+        .draggable { padding: 15px 25px; font-size: 1.5rem; background: var(--accent); color: white; cursor: grab; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .drop-zone { min-height: 200px; border: 5px dashed var(--primary); border-radius: 15px; padding: 30px; font-size: 3rem; line-height: 1.6; display: flex; flex-wrap: wrap; align-items: center; gap: 15px; background: #fff; }
+
+        /* Knoppen */
+        .controls { margin-bottom: 15px; display: flex; gap: 10px; }
+        button { padding: 15px 30px; font-size: 1.2rem; font-weight: bold; cursor: pointer; border: none; border-radius: 8px; transition: 0.2s; }
+        .btn-clear { background: #95a5a6; color: white; }
+        .btn-next { background: #27ae60; color: white; float: right; margin-top: 20px; }
+        button:hover { opacity: 0.8; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <div id="screen1" class="screen">
+        <h2>1. Typ & Teken de zin</h2>
+        <div class="controls">
+            <button class="btn-clear" onclick="clearData()">Wis Alles</button>
+        </div>
+        <input type="text" id="sentenceInput" placeholder="Typ hier de zin voor de klas...">
+        <canvas id="drawingCanvas"></canvas>
+        <button class="btn-next" onclick="showScreen(2)">Naar de Analyse →</button>
+    </div>
+
+    <div id="screen2" class="screen" style="display:none;">
+        <h2>2. Verdeel in zinsdelen</h2>
+        <div class="grid-container" id="analysisGrid"></div>
+        <button class="btn-next" onclick="showScreen(3)">Maak Hilarische Zinnen →</button>
+    </div>
+
+    <div id="screen3" class="screen" style="display:none;">
+        <h2>3. Sleep & Lach</h2>
+        <div id="dragContainer"></div>
+        <div class="drop-zone" id="sentenceBuilder" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <span style="color: #ccc; font-size: 1.5rem;">Sleep de zinsdelen hieronder om een nieuwe zin te bouwen...</span>
+        </div>
+        <button class="btn-next" onclick="showScreen(1)">Terug naar start</button>
+    </div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, set, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyC-Of0AUOd-kVo2RKxYc-68Gr-RO4HdRk0",
+        authDomain: "q2aangifteles2.firebaseapp.com",
+        databaseURL: "https://q2aangifteles2-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "q2aangifteles2",
+        storageBucket: "q2aangifteles2.firebasestorage.app",
+        messagingSenderId: "696806554615",
+        appId: "1:696806554615:web:bd877b1caee23c5283ccf2"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Canvas Setup
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth;
+    canvas.height = 500;
+    let drawing = false;
+
+    // --- REALTIME SYNC ---
+
+    // 1. Zin sync
+    const inputField = document.getElementById('sentenceInput');
+    inputField.oninput = () => set(ref(db, 'shared/sentence'), inputField.value);
+    onValue(ref(db, 'shared/sentence'), (s) => inputField.value = s.val() || "");
+
+    // 2. Tekenen sync (Dikke lijnen voor digibord)
+    canvas.onmousedown = () => drawing = true;
+    window.onmouseup = () => { drawing = false; ctx.beginPath(); };
+    canvas.onmousemove = (e) => {
+        if (!drawing) return;
+        const rect = canvas.getBoundingClientRect();
+        push(ref(db, 'shared/drawing'), { x: e.clientX - rect.left, y: e.clientY - rect.top });
+    };
+
+    onValue(ref(db, 'shared/drawing'), (snapshot) => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.lineWidth = 6;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#e74c3c';
+        snapshot.forEach((child) => {
+            const pt = child.val();
+            ctx.lineTo(pt.x, pt.y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(pt.x, pt.y);
+        });
+    });
+
+    // 3. Tabel sync
+    const columns = ["Onderwerp", "Persoonsvorm", "Lijdend Voorwerp", "Meewerkend Voorwerp", "Gezegde"];
+    const grid = document.getElementById('analysisGrid');
+    columns.forEach((name, colIdx) => {
+        const div = document.createElement('div');
+        div.className = 'column';
+        div.innerHTML = `<h3>${name}</h3>`;
+        for (let i = 0; i < 10; i++) {
+            const inp = document.createElement('input');
+            inp.dataset.path = `c${colIdx}r${i}`;
+            inp.oninput = (e) => set(ref(db, 'shared/table/' + e.target.dataset.path), e.target.value);
+            div.appendChild(inp);
+        }
+        grid.appendChild(div);
+    });
+
+    onValue(ref(db, 'shared/table'), (snapshot) => {
+        const data = snapshot.val() || {};
+        document.querySelectorAll('#analysisGrid input').forEach(inp => {
+            inp.value = data[inp.dataset.path] || "";
+        });
+    });
+
+    // --- INTERFACE FUNCTIES ---
+    window.showScreen = (n) => {
+        document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+        document.getElementById('screen' + n).style.display = 'block';
+        if (n === 3) loadDraggables();
+    };
+
+    function loadDraggables() {
+        const container = document.getElementById('dragContainer');
+        container.innerHTML = "";
+        onValue(ref(db, 'shared/table'), (snapshot) => {
+            const data = snapshot.val();
+            if(!data) return;
+            Object.values(data).forEach(word => {
+                if(word.trim()) {
+                    const div = document.createElement('div');
+                    div.className = 'draggable';
+                    div.draggable = true;
+                    div.innerText = word;
+                    div.ondragstart = (e) => e.dataTransfer.setData("text", e.target.innerText);
+                    container.appendChild(div);
+                }
+            });
+        }, { onlyOnce: true });
+    }
+
+    window.allowDrop = (e) => e.preventDefault();
+    window.drop = (e) => {
+        e.preventDefault();
+        const word = e.dataTransfer.getData("text");
+        const builder = document.getElementById('sentenceBuilder');
+        if(builder.querySelector('span')) builder.innerHTML = ""; // Clear placeholder
+        builder.innerHTML += `<span>${word}</span> `;
+    };
+
+    window.clearData = () => {
+        if(confirm("Weet je zeker dat je alles wilt wissen?")) {
+            remove(ref(db, 'shared'));
+        }
+    };
+</script>
+</body>
+</html>
