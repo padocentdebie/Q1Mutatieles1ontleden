@@ -2,37 +2,34 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Realtime Klaslokaal - Interactieve Analyse</title>
+    <title>Realtime Klaslokaal - De Hussel Editie</title>
     <style>
         :root { --primary: #2c3e50; --accent: #e74c3c; --bg: #ecf0f1; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--primary); }
-        .screen { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1450px; margin: 0 auto; min-height: 85vh; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--primary); overflow-x: hidden; }
+        .screen { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1450px; margin: 0 auto; min-height: 85vh; position: relative; }
         
         /* Whiteboard & Canvas */
-        .whiteboard-container { position: relative; background: #fff; border: 5px solid #333; border-radius: 12px; height: 450px; overflow: hidden; margin-top: 15px; }
-        #displaySentence { position: absolute; top: 30px; left: 30px; font-size: 3.5rem; font-weight: 800; z-index: 1; pointer-events: none; display: flex; flex-direction: column; gap: 10px; color: #2c3e50; width: 90%; }
+        .whiteboard-container { position: relative; background: #fff; border: 5px solid #333; border-radius: 12px; height: 400px; overflow: hidden; margin-top: 15px; }
+        #displaySentence { position: absolute; top: 30px; left: 30px; font-size: 3rem; font-weight: 800; z-index: 1; pointer-events: none; display: flex; flex-direction: column; gap: 10px; }
         canvas { position: absolute; top: 0; left: 0; z-index: 5; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
 
-        /* Invoervelden */
-        .input-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 25px; background: #dfe6e9; padding: 20px; border-radius: 12px; }
-        .input-bar div { display: flex; flex-direction: column; }
-        .input-bar input { padding: 12px; border: 2px solid var(--primary); border-radius: 8px; font-size: 1.1rem; }
+        /* Invoervelden Scherm 1 & 2 */
+        .input-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 20px; background: #dfe6e9; padding: 15px; border-radius: 12px; }
+        .input-bar input, .col-add-input { padding: 10px; border: 2px solid var(--primary); border-radius: 8px; font-size: 1rem; width: 80%; }
 
-        /* Live Kolommen Scherm 2 */
-        .live-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; min-height: 650px; margin-top: 20px; position: relative; }
-        .column-zone { background: #f9f9f9; border: 3px dashed #bdc3c7; border-radius: 12px; padding: 15px; position: relative; min-height: 550px; z-index: 1; }
-        .column-zone h3 { background: var(--primary); color: white; margin: -15px -15px 15px -15px; padding: 12px; text-align: center; border-radius: 9px 9px 0 0; }
-        .col-add-input { width: calc(100% - 20px); margin-bottom: 15px; padding: 10px; border: 1px dashed var(--primary); border-radius: 6px; position: relative; z-index: 10; }
-
+        /* Scherm 3: De Hussel-bak */
+        .grabbelton { background: #34495e; padding: 20px; border-radius: 12px; min-height: 100px; display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; border: 4px dashed #2c3e50; align-items: center; }
+        .speelveld { background: #fff; border: 5px solid #7f8c8d; border-radius: 12px; height: 600px; position: relative; overflow: hidden; }
+        
         /* Dragables */
         .word-card { 
             padding: 12px 18px; background: var(--accent); color: white; border-radius: 8px; 
             cursor: move; position: absolute; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            font-size: 1.3rem; z-index: 6; white-space: nowrap;
+            font-size: 1.3rem; z-index: 10; white-space: nowrap; user-select: none;
         }
 
-        .nav-bar { display: flex; justify-content: space-between; margin-top: 25px; border-top: 2px solid #eee; padding-top: 20px; }
-        button { padding: 15px 35px; font-weight: bold; border-radius: 8px; cursor: pointer; border: none; }
+        .nav-bar { display: flex; justify-content: space-between; margin-top: 20px; border-top: 2px solid #eee; padding-top: 15px; }
+        button { padding: 12px 25px; font-weight: bold; border-radius: 8px; cursor: pointer; border: none; transition: 0.2s; }
         .btn-hard-reset { background: #c0392b; color: white; }
         .btn-next { background: #27ae60; color: white; }
     </style>
@@ -40,39 +37,37 @@
 <body>
 
     <div id="screen1" class="screen">
-        <h2>1. Whiteboard & Tekst-input</h2>
-        <input type="text" id="sentenceInput" placeholder="Typ een zin en druk op Enter..." onkeydown="handleSentenceEnter(event)" style="width:100%; font-size: 1.8rem; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 2px solid var(--primary);">
-        <div class="whiteboard-container">
-            <div id="displaySentence"></div>
-            <canvas id="canvas1"></canvas>
-        </div>
+        <h2>1. Whiteboard & Input</h2>
+        <input type="text" placeholder="Zin voor het bord..." onkeydown="handleSentenceEnter(event)" style="width:95%; font-size: 1.5rem; padding: 10px; margin-bottom: 10px;">
+        <div class="whiteboard-container"><div id="displaySentence"></div><canvas id="canvas1"></canvas></div>
         <div class="input-bar">
-            <div><label>Onderwerp</label><input type="text" placeholder="Enter..." onkeydown="handleWordSync(event, 0)"></div>
-            <div><label>PV</label><input type="text" placeholder="Enter..." onkeydown="handleWordSync(event, 1)"></div>
-            <div><label>LV</label><input type="text" placeholder="Enter..." onkeydown="handleWordSync(event, 2)"></div>
-            <div><label>MV</label><input type="text" placeholder="Enter..." onkeydown="handleWordSync(event, 3)"></div>
-            <div><label>Gezegde</label><input type="text" placeholder="Enter..." onkeydown="handleWordSync(event, 4)"></div>
+            <div><label>Ond.</label><input type="text" onkeydown="handleWordSync(event, 0)"></div>
+            <div><label>PV</label><input type="text" onkeydown="handleWordSync(event, 1)"></div>
+            <div><label>LV</label><input type="text" onkeydown="handleWordSync(event, 2)"></div>
+            <div><label>MV</label><input type="text" onkeydown="handleWordSync(event, 3)"></div>
+            <div><label>Gez.</label><input type="text" onkeydown="handleWordSync(event, 4)"></div>
         </div>
         <div class="nav-bar">
             <button class="btn-hard-reset" onclick="hardReset()">HARDE RESET</button>
-            <button class="btn-next" onclick="showScreen(2)">Naar de Analyse (Scherm 2) →</button>
+            <button class="btn-next" onclick="showScreen(3)">NAAR HET SPEELVELD (HUSSelen) →</button>
         </div>
     </div>
 
-    <div id="screen2" class="screen" style="display:none;">
-        <h2>2. Live Analyse & Correctie</h2>
-        <p>Gebruik de pen om uitgangen aan te passen of typ nieuwe vormen in de kolommen.</p>
-        <div class="live-grid" id="liveGrid">
-            <canvas id="canvas2"></canvas>
-            <div class="column-zone" id="zone-0" ondragover="allowDrop(event)" ondrop="handleDrop(event, 0)"><h3>Onderwerp</h3><input type="text" class="col-add-input" placeholder="+ Corrigeer..." onkeydown="handleWordSync(event, 0)"></div>
-            <div class="column-zone" id="zone-1" ondragover="allowDrop(event)" ondrop="handleDrop(event, 1)"><h3>PV</h3><input type="text" class="col-add-input" placeholder="+ Corrigeer..." onkeydown="handleWordSync(event, 1)"></div>
-            <div class="column-zone" id="zone-2" ondragover="allowDrop(event)" ondrop="handleDrop(event, 2)"><h3>LV</h3><input type="text" class="col-add-input" placeholder="+ Corrigeer..." onkeydown="handleWordSync(event, 2)"></div>
-            <div class="column-zone" id="zone-3" ondragover="allowDrop(event)" ondrop="handleDrop(event, 3)"><h3>MV</h3><input type="text" class="col-add-input" placeholder="+ Corrigeer..." onkeydown="handleWordSync(event, 3)"></div>
-            <div class="column-zone" id="zone-4" ondragover="allowDrop(event)" ondrop="handleDrop(event, 4)"><h3>Gezegde</h3><input type="text" class="col-add-input" placeholder="+ Corrigeer..." onkeydown="handleWordSync(event, 4)"></div>
-        </div>
+    <div id="screen3" class="screen" style="display:none;">
+        <h2>3. Het Speelveld: Bouw je zinnen</h2>
+        <p>Sleep woorden uit de bak hieronder naar het veld. Gebruik de pen voor correcties.</p>
+        
+        <div class="grabbelton" id="ton" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'ton')">
+            </div>
+
+        <div class="speelveld" id="veld" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'veld')">
+            <canvas id="canvas3"></canvas>
+            </div>
+
         <div class="nav-bar">
             <button onclick="showScreen(1)">← Terug naar Whiteboard</button>
-            <button onclick="remove(ref(db, 'shared/drawing'))">Wis alleen penstrepen</button>
+            <button onclick="remove(ref(db, 'shared/drawing'))">Wis penstrepen</button>
+            <button class="btn-hard-reset" onclick="clearWords()">Wis alle woorden</button>
         </div>
     </div>
 
@@ -93,57 +88,44 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // --- ZINNEN & WOORDEN SYNC ---
-    window.handleSentenceEnter = (e) => {
-        if (e.key === "Enter" && e.target.value.trim() !== "") {
-            push(ref(db, 'shared/sentences'), e.target.value);
-            e.target.value = "";
-        }
-    };
+    // --- DATA SYNC ---
+    window.handleSentenceEnter = (e) => { if (e.key === "Enter" && e.target.value) { push(ref(db, 'shared/sentences'), e.target.value); e.target.value = ""; } };
     onValue(ref(db, 'shared/sentences'), s => {
-        const div = document.getElementById('displaySentence');
-        div.innerHTML = "";
-        const data = s.val();
-        if(data) Object.values(data).forEach(t => { const z = document.createElement('div'); z.innerText = t; div.appendChild(z); });
+        const div = document.getElementById('displaySentence'); div.innerHTML = "";
+        const data = s.val(); if(data) Object.values(data).forEach(t => { const z = document.createElement('div'); z.innerText = t; div.appendChild(z); });
     });
 
-    window.handleWordSync = (e, zoneIdx) => {
-        if (e.key === "Enter" && e.target.value.trim() !== "") {
-            push(ref(db, 'shared/words'), { text: e.target.value, x: 20, y: 120 + (Math.random()*100), zone: zoneIdx });
+    window.handleWordSync = (e, zone) => {
+        if (e.key === "Enter" && e.target.value) {
+            push(ref(db, 'shared/words'), { text: e.target.value, x: 10, y: 10, location: 'ton' });
             e.target.value = "";
         }
     };
 
-    // --- PEN FUNCTIE VOOR BEIDE CANVASEN ---
+    // --- PEN FUNCTIE ---
     const setupCanvas = (id) => {
-        const canvas = document.getElementById(id);
-        const ctx = canvas.getContext('2d');
-        canvas.width = 1400; canvas.height = (id === 'canvas1') ? 450 : 650;
-
+        const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
+        canvas.width = 1400; canvas.height = (id === 'canvas1') ? 400 : 600;
         let drawing = false, strokeId = null;
         canvas.onmousedown = (e) => { drawing = true; strokeId = "s_"+Date.now(); };
         window.addEventListener('mouseup', () => { drawing = false; strokeId = null; });
         canvas.onmousemove = (e) => {
-            if(!drawing) return;
-            const r = canvas.getBoundingClientRect();
+            if(!drawing) return; const r = canvas.getBoundingClientRect();
             push(ref(db, `shared/drawing/${strokeId}`), { x: e.clientX - r.left, y: e.clientY - r.top });
         };
-
         onValue(ref(db, 'shared/drawing'), s => {
             ctx.clearRect(0,0,canvas.width,canvas.height);
-            ctx.lineWidth=6; ctx.strokeStyle="#e74c3c"; ctx.lineCap="round"; ctx.lineJoin="round";
-            const data = s.val();
-            if(data) Object.values(data).forEach(st => {
-                ctx.beginPath();
-                const pts = Object.values(st);
+            ctx.lineWidth=5; ctx.strokeStyle="#e74c3c"; ctx.lineCap="round";
+            const data = s.val(); if(data) Object.values(data).forEach(st => {
+                ctx.beginPath(); const pts = Object.values(st);
                 pts.forEach((p, i) => { if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); });
                 ctx.stroke();
             });
         });
     };
-    setupCanvas('canvas1'); setupCanvas('canvas2');
+    setupCanvas('canvas1'); setupCanvas('canvas3');
 
-    // --- DRAG & DROP SCHERM 2 ---
+    // --- HUSSEL DRAG & DROP ---
     let draggedId = null;
     onValue(ref(db, 'shared/words'), (snapshot) => {
         const data = snapshot.val();
@@ -154,26 +136,34 @@
             if (!el) {
                 el = document.createElement('div'); el.id = id; el.className = 'word-card'; el.draggable = true;
                 el.ondragstart = () => { draggedId = id; };
-                document.getElementById('zone-' + data[id].zone).appendChild(el);
             }
-            el.innerText = data[id].text; el.style.left = data[id].x + "px"; el.style.top = data[id].y + "px";
-            const targetZone = document.getElementById('zone-' + data[id].zone);
-            if (el.parentElement !== targetZone) targetZone.appendChild(el);
+            el.innerText = data[id].text;
+            const container = document.getElementById(data[id].location || 'ton');
+            if (el.parentElement !== container) container.appendChild(el);
+            
+            if(data[id].location === 'veld') {
+                el.style.position = 'absolute'; el.style.left = data[id].x + "px"; el.style.top = data[id].y + "px";
+            } else {
+                el.style.position = 'relative'; el.style.left = '0'; el.style.top = '0';
+            }
         });
     });
 
     window.allowDrop = (e) => e.preventDefault();
-    window.handleDrop = (e, zoneIdx) => {
+    window.handleDrop = (e, targetLoc) => {
         e.preventDefault();
-        const rect = document.getElementById('zone-' + zoneIdx).getBoundingClientRect();
-        update(ref(db, 'shared/words/' + draggedId), { x: e.clientX - rect.left - 40, y: e.clientY - rect.top - 20, zone: zoneIdx });
+        const rect = document.getElementById(targetLoc).getBoundingClientRect();
+        const x = e.clientX - rect.left - 40;
+        const y = e.clientY - rect.top - 20;
+        update(ref(db, 'shared/words/' + draggedId), { location: targetLoc, x: x, y: y });
     };
 
     window.showScreen = (n) => {
         document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
         document.getElementById('screen'+n).style.display = 'block';
     };
-    window.hardReset = () => { if(confirm("ALLES permanent wissen?")) remove(ref(db, 'shared')); };
+    window.hardReset = () => { if(confirm("ALLES wissen?")) remove(ref(db, 'shared')); };
+    window.clearWords = () => { if(confirm("Woorden wissen?")) remove(ref(db, 'shared/words')); };
     window.ref = ref; window.db = db; window.remove = remove;
 </script>
 </body>
