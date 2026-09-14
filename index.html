@@ -9,95 +9,38 @@
         .screen { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1450px; margin: 0 auto; min-height: 85vh; position: relative; }
         .hidden { display: none !important; }
 
-        /* ─── INLOG (scherm 0) ─── */
-        .login-wrap {
-            max-width: 480px;
-            margin: 60px auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            border-top: 8px solid var(--primary);
-        }
+        /* ─── INLOG ─── */
+        .login-wrap { max-width: 480px; margin: 60px auto; background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-top: 8px solid var(--primary); }
         .login-wrap h1 { margin-top: 0; text-align: center; color: var(--primary); }
         .login-wrap p.sub { text-align: center; color: #7f8c8d; margin-top: -10px; margin-bottom: 25px; }
         .login-wrap label { display: block; font-weight: 700; margin-bottom: 6px; margin-top: 15px; color: var(--primary); }
-        .login-wrap input, .login-wrap select {
-            width: 100%;
-            padding: 12px 14px;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-        .login-wrap input:focus, .login-wrap select:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        .login-wrap button {
-            width: 100%;
-            margin-top: 25px;
-            padding: 14px;
-            background: var(--accent);
-            color: white;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            letter-spacing: 1px;
-            transition: 0.2s;
-        }
+        .login-wrap input, .login-wrap select { width: 100%; padding: 12px 14px; border: 2px solid #ccc; border-radius: 8px; font-size: 1rem; box-sizing: border-box; font-family: inherit; }
+        .login-wrap input:focus, .login-wrap select:focus { outline: none; border-color: var(--accent); }
+        .login-wrap button { width: 100%; margin-top: 25px; padding: 14px; background: var(--accent); color: white; font-size: 1.1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; letter-spacing: 1px; transition: 0.2s; }
         .login-wrap button:hover { background: #c0392b; }
         .login-wrap .hint { font-size: 0.85rem; color: #95a5a6; text-align: center; margin-top: 20px; }
 
         /* ─── TOPBAR ─── */
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #2c3e50;
-            color: #fff;
-            padding: 10px 18px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
+        .topbar { display: flex; justify-content: space-between; align-items: center; background: #2c3e50; color: #fff; padding: 10px 18px; border-radius: 10px; margin-bottom: 20px; font-size: 0.95rem; }
         .topbar strong { color: #f39c12; }
-        .topbar .btn-logout {
-            background: #e74c3c;
-            color: #fff;
-            padding: 6px 14px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
+        .topbar .btn-logout { background: #e74c3c; color: #fff; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
         .topbar .btn-logout:hover { background: #c0392b; }
         
-        /* Whiteboard & Canvas */
+        /* Whiteboard */
         .whiteboard-container { position: relative; background: #fff; border: 5px solid #333; border-radius: 12px; height: 400px; overflow: hidden; margin-top: 15px; }
         #displaySentence { position: absolute; top: 30px; left: 30px; font-size: 3rem; font-weight: 800; z-index: 1; pointer-events: none; display: flex; flex-direction: column; gap: 10px; }
         canvas { position: absolute; top: 0; left: 0; z-index: 5; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
 
-        /* Invoervelden Scherm 1 & 2 */
+        /* Inputs */
         .input-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 20px; background: #dfe6e9; padding: 15px; border-radius: 12px; }
         .input-bar input, .col-add-input { padding: 10px; border: 2px solid var(--primary); border-radius: 8px; font-size: 1rem; width: 80%; }
 
-        /* Scherm 3: De Hussel-bak */
+        /* Hussel */
         .grabbelton { background: #34495e; padding: 20px; border-radius: 12px; min-height: 100px; display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; border: 4px dashed #2c3e50; align-items: center; transition: 0.2s; }
         .grabbelton.drag-over { background: #4a6278; border-color: var(--accent); }
         .speelveld { background: #fff; border: 5px solid #7f8c8d; border-radius: 12px; height: 600px; position: relative; overflow: hidden; transition: 0.2s; }
         .speelveld.drag-over { border-color: var(--accent); box-shadow: inset 0 0 0 4px rgba(231, 76, 60, 0.15); }
-        
-        /* Dragables */
-        .word-card { 
-            padding: 12px 18px; background: var(--accent); color: white; border-radius: 8px; 
-            cursor: move; position: absolute; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            font-size: 1.3rem; z-index: 10; white-space: nowrap; user-select: none;
-        }
+        .word-card { padding: 12px 18px; background: var(--accent); color: white; border-radius: 8px; cursor: move; position: absolute; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); font-size: 1.3rem; z-index: 10; white-space: nowrap; user-select: none; }
         .word-card:active { cursor: grabbing; }
         .word-card.dragging { opacity: 0.4; }
 
@@ -108,151 +51,87 @@
         .btn-review { background: #3498db; color: white; padding: 8px 16px; font-size: 0.9rem; }
         .btn-reviewed { background: #27ae60; color: white; padding: 8px 16px; font-size: 0.9rem; cursor: default; }
         .btn-warning { background: #e67e22; color: white; }
+        .btn-speak { background: #9b59b6; color: white; padding: 10px 20px; }
+        .btn-speak:hover { background: #8e44ad; }
+        .btn-stop { background: #7f8c8d; color: white; padding: 10px 20px; }
 
-        /* ─── SCHERM 4: Oefening 2 ─── */
-        .oefening-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 10px;
-        }
-        @media (max-width: 900px) {
-            .oefening-layout { grid-template-columns: 1fr; }
-        }
+        /* Layout oefeningen */
+        .oefening-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 10px; }
+        @media (max-width: 900px) { .oefening-layout { grid-template-columns: 1fr; } }
 
-        .pdf-panel {
-            background: #fff;
-            border: 3px solid #333;
-            border-radius: 12px;
-            overflow: hidden;
-            height: 720px;
-            display: flex;
-            flex-direction: column;
-        }
-        .pdf-panel h3 {
-            margin: 0;
-            padding: 10px 15px;
-            background: #2c3e50;
-            color: #fff;
-            font-size: 1rem;
-            letter-spacing: 1px;
-        }
-        .pdf-panel embed,
-        .pdf-panel iframe {
-            flex: 1;
-            width: 100%;
-            border: 0;
-        }
-        .pdf-fallback {
-            padding: 20px;
-            font-size: 0.9rem;
-            color: #555;
-        }
+        .pdf-panel { background: #fff; border: 3px solid #333; border-radius: 12px; overflow: hidden; height: 720px; display: flex; flex-direction: column; }
+        .pdf-panel h3 { margin: 0; padding: 10px 15px; background: #2c3e50; color: #fff; font-size: 1rem; letter-spacing: 1px; }
+        .pdf-panel embed, .pdf-panel iframe { flex: 1; width: 100%; border: 0; }
+        .pdf-fallback { padding: 20px; font-size: 0.9rem; color: #555; }
 
-        .questions-panel {
-            background: #f8f9fa;
-            border: 3px solid #333;
-            border-radius: 12px;
-            padding: 20px;
-            height: 720px;
-            overflow-y: auto;
-        }
-        .questions-panel h3 {
-            margin-top: 0;
-            color: var(--primary);
-            border-bottom: 2px solid #ccc;
-            padding-bottom: 8px;
-        }
+        .questions-panel { background: #f8f9fa; border: 3px solid #333; border-radius: 12px; padding: 20px; height: 720px; overflow-y: auto; }
+        .questions-panel h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid #ccc; padding-bottom: 8px; }
         .question-item { margin-bottom: 14px; }
-        .question-item label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 4px;
-            color: var(--primary);
-        }
-        .question-item textarea {
-            width: 100%;
-            min-height: 55px;
-            padding: 8px 10px;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            resize: vertical;
-            box-sizing: border-box;
-        }
-        .question-item textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        .save-status {
-            font-size: 0.8rem;
-            color: #27ae60;
-            font-style: italic;
-            margin-top: 8px;
-        }
+        .question-item label { display: block; font-weight: 700; margin-bottom: 4px; color: var(--primary); }
+        .question-item textarea { width: 100%; min-height: 55px; padding: 8px 10px; border: 2px solid #ccc; border-radius: 8px; font-family: inherit; font-size: 0.95rem; resize: vertical; box-sizing: border-box; }
+        .question-item textarea:focus { outline: none; border-color: var(--accent); }
+        .save-status { font-size: 0.8rem; color: #27ae60; font-style: italic; margin-top: 8px; }
 
+        /* OC-melding */
+        .oc-panel { background: #fff; border: 3px solid #333; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
+        .oc-header { background: #c0392b; color: #fff; padding: 12px 18px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
+        .oc-header .dot { width: 12px; height: 12px; background: #ffcc00; border-radius: 50%; display: inline-block; animation: pulse 1.2s infinite; }
+        @keyframes pulse { 0%,100% { opacity:1; transform:scale(1);} 50% { opacity:0.4; transform:scale(1.3);} }
+        .oc-text { padding: 18px 22px; font-family: 'Courier New', monospace; font-size: 0.98rem; line-height: 1.6; background: #1a1a1a; color: #33ff88; white-space: pre-wrap; }
+        .oc-controls { padding: 12px 18px; background: #ecf0f1; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-top: 2px solid #ddd; }
+        .oc-controls .speed-label { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #555; margin-left: auto; }
+        .oc-controls input[type=range] { width: 120px; }
+
+        /* Chatbot */
+        .chat-panel { background: #fff; border: 3px solid #333; border-radius: 12px; height: 720px; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-header { background: #2c3e50; color: #fff; padding: 12px 18px; display: flex; align-items: center; gap: 12px; }
+        .chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: #3498db; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; color: #fff; flex-shrink: 0; }
+        .chat-header-info { display: flex; flex-direction: column; }
+        .chat-header-info strong { font-size: 1rem; }
+        .chat-header-info small { color: #bdc3c7; font-size: 0.78rem; }
+        .chat-header-info small::before { content: "● "; color: #2ecc71; }
+        .chat-body { flex: 1; overflow-y: auto; padding: 20px; background: #f4f6f8; display: flex; flex-direction: column; gap: 10px; }
+        .chat-msg { max-width: 78%; padding: 10px 14px; border-radius: 14px; font-size: 0.95rem; line-height: 1.45; white-space: pre-wrap; word-wrap: break-word; }
+        .chat-msg.bot { align-self: flex-start; background: #fff; border: 1px solid #e1e8ed; border-bottom-left-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .chat-msg.user { align-self: flex-end; background: #3498db; color: #fff; border-bottom-right-radius: 4px; }
+        .chat-msg.typing { align-self: flex-start; background: #fff; border: 1px solid #e1e8ed; padding: 12px 16px; }
+        .chat-msg.typing span { display: inline-block; width: 7px; height: 7px; margin: 0 2px; background: #95a5a6; border-radius: 50%; animation: blink 1.3s infinite; }
+        .chat-msg.typing span:nth-child(2) { animation-delay: 0.2s; }
+        .chat-msg.typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes blink { 0%,60%,100% { opacity:0.3; } 30% { opacity:1; } }
+        .chat-input-area { padding: 12px; background: #fff; border-top: 2px solid #eee; display: flex; gap: 8px; }
+        .chat-input-area input { flex: 1; padding: 12px 14px; border: 2px solid #ccc; border-radius: 8px; font-size: 0.95rem; font-family: inherit; }
+        .chat-input-area input:focus { outline: none; border-color: var(--accent); }
+        .chat-input-area button { padding: 12px 22px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .chat-input-area button:hover { background: #c0392b; }
+        .chat-input-area button:disabled { background: #ccc; cursor: not-allowed; }
+        .chat-hints { padding: 10px 14px; background: #f8f9fa; border-top: 1px solid #eee; display: flex; flex-wrap: wrap; gap: 6px; }
+        .chat-hints button { background: #ecf0f1; color: #2c3e50; padding: 6px 12px; font-size: 0.82rem; border-radius: 14px; border: 1px solid #d5dbdb; font-weight: 500; }
+        .chat-hints button:hover { background: #dfe6e9; }
+
+        /* Livefeed */
         .feed-section { margin-top: 25px; border-top: 3px solid #eee; padding-top: 15px; }
         .feed-section h3 { color: var(--primary); }
-        .answers-feed {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 15px;
-        }
-        .answer-card {
-            background: #fff;
-            border: 2px solid #e1e8ed;
-            border-left: 6px solid #3498db;
-            border-radius: 10px;
-            padding: 12px 15px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-        }
-        .answer-card .student-name {
-            font-weight: 800;
-            color: var(--primary);
-            font-size: 1.1rem;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-            margin-bottom: 8px;
-            display: block;
-        }
-        .answer-card .qa {
-            margin-bottom: 6px;
-            font-size: 0.92rem;
-        }
-        .answer-card .qa .q {
-            font-weight: 700;
-            color: #7f8c8d;
-        }
+        .answers-feed { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 15px; }
+        .answer-card { background: #fff; border: 2px solid #e1e8ed; border-left: 6px solid #3498db; border-radius: 10px; padding: 12px 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+        .answer-card .student-name { font-weight: 800; color: var(--primary); font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 8px; display: block; }
+        .answer-card .qa { margin-bottom: 6px; font-size: 0.92rem; }
+        .answer-card .qa .q { font-weight: 700; color: #7f8c8d; }
         .answer-card .qa .a { color: #2c3e50; }
-        .review-area {
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px dashed #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .reviewers {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-        }
+        .review-area { margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .reviewers { font-size: 0.8rem; color: #7f8c8d; }
         .reviewers strong { color: #27ae60; }
     </style>
 </head>
 <body>
 
-    <!-- ═══════════════ SCHERM 0: INLOGGEN ═══════════════ -->
+    <!-- ═══════════ SCHERM 0: INLOGGEN ═══════════ -->
     <div id="screen0" class="screen">
         <div class="login-wrap">
             <h1>Inloggen</h1>
             <p class="sub">Vul je naam in en kies je klas om te beginnen.</p>
-
             <label for="login-name">Voornaam</label>
             <input type="text" id="login-name" placeholder="bijv. Piet" autocomplete="off" />
-
             <label for="login-class">Klas</label>
             <select id="login-class">
                 <option value="">— Selecteer klas —</option>
@@ -261,13 +140,12 @@
                 <option>Golf</option><option>Hotel</option><option>Juliett</option>
                 <option>Kilo</option><option>Lima</option><option>Mike</option>
             </select>
-
             <button onclick="doLogin()">Start les →</button>
             <p class="hint">Je naam en klas worden onthouden op dit apparaat.</p>
         </div>
     </div>
 
-    <!-- ═══════════════ SCHERM 1: WHITEBOARD ═══════════════ -->
+    <!-- ═══════════ SCHERM 1 ═══════════ -->
     <div id="screen1" class="screen hidden">
         <div class="topbar">
             <div>Ingelogd als <strong id="tb-name">—</strong> · Klas <strong id="tb-class">—</strong></div>
@@ -289,7 +167,7 @@
         </div>
     </div>
 
-    <!-- ═══════════════ SCHERM 3: SPEELVELD ═══════════════ -->
+    <!-- ═══════════ SCHERM 3 ═══════════ -->
     <div id="screen3" class="screen hidden">
         <div class="topbar">
             <div>Ingelogd als <strong id="tb-name-3">—</strong> · Klas <strong id="tb-class-3">—</strong></div>
@@ -297,22 +175,10 @@
         </div>
         <h2>3. Het Speelveld: Bouw je zinnen</h2>
         <p>Sleep woorden uit de bak hieronder naar het veld. Gebruik de pen voor correcties.</p>
-        
-        <div class="grabbelton" id="ton"
-             ondragover="allowDrop(event)"
-             ondragenter="dragEnter(event, 'ton')"
-             ondragleave="dragLeave(event, 'ton')"
-             ondrop="handleDrop(event, 'ton')">
-            </div>
-
-        <div class="speelveld" id="veld"
-             ondragover="allowDrop(event)"
-             ondragenter="dragEnter(event, 'veld')"
-             ondragleave="dragLeave(event, 'veld')"
-             ondrop="handleDrop(event, 'veld')">
+        <div class="grabbelton" id="ton" ondragover="allowDrop(event)" ondragenter="dragEnter(event, 'ton')" ondragleave="dragLeave(event, 'ton')" ondrop="handleDrop(event, 'ton')"></div>
+        <div class="speelveld" id="veld" ondragover="allowDrop(event)" ondragenter="dragEnter(event, 'veld')" ondragleave="dragLeave(event, 'veld')" ondrop="handleDrop(event, 'veld')">
             <canvas id="canvas3"></canvas>
-            </div>
-
+        </div>
         <div class="nav-bar">
             <button onclick="showScreen(1)">← Terug naar Whiteboard</button>
             <button onclick="clearDrawing()">Wis penstrepen</button>
@@ -321,73 +187,122 @@
         </div>
     </div>
 
-    <!-- ═══════════════ SCHERM 4: Oefening 2 ═══════════════ -->
+    <!-- ═══════════ SCHERM 4 ═══════════ -->
     <div id="screen4" class="screen hidden">
         <div class="topbar">
             <div>Ingelogd als <strong id="tb-name-4">—</strong> · Klas <strong id="tb-class-4">—</strong></div>
             <button class="btn-logout" onclick="doLogout()">Uitloggen</button>
         </div>
         <h2>4. Oefening 2: Mutatie analyseren</h2>
-        <p>Lees de mutatie in het PDF-venster en beantwoord de 6 vragen. Je antwoorden verschijnen live bij je klasgenoten — jullie kijken elkaars antwoorden na.</p>
-
+        <p>Lees de mutatie in het PDF-venster en beantwoord de 6 vragen. Je antwoorden verschijnen live bij je klasgenoten.</p>
         <div class="oefening-layout">
-            <!-- PDF-paneel -->
             <div class="pdf-panel">
                 <h3>📄 Mutatie 29-1-2026 — Artikel 130</h3>
-                <embed
-                    src="mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf"
-                    type="application/pdf"
-                />
-                <div class="pdf-fallback">
-                    Werkt de PDF niet? <a href="mutatie 29-1-2026 artikel 130corrdjdebie2feb2026 (1).pdf" target="_blank" rel="noopener">Open de PDF in een nieuw tabblad</a>.
-                </div>
+                <embed src="mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf" type="application/pdf" />
+                <div class="pdf-fallback">Werkt de PDF niet? <a href="mutatie 29-1-2026 artikel 130corrdjdebie2feb2026 (1).pdf" target="_blank" rel="noopener">Open de PDF in een nieuw tabblad</a>.</div>
             </div>
-
-            <!-- Vragen-paneel -->
             <div class="questions-panel">
                 <h3>Beantwoord de vragen</h3>
-
-                <div class="question-item">
-                    <label>Wie?</label>
-                    <textarea id="q-wie" data-q="wie" placeholder="Wie is betrokken?"></textarea>
-                </div>
-                <div class="question-item">
-                    <label>Wat?</label>
-                    <textarea id="q-wat" data-q="wat" placeholder="Wat is er gebeurd?"></textarea>
-                </div>
-                <div class="question-item">
-                    <label>Waar?</label>
-                    <textarea id="q-waar" data-q="waar" placeholder="Waar vond het plaats?"></textarea>
-                </div>
-                <div class="question-item">
-                    <label>Wanneer?</label>
-                    <textarea id="q-wanneer" data-q="wanneer" placeholder="Wanneer vond het plaats?"></textarea>
-                </div>
-                <div class="question-item">
-                    <label>Waarom?</label>
-                    <textarea id="q-waarom" data-q="waarom" placeholder="Waarom gebeurde het?"></textarea>
-                </div>
-                <div class="question-item">
-                    <label>Op welke wijze?</label>
-                    <textarea id="q-wijze" data-q="wijze" placeholder="Op welke wijze vond het plaats?"></textarea>
-                </div>
-
+                <div class="question-item"><label>Wie?</label><textarea id="q-wie" placeholder="Wie is betrokken?"></textarea></div>
+                <div class="question-item"><label>Wat?</label><textarea id="q-wat" placeholder="Wat is er gebeurd?"></textarea></div>
+                <div class="question-item"><label>Waar?</label><textarea id="q-waar" placeholder="Waar vond het plaats?"></textarea></div>
+                <div class="question-item"><label>Wanneer?</label><textarea id="q-wanneer" placeholder="Wanneer vond het plaats?"></textarea></div>
+                <div class="question-item"><label>Waarom?</label><textarea id="q-waarom" placeholder="Waarom gebeurde het?"></textarea></div>
+                <div class="question-item"><label>Op welke wijze?</label><textarea id="q-wijze" placeholder="Op welke wijze vond het plaats?"></textarea></div>
                 <div class="save-status" id="save-status"></div>
             </div>
         </div>
-
-        <!-- Livefeed van klasgenoten -->
         <div class="feed-section">
             <h3>📡 Live antwoorden van klas <span id="feed-class-name"></span></h3>
-            <div class="answers-feed" id="answers-feed">
-                <p style="color:#888;">Nog geen antwoorden...</p>
-            </div>
+            <div class="answers-feed" id="answers-feed"><p style="color:#888;">Nog geen antwoorden...</p></div>
         </div>
-
         <div class="nav-bar">
             <button onclick="showScreen(3)">← Terug naar Speelveld</button>
             <button onclick="showScreen(1)">← Naar Whiteboard</button>
             <button class="btn-warning" onclick="resetAnswers()">Wis antwoorden (eigen klas)</button>
+            <button class="btn-next" onclick="showScreen(5)">NAAR OEFENING 3: MUTATIE OPSTELLEN →</button>
+        </div>
+    </div>
+
+    <!-- ═══════════ SCHERM 5: Oefening 3 — Chatbot + Mutatie ═══════════ -->
+    <div id="screen5" class="screen hidden">
+        <div class="topbar">
+            <div>Ingelogd als <strong id="tb-name-5">—</strong> · Klas <strong id="tb-class-5">—</strong></div>
+            <button class="btn-logout" onclick="doLogout()">Uitloggen</button>
+        </div>
+        <h2>5. Oefening 3: Mutatie opstellen</h2>
+        <p>Je krijgt zo een OC-melding te horen. <strong>Ondervraag de agent in de chat</strong> om alle informatie te verzamelen. Stel daarna zelf een complete mutatie op volgens de ASTMA-structuur.</p>
+
+        <!-- OC-melding -->
+        <div class="oc-panel">
+            <div class="oc-header"><span class="dot"></span> OPERATIONEEL CENTRUM — LIVE MELDING</div>
+            <div class="oc-text" id="oc-tekst">Hier het Operationeel Centrum.
+
+Eenheid 21-05, ik heb een melding voor jullie.
+
+Op de hoek van de Langestraat met de Kamp in Amersfoort wordt een persoon gesignaleerd die staat te urineren in de openbare ruimte. Een passant heeft dit gemeld.
+
+Signalement: man, rond 1 meter 80, lichtblauwe spijkerbroek, donker jack, kaal hoofd.
+
+De persoon is nog ter plaatse. Willen jullie een kijkje nemen?
+
+Einde bericht.</div>
+            <div class="oc-controls">
+                <button class="btn-speak" onclick="speakOC()">▶ Voorlezen</button>
+                <button class="btn-stop" onclick="stopOC()">⏹ Stop</button>
+                <label class="speed-label">Snelheid <input type="range" id="oc-speed" min="0.5" max="1.5" step="0.1" value="0.95" /></label>
+            </div>
+        </div>
+
+        <!-- Chatbot + Mutatie -->
+        <div class="oefening-layout">
+            <!-- Chatbot -->
+            <div class="chat-panel">
+                <div class="chat-header">
+                    <div class="chat-avatar">JV</div>
+                    <div class="chat-header-info">
+                        <strong>RAPP J. Voordewind</strong>
+                        <small>aspirant agent · eenheid Amersfoort</small>
+                    </div>
+                </div>
+                <div class="chat-body" id="chat-body"></div>
+                <div class="chat-hints" id="chat-hints">
+                    <button onclick="quickAsk('Wie bent u?')">Wie bent u?</button>
+                    <button onclick="quickAsk('Wat is er precies gebeurd?')">Wat is er gebeurd?</button>
+                    <button onclick="quickAsk('Waar vond het plaats?')">Waar?</button>
+                    <button onclick="quickAsk('Hoe laat was het?')">Hoe laat?</button>
+                    <button onclick="quickAsk('Waarom deed hij dat?')">Waarom?</button>
+                    <button onclick="quickAsk('Wat was het signalement?')">Signalement?</button>
+                    <button onclick="quickAsk('Wat heeft u gedaan?')">Wat deed u?</button>
+                    <button onclick="quickAsk('Wat was het gevolg?')">Gevolg?</button>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Typ je vraag..." autocomplete="off" />
+                    <button id="chat-send" onclick="sendChat()">Verstuur</button>
+                </div>
+            </div>
+
+            <!-- Mutatie-invoer -->
+            <div class="questions-panel">
+                <h3>Jouw mutatie</h3>
+                <div class="question-item"><label>Aanleiding</label><textarea id="m-aanleiding" placeholder="Wie ben je, wat is je bevoegdheid, wat is je taak en wat kreeg je binnen?"></textarea></div>
+                <div class="question-item"><label>Situatie</label><textarea id="m-situatie" placeholder="Beschrijf kort de situatie ter plaatse."></textarea></div>
+                <div class="question-item"><label>Toedracht</label><textarea id="m-toedracht" placeholder="Wat zag, hoorde, rook je? Beantwoord de Gouden W's."></textarea></div>
+                <div class="question-item"><label>Maatregelen</label><textarea id="m-maatregelen" placeholder="Welke acties, maatregelen of afspraken heb je ondernomen?"></textarea></div>
+                <div class="question-item"><label>Afhandeling</label><textarea id="m-afhandeling" placeholder="Wat heb je na afronding gedaan?"></textarea></div>
+                <div class="save-status" id="mutatie-save-status"></div>
+            </div>
+        </div>
+
+        <div class="feed-section">
+            <h3>📡 Live mutaties van klas <span id="feed-class-name-5"></span></h3>
+            <div class="answers-feed" id="mutaties-feed"><p style="color:#888;">Nog geen mutaties...</p></div>
+        </div>
+
+        <div class="nav-bar">
+            <button onclick="showScreen(4)">← Terug naar Oefening 2</button>
+            <button onclick="showScreen(1)">← Naar Whiteboard</button>
+            <button class="btn-warning" onclick="resetMutaties()">Wis mutaties (eigen klas)</button>
             <button class="btn-hard-reset" onclick="resetMyClass()">Reset klas (alles)</button>
         </div>
     </div>
@@ -409,67 +324,47 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // ════════════ GLOBALE STATE ════════════
     let userName = localStorage.getItem('kl_name') || '';
     let userClass = localStorage.getItem('kl_class') || '';
-    let unsubscribers = [];    // lijst van Firebase onValue-unsubscribes
-    let activeListeners = null; // om dubbele listeners te voorkomen
+    let unsubscribers = [];
+    let activeListeners = null;
 
-    // Basis-pad voor alle data van deze klas
-    function basePath() {
-        return `shared/${encodeKey(userClass)}`;
-    }
-    function encodeKey(s) {
-        return String(s || '').replace(/[.#$\[\]\/]/g, '_');
-    }
+    function basePath() { return `shared/${encodeKey(userClass)}`; }
+    function encodeKey(s) { return String(s || '').replace(/[.#$\[\]\/]/g, '_'); }
     function escapeHtml(s) {
-        return String(s == null ? '' : s)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;');
+        return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
-    // ════════════ INLOG / UITLOG ════════════
+    // ════════════ INLOG ════════════
     window.doLogin = function() {
         const name = document.getElementById('login-name').value.trim();
         const cls = document.getElementById('login-class').value;
         if (!name) { alert('Vul je voornaam in.'); return; }
         if (!cls) { alert('Kies een klas.'); return; }
-
-        userName = name;
-        userClass = cls;
+        userName = name; userClass = cls;
         localStorage.setItem('kl_name', name);
         localStorage.setItem('kl_class', cls);
-
-        // UI updaten
-        ['tb-name','tb-name-3','tb-name-4'].forEach(id => {
-            const el = document.getElementById(id); if (el) el.textContent = name;
-        });
-        ['tb-class','tb-class-3','tb-class-4'].forEach(id => {
-            const el = document.getElementById(id); if (el) el.textContent = cls;
-        });
-        const fc = document.getElementById('feed-class-name');
-        if (fc) fc.textContent = cls;
-
+        ['tb-name','tb-name-3','tb-name-4','tb-name-5'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = name; });
+        ['tb-class','tb-class-3','tb-class-4','tb-class-5'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = cls; });
+        const fc = document.getElementById('feed-class-name'); if (fc) fc.textContent = cls;
+        const fc5 = document.getElementById('feed-class-name-5'); if (fc5) fc5.textContent = cls;
         startAllListeners();
         showScreen(1);
     };
 
     window.doLogout = function() {
-        if (!confirm('Weet je zeker dat je wilt uitloggen? Je naam en klas worden gewist.')) return;
+        if (!confirm('Weet je zeker dat je wilt uitloggen?')) return;
+        stopOC();
         stopAllListeners();
-        userName = '';
-        userClass = '';
+        userName = ''; userClass = '';
         localStorage.removeItem('kl_name');
         localStorage.removeItem('kl_class');
-
         document.getElementById('login-name').value = '';
         document.getElementById('login-class').value = '';
         showScreen(0);
     };
 
-    // Automatisch inloggen als naam+klas al bekend zijn
     function tryAutoLogin() {
         if (userName && userClass) {
             document.getElementById('login-name').value = userName;
@@ -480,29 +375,25 @@
         }
     }
 
-    // ════════════ FIREBASE LISTENERS BEHEREN ════════════
-    function addListener(unsub) {
-        if (typeof unsub === 'function') unsubscribers.push(unsub);
-    }
+    // ════════════ LISTENERS ════════════
+    function addListener(unsub) { if (typeof unsub === 'function') unsubscribers.push(unsub); }
     function stopAllListeners() {
         unsubscribers.forEach(u => { try { u(); } catch(e) {} });
-        unsubscribers = [];
-        activeListeners = null;
-
-        // Canvas leeghalen
+        unsubscribers = []; activeListeners = null;
         ['canvas1','canvas3'].forEach(id => {
             const c = document.getElementById(id);
             if (c) { const ctx = c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); }
         });
-        const disp = document.getElementById('displaySentence');
-        if (disp) disp.innerHTML = '';
+        const disp = document.getElementById('displaySentence'); if (disp) disp.innerHTML = '';
         document.querySelectorAll('.word-card').forEach(el => el.remove());
         const feed = document.getElementById('answers-feed');
         if (feed) feed.innerHTML = '<p style="color:#888;">Nog geen antwoorden...</p>';
+        const mfeed = document.getElementById('mutaties-feed');
+        if (mfeed) mfeed.innerHTML = '<p style="color:#888;">Nog geen mutaties...</p>';
     }
 
     function startAllListeners() {
-        if (activeListeners) return;   // al actief
+        if (activeListeners) return;
         activeListeners = true;
 
         // 1. Zinnen
@@ -511,9 +402,7 @@
             div.innerHTML = '';
             const data = s.val();
             if (data) Object.values(data).forEach(t => {
-                const z = document.createElement('div');
-                z.innerText = t;
-                div.appendChild(z);
+                const z = document.createElement('div'); z.innerText = t; div.appendChild(z);
             });
         }));
 
@@ -521,54 +410,38 @@
         addListener(onValue(ref(db, basePath() + '/drawing'), s => {
             const data = s.val() || {};
             ['canvas1','canvas3'].forEach(id => {
-                const canvas = document.getElementById(id);
-                if (!canvas) return;
+                const canvas = document.getElementById(id); if (!canvas) return;
                 const ctx = canvas.getContext('2d');
                 ctx.clearRect(0,0,canvas.width,canvas.height);
-                ctx.lineWidth = 5;
-                ctx.strokeStyle = "#e74c3c";
-                ctx.lineCap = "round";
+                ctx.lineWidth = 5; ctx.strokeStyle = "#e74c3c"; ctx.lineCap = "round";
                 Object.values(data).forEach(st => {
                     ctx.beginPath();
                     const pts = Object.values(st);
-                    pts.forEach((p, i) => {
-                        if (i === 0) ctx.moveTo(p.x, p.y);
-                        else ctx.lineTo(p.x, p.y);
-                    });
+                    pts.forEach((p, i) => { i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y); });
                     ctx.stroke();
                 });
             });
         }));
 
-        // 3. Woorden (drag & drop)
+        // 3. Woorden
         addListener(onValue(ref(db, basePath() + '/words'), (snapshot) => {
             const data = snapshot.val();
-            document.querySelectorAll('.word-card').forEach(el => {
-                if (!data || !data[el.id]) el.remove();
-            });
+            document.querySelectorAll('.word-card').forEach(el => { if (!data || !data[el.id]) el.remove(); });
             if (!data) return;
-
             Object.keys(data).forEach(id => {
                 let el = document.getElementById(id);
                 if (!el) {
                     el = document.createElement('div');
-                    el.id = id;
-                    el.className = 'word-card';
-                    el.draggable = true;
-
+                    el.id = id; el.className = 'word-card'; el.draggable = true;
                     el.addEventListener('dragstart', (e) => {
                         draggedId = id;
                         const rect = el.getBoundingClientRect();
                         dragOffset.x = e.clientX - rect.left;
                         dragOffset.y = e.clientY - rect.top;
                         el.classList.add('dragging');
-                        try {
-                            e.dataTransfer.effectAllowed = 'move';
-                            e.dataTransfer.setData('text/plain', id);
-                        } catch (err) {}
+                        try { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', id); } catch (err) {}
                         setCanvasPointerEvents('none');
                     });
-
                     el.addEventListener('dragend', () => {
                         el.classList.remove('dragging');
                         draggedId = null;
@@ -577,95 +450,115 @@
                         document.getElementById('ton')?.classList.remove('drag-over');
                     });
                 }
-
                 el.innerText = data[id].text;
                 const container = document.getElementById(data[id].location || 'ton');
                 if (container && el.parentElement !== container) container.appendChild(el);
-
                 if (data[id].location === 'veld') {
                     el.style.position = 'absolute';
                     el.style.left = Math.max(0, data[id].x || 0) + "px";
                     el.style.top  = Math.max(0, data[id].y || 0) + "px";
                 } else {
                     el.style.position = 'relative';
-                    el.style.left = '0';
-                    el.style.top  = '0';
+                    el.style.left = '0'; el.style.top = '0';
                 }
             });
         }));
 
-        // 4. Antwoorden livefeed
+        // 4. Antwoorden (oefening 2)
         addListener(onValue(ref(db, basePath() + '/answers'), (snap) => {
-            const feed = document.getElementById('answers-feed');
-            if (!feed) return;
+            const feed = document.getElementById('answers-feed'); if (!feed) return;
             const data = snap.val();
-
             if (!data || Object.keys(data).length === 0) {
-                feed.innerHTML = '<p style="color:#888;">Nog geen antwoorden...</p>';
-                return;
+                feed.innerHTML = '<p style="color:#888;">Nog geen antwoorden...</p>'; return;
             }
-
             feed.innerHTML = '';
-            const entries = Object.entries(data)
-                .sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
-
-            const QK = ['wie', 'wat', 'waar', 'wanneer', 'waarom', 'wijze'];
-            const QL = { wie: 'Wie', wat: 'Wat', waar: 'Waar', wanneer: 'Wanneer', waarom: 'Waarom', wijze: 'Op welke wijze' };
-
+            const entries = Object.entries(data).sort((a,b) => (b[1].timestamp||0) - (a[1].timestamp||0));
+            const QK = ['wie','wat','waar','wanneer','waarom','wijze'];
+            const QL = { wie:'Wie', wat:'Wat', waar:'Waar', wanneer:'Wanneer', waarom:'Waarom', wijze:'Op welke wijze' };
             entries.forEach(([key, item]) => {
                 const card = document.createElement('div');
                 card.className = 'answer-card';
-
                 const reviewers = item.reviews ? Object.keys(item.reviews) : [];
                 const isMine = (item.name === userName);
                 const iReviewed = item.reviews && userName && item.reviews[encodeKey(userName)];
-
                 let html = `<span class="student-name">${escapeHtml(item.name || 'Onbekend')}${isMine ? ' (jij)' : ''}</span>`;
                 QK.forEach(q => {
                     const answer = (item.answers && item.answers[q]) ? item.answers[q] : '—';
                     html += `<div class="qa"><span class="q">${QL[q]}:</span> <span class="a">${escapeHtml(answer)}</span></div>`;
                 });
-
-                html += `<div class="review-area">`;
-                html += `<div class="reviewers">${reviewers.length
-                    ? '✓ Nagekeken door: <strong>' + reviewers.map(escapeHtml).join(', ') + '</strong>'
-                    : 'Nog niet nagekeken'}</div>`;
+                html += `<div class="review-area"><div class="reviewers">${reviewers.length ? '✓ Nagekeken door: <strong>' + reviewers.map(escapeHtml).join(', ') + '</strong>' : 'Nog niet nagekeken'}</div>`;
                 if (!isMine && userName) {
-                    if (iReviewed) {
-                        html += `<button class="btn-reviewed" disabled>✓ Door jou nagekeken</button>`;
-                    } else {
-                        html += `<button class="btn-review" data-review-key="${escapeHtml(key)}">Markeer als nagekeken</button>`;
-                    }
+                    if (iReviewed) html += `<button class="btn-reviewed" disabled>✓ Door jou nagekeken</button>`;
+                    else html += `<button class="btn-review" data-review-key="${escapeHtml(key)}">Markeer als nagekeken</button>`;
                 }
                 html += `</div>`;
                 card.innerHTML = html;
                 feed.appendChild(card);
             });
-
             feed.querySelectorAll('[data-review-key]').forEach(btn => {
                 btn.addEventListener('click', () => {
                     if (!userName) return;
                     const targetKey = btn.getAttribute('data-review-key');
-                    const myKey = encodeKey(userName);
-                    update(ref(db, basePath() + `/answers/${targetKey}/reviews`), { [myKey]: true });
+                    update(ref(db, basePath() + `/answers/${targetKey}/reviews`), { [encodeKey(userName)]: true });
+                });
+            });
+        }));
+
+        // 5. Mutaties (oefening 3)
+        addListener(onValue(ref(db, basePath() + '/mutaties'), (snap) => {
+            const feed = document.getElementById('mutaties-feed'); if (!feed) return;
+            const data = snap.val();
+            if (!data || Object.keys(data).length === 0) {
+                feed.innerHTML = '<p style="color:#888;">Nog geen mutaties...</p>'; return;
+            }
+            feed.innerHTML = '';
+            const entries = Object.entries(data).sort((a,b) => (b[1].timestamp||0) - (a[1].timestamp||0));
+            const MK = [
+                ['aanleiding', 'Aanleiding'],
+                ['situatie', 'Situatie'],
+                ['toedracht', 'Toedracht'],
+                ['maatregelen', 'Maatregelen'],
+                ['afhandeling', 'Afhandeling']
+            ];
+            entries.forEach(([key, item]) => {
+                const card = document.createElement('div');
+                card.className = 'answer-card';
+                const reviewers = item.reviews ? Object.keys(item.reviews) : [];
+                const isMine = (item.name === userName);
+                const iReviewed = item.reviews && userName && item.reviews[encodeKey(userName)];
+                let html = `<span class="student-name">${escapeHtml(item.name || 'Onbekend')}${isMine ? ' (jij)' : ''}</span>`;
+                MK.forEach(([k, label]) => {
+                    const answer = (item.parts && item.parts[k]) ? item.parts[k] : '—';
+                    html += `<div class="qa"><span class="q">${label}:</span> <span class="a">${escapeHtml(answer)}</span></div>`;
+                });
+                html += `<div class="review-area"><div class="reviewers">${reviewers.length ? '✓ Nagekeken door: <strong>' + reviewers.map(escapeHtml).join(', ') + '</strong>' : 'Nog niet nagekeken'}</div>`;
+                if (!isMine && userName) {
+                    if (iReviewed) html += `<button class="btn-reviewed" disabled>✓ Door jou nagekeken</button>`;
+                    else html += `<button class="btn-review" data-mreview-key="${escapeHtml(key)}">Markeer als nagekeken</button>`;
+                }
+                html += `</div>`;
+                card.innerHTML = html;
+                feed.appendChild(card);
+            });
+            feed.querySelectorAll('[data-mreview-key]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (!userName) return;
+                    const targetKey = btn.getAttribute('data-mreview-key');
+                    update(ref(db, basePath() + `/mutaties/${targetKey}/reviews`), { [encodeKey(userName)]: true });
                 });
             });
         }));
     }
 
-    // ════════════ PEN FUNCTIE ════════════
+    // ════════════ PEN ════════════
     const setupCanvas = (id) => {
-        const canvas = document.getElementById(id);
-        if (!canvas) return;
+        const canvas = document.getElementById(id); if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        canvas.width = 1400;
-        canvas.height = (id === 'canvas1') ? 400 : 600;
-
+        canvas.width = 1400; canvas.height = (id === 'canvas1') ? 400 : 600;
         let drawing = false, strokeId = null;
         canvas.onmousedown = (e) => {
             if (!userClass) return;
-            drawing = true;
-            strokeId = "s_" + Date.now() + "_" + Math.random().toString(36).slice(2,6);
+            drawing = true; strokeId = "s_" + Date.now() + "_" + Math.random().toString(36).slice(2,6);
         };
         window.addEventListener('mouseup', () => { drawing = false; strokeId = null; });
         canvas.onmousemove = (e) => {
@@ -679,32 +572,18 @@
             });
         };
     };
-    setupCanvas('canvas1');
-    setupCanvas('canvas3');
+    setupCanvas('canvas1'); setupCanvas('canvas3');
 
     // ════════════ DRAG & DROP ════════════
     let draggedId = null;
     let dragOffset = { x: 0, y: 0 };
-
     function setCanvasPointerEvents(value) {
-        document.querySelectorAll('.speelveld canvas, .whiteboard-container canvas').forEach(c => {
-            c.style.pointerEvents = value;
-        });
+        document.querySelectorAll('.speelveld canvas, .whiteboard-container canvas').forEach(c => { c.style.pointerEvents = value; });
     }
-
-    window.allowDrop = (e) => {
-        e.preventDefault();
-        try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
-    };
-    window.dragEnter = (e, targetLoc) => {
-        e.preventDefault();
-        const el = document.getElementById(targetLoc);
-        if (el) el.classList.add('drag-over');
-    };
+    window.allowDrop = (e) => { e.preventDefault(); try { e.dataTransfer.dropEffect = 'move'; } catch (err) {} };
+    window.dragEnter = (e, targetLoc) => { e.preventDefault(); const el = document.getElementById(targetLoc); if (el) el.classList.add('drag-over'); };
     window.dragLeave = (e, targetLoc) => {
-        e.preventDefault();
-        const el = document.getElementById(targetLoc);
-        if (!el) return;
+        e.preventDefault(); const el = document.getElementById(targetLoc); if (!el) return;
         const related = e.relatedTarget;
         if (!related || !el.contains(related)) el.classList.remove('drag-over');
     };
@@ -712,24 +591,18 @@
         e.preventDefault();
         document.getElementById('veld')?.classList.remove('drag-over');
         document.getElementById('ton')?.classList.remove('drag-over');
-
         let id = null;
         try { id = e.dataTransfer.getData('text/plain'); } catch (err) {}
-        if (!id) id = draggedId;
-        if (!id) return;
-
-        const container = document.getElementById(targetLoc);
-        if (!container) return;
-
+        if (!id) id = draggedId; if (!id) return;
+        const container = document.getElementById(targetLoc); if (!container) return;
         const rect = container.getBoundingClientRect();
         const x = Math.max(0, e.clientX - rect.left - dragOffset.x);
         const y = Math.max(0, e.clientY - rect.top  - dragOffset.y);
-
         update(ref(db, basePath() + '/words/' + id), { location: targetLoc, x: x, y: y });
         draggedId = null;
     };
 
-    // ════════════ INPUT HANDLERS ════════════
+    // ════════════ INPUT ════════════
     window.handleSentenceEnter = (e) => {
         if (e.key === "Enter" && e.target.value && userClass) {
             push(ref(db, basePath() + '/sentences'), e.target.value);
@@ -738,25 +611,19 @@
     };
     window.handleWordSync = (e, zone) => {
         if (e.key === "Enter" && e.target.value && userClass) {
-            push(ref(db, basePath() + '/words'), {
-                text: e.target.value, x: 10, y: 10, location: 'ton'
-            });
+            push(ref(db, basePath() + '/words'), { text: e.target.value, x: 10, y: 10, location: 'ton' });
             e.target.value = "";
         }
     };
 
-    // ════════════ RESET-FUNCTIES ════════════
+    // ════════════ RESET ════════════
     window.hardReset = function() {
         if (!userClass) return;
-        if (confirm(`ALLES van klas ${userClass} wissen? (bord, woorden, tekeningen, antwoorden)`)) {
-            remove(ref(db, basePath()));
-        }
+        if (confirm(`ALLES van klas ${userClass} wissen? (bord, woorden, tekeningen, antwoorden, mutaties)`)) remove(ref(db, basePath()));
     };
     window.clearWords = function() {
         if (!userClass) return;
-        if (confirm(`Alle woorden van klas ${userClass} wissen?`)) {
-            remove(ref(db, basePath() + '/words'));
-        }
+        if (confirm(`Alle woorden van klas ${userClass} wissen?`)) remove(ref(db, basePath() + '/words'));
     };
     window.clearDrawing = function() {
         if (!userClass) return;
@@ -764,31 +631,26 @@
     };
     window.resetAnswers = function() {
         if (!userClass) return;
-        if (confirm(`Alle antwoorden van klas ${userClass} wissen?`)) {
-            remove(ref(db, basePath() + '/answers'));
-        }
+        if (confirm(`Alle antwoorden van klas ${userClass} wissen?`)) remove(ref(db, basePath() + '/answers'));
+    };
+    window.resetMutaties = function() {
+        if (!userClass) return;
+        if (confirm(`Alle mutaties van klas ${userClass} wissen?`)) remove(ref(db, basePath() + '/mutaties'));
     };
     window.resetMyClass = function() {
         if (!userClass) return;
-        if (confirm(`Reset klas ${userClass}? ALLES (bord, woorden, tekeningen, antwoorden) wordt gewist.`)) {
-            remove(ref(db, basePath()));
-        }
-    };
-    // Optionele "reset alles" (docent) — wist de complete shared-tree
-    window.resetEverything = function() {
-        if (confirm('LET OP! Dit wist ALLE klassen, ALLE antwoorden en ALLE borden. Zeker weten?')) {
-            remove(ref(db, 'shared'));
-        }
+        if (confirm(`Reset klas ${userClass}? ALLES wordt gewist.`)) remove(ref(db, basePath()));
     };
 
     // ════════════ NAVIGATIE ════════════
     window.showScreen = (n) => {
         document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-        const el = document.getElementById('screen' + n);
-        if (el) el.classList.remove('hidden');
+        const el = document.getElementById('screen' + n); if (el) el.classList.remove('hidden');
+        if (n === 4) attachAnswerListeners();
+        if (n === 5) initChatbot();
     };
 
-    // ════════════ ANTWOORDEN SCHERM 4 ════════════
+    // ════════════ OEFENING 2 ════════════
     const QUESTION_KEYS = ['wie', 'wat', 'waar', 'wanneer', 'waarom', 'wijze'];
     let saveTimer = null;
     let answersInitialized = false;
@@ -796,10 +658,8 @@
     function attachAnswerListeners() {
         if (answersInitialized) return;
         answersInitialized = true;
-
         QUESTION_KEYS.forEach(k => {
-            const el = document.getElementById('q-' + k);
-            if (!el) return;
+            const el = document.getElementById('q-' + k); if (!el) return;
             el.addEventListener('input', () => {
                 if (!userName || !userClass) return;
                 document.getElementById('save-status').textContent = 'Bezig met opslaan...';
@@ -807,11 +667,8 @@
                 saveTimer = setTimeout(saveMyAnswers, 500);
             });
         });
-
-        // Voorvullen
         onValue(ref(db, basePath() + '/answers/' + encodeKey(userName)), (snap) => {
-            const data = snap.val();
-            if (!data || !data.answers) return;
+            const data = snap.val(); if (!data || !data.answers) return;
             QUESTION_KEYS.forEach(k => {
                 const el = document.getElementById('q-' + k);
                 if (el && document.activeElement !== el) el.value = data.answers[k] || '';
@@ -827,28 +684,409 @@
             payload.answers[k] = (el && el.value) ? el.value : '';
         });
         set(ref(db, basePath() + '/answers/' + encodeKey(userName)), payload)
+            .then(() => { document.getElementById('save-status').textContent = '✓ Opgeslagen om ' + new Date().toLocaleTimeString('nl-NL'); })
+            .catch(err => { document.getElementById('save-status').textContent = '⚠️ Fout: ' + err.message; });
+    }
+
+    // ════════════ OEFENING 3 — OC-MELDING VOORLEZEN ════════════
+    let ocUtterance = null;
+    window.speakOC = function() {
+        if (!('speechSynthesis' in window)) { alert('Je browser ondersteunt geen voorlezen.'); return; }
+        stopOC();
+        const tekst = document.getElementById('oc-tekst').innerText;
+        ocUtterance = new SpeechSynthesisUtterance(tekst);
+        ocUtterance.lang = 'nl-NL';
+        ocUtterance.rate = parseFloat(document.getElementById('oc-speed').value) || 0.95;
+        ocUtterance.pitch = 0.95;
+        const stemmen = speechSynthesis.getVoices();
+        const nlStem = stemmen.find(v => v.lang && v.lang.toLowerCase().startsWith('nl'));
+        if (nlStem) ocUtterance.voice = nlStem;
+        speechSynthesis.speak(ocUtterance);
+    };
+    window.stopOC = function() {
+        if ('speechSynthesis' in window) speechSynthesis.cancel();
+        ocUtterance = null;
+    };
+
+    // ════════════ OEFENING 3 — CHATBOT ════════════
+    let chatbotInitialized = false;
+    let botTypingTimer = null;
+
+    // Kennisbank van RAPP Voordewind
+    const KB = [
+        {
+            keys: ['wie ben', 'uw naam', 'je naam', 'wie bent', 'naam'],
+            answers: [
+                "Ik ben Jeroen Voordewind, aspirant agent bij eenheid Amersfoort. Ik loop vanavond voetsurveillance in het uitgaansgebied.",
+                "Jeroen Voordewind, RAPP bij eenheid Amersfoort. Ik was op de Langestraat op het moment van de melding."
+            ]
+        },
+        {
+            keys: ['bevoegdheid', 'rang', 'functie', 'aspirant'],
+            answers: [
+                "Ik ben aspirant agent. Ik loop stage bij eenheid Amersfoort en doe mee aan de voetsurveillance in het centrum."
+            ]
+        },
+        {
+            keys: ['wat is er gebeurd', 'wat gebeurde', 'incident', 'wat deed hij', 'wat heb je gezien', 'wat zag je'],
+            answers: [
+                "Ik zag een man die tegen de muur van een hoekpand stond te urineren. Zijn gulp was open en er kwam urine tegen de muur en op de stoep terecht.",
+                "Een manspersoon stond staand te urineren in de openbare ruimte, tegen de muur van een hoekpand. Openlijk in het zicht van iedereen."
+            ]
+        },
+        {
+            keys: ['waar', 'locatie', 'plek', 'adres'],
+            answers: [
+                "Op de Langestraat in Amersfoort, ter hoogte van de kruising met de Kamp. Tegen de muur van het hoekpand.",
+                "Langestraat, hoek Kamp, in het centrum van Amersfoort."
+            ]
+        },
+        {
+            keys: ['wanneer', 'hoe laat', 'tijd', 'datum', 'welke dag'],
+            answers: [
+                "Het was vrijdag 6 maart 2026, omstreeks 23:45 uur. Midden in het uitgaansgebied, dus vrij druk op straat.",
+                "Vrijdagavond 6 maart, rond kwart voor twaalf 's nachts."
+            ]
+        },
+        {
+            keys: ['waarom', 'reden', 'motief', 'excuses'],
+            answers: [
+                "Hij zei dat hij geen toilet kon vinden. Maar er is een openbaar toilet op ongeveer 150 meter afstand, dus dat klopte niet. Hij leek ook niet in nood.",
+                "Hij gaf aan dat hij het niet op tijd kon halen. Ik heb hem verteld dat er een openbaar toilet in de buurt was, waar hij niets van zei te weten."
+            ]
+        },
+        {
+            keys: ['op welke wijze', 'manier', 'hoe deed', 'wijze'],
+            answers: [
+                "Staand, met zijn gulp open, tegen de muur. Gewoon openlijk op straat. Hij deed geen enkele moeite om het aan het zicht te onttrekken.",
+                "Hij stond rechtop tegen de muur. Urine kwam tegen de muur én op de stoep. Mensen liepen er gewoon langs."
+            ]
+        },
+        {
+            keys: ['signalement', 'uiterlijk', 'beschrijving', 'hoe zag'],
+            answers: [
+                "Een man, rond 1 meter 80, lichtblauwe spijkerbroek, donker jack en een kaal hoofd. Dat was ook het signalement dat de melder doorgaf.",
+                "Man, ongeveer 1.80 m. Lichtblauwe spijkerbroek, donker jack, kaal hoofd."
+            ]
+        },
+        {
+            keys: ['naam verdachte', 'wie is hij', 'betrokkene', 'naam'],
+            answers: [
+                "Meneer M. Jansen, 23 jaar, woonachtig in Amersfoort. Hij gaf zijn personalia zonder problemen op.",
+                "Hij stelde zich voor als M. Jansen, 23 jaar oud, uit Amersfoort."
+            ]
+        },
+        {
+            keys: ['leeftijd', 'hoe oud'],
+            answers: ["Hij is 23 jaar."]
+        },
+        {
+            keys: ['woonplaats', 'waar woont', 'adres van hem'],
+            answers: ["Hij woont in Amersfoort. Ik heb geen straatnaam genoteerd — dat was voor deze mutatie niet nodig."]
+        },
+        {
+            keys: ['wat heeft u gedaan', 'wat deed u', 'wat heb je gedaan', 'actie', 'maatregel'],
+            answers: [
+                "Ik heb hem aangesproken, zijn personalia laten opnemen en hem meegedeeld dat wildplassen een overtreding is van de APV. Vervolgens heb ik een bekeuring aangezegd.",
+                "Ik heb hem staande gehouden, aangesproken op zijn gedrag, zijn gegevens gecontroleerd en hem een bekeuring aangezegd."
+            ]
+        },
+        {
+            keys: ['bekeuring', 'boete', 'straf', 'gevolg', 'consequentie'],
+            answers: [
+                "Hij krijgt een bekeuring voor het overtreden van de APV. Dat is een bestuurlijke boete.",
+                "Er is een bekeuring aangezegd wegens overtreding van de APV. Hij heeft daarna het terrein mogen verlaten."
+            ]
+        },
+        {
+            keys: ['laten gaan', 'vrijgelaten', 'meegenomen', 'aanhouding'],
+            answers: [
+                "Ik heb hem niet aangehouden. Wildplassen is een overtreding, geen misdrijf. Hij kreeg een bekeuring en mocht daarna gaan.",
+                "Geen aanhouding. Hij kreeg een bekeuring aangezegd en is daarna vertrokken."
+            ]
+        },
+        {
+            keys: ['getuige', 'melder', 'wie belde'],
+            answers: [
+                "De melding kwam van een passant, de heer D. Kuipers. Hij zag het gebeuren en belde direct het OC.",
+                "Een voorbijganger, meneer Kuipers, heeft de melding gedaan."
+            ]
+        },
+        {
+            keys: ['wat deed u daar', 'waarom was u daar', 'taak', 'surveillance', 'bezig'],
+            answers: [
+                "Ik was op de Langestraat in het kader van voetsurveillance in het uitgaansgebied. Dat doen we in het weekend vaker, ter voorkoming van overlast.",
+                "Ik liep voetsurveillance in het uitgaansgebied. Ik was daar met nog een collega in de buurt."
+            ]
+        },
+        {
+            keys: ['collega', 'met wie', 'alleen'],
+            answers: [
+                "Ik was op dat moment alleen op de Langestraat, maar een collega was op loopafstand in de buurt."
+            ]
+        },
+        {
+            keys: ['weer', 'omstandigheden', 'hoe was het weer'],
+            answers: [
+                "Het was droog, donker. De straatlantaarns brandden. Er liepen redelijk wat mensen op straat."
+            ]
+        },
+        {
+            keys: ['hoe voelde hij', 'emotie', 'gedrag', 'reactie'],
+            answers: [
+                "Hij leek zich opgelaten te voelen. Niet agressief, niet ontkennend. Hij erkende het direct en bood geen verzet.",
+                "Hij was rustig, een tikje beschaamd. Hij gaf het meteen toe."
+            ]
+        },
+        {
+            keys: ['ruzie', 'agressief', 'geweld', 'verzet'],
+            answers: [
+                "Nee, totaal geen verzet. Hij werkte mee en gaf zijn gegevens direct."
+            ]
+        },
+        {
+            keys: ['alcohol', 'dronken', 'onder invloed'],
+            answers: [
+                "Hij rook naar alcohol, dat klopt. Maar hij was goed aanspreekbaar. Geen reden voor een ademtest."
+            ]
+        },
+        {
+            keys: ['openbaar toilet', 'toilet in de buurt', 'alternatief'],
+            answers: [
+                "Ja, op ongeveer 150 meter afstand is een openbaar toilet. Hij zei dat niet te weten, maar dat lijkt me sterk.",
+                "Er is een openbaar toilet op zo'n 150 meter. Dat heb ik hem ook verteld."
+            ]
+        },
+        {
+            keys: ['hoeveel mensen', 'hoe druk', 'omstanders'],
+            answers: [
+                "Het was redelijk druk — het is het uitgaansgebied op vrijdagavond. Er waren meerdere mensen in de buurt die het hadden kunnen zien.",
+                "Er liepen op dat moment meerdere mensen op straat."
+            ]
+        },
+        {
+            keys: ['straat', 'muur', 'gebouw', 'pand'],
+            answers: [
+                "Een hoekpand op de kruising Langestraat / Kamp. Een winkelpand, 's avonds gesloten."
+            ]
+        },
+        {
+            keys: ['rook', 'hoorde', 'voelde'],
+            answers: [
+                "Ik rook de urine tegen de muur. Ik zag het gebeuren. Verder geen bijzonderheden."
+            ]
+        },
+        {
+            keys: ['foto', 'camera', 'bewijs'],
+            answers: [
+                "Nee, geen foto's gemaakt. Voor een mutatie is dat ook niet nodig. De eigen waarneming is voldoende."
+            ]
+        },
+        {
+            keys: ['mutatie', 'pv', 'proces-verbaal'],
+            answers: [
+                "Ik maak een mutatie op, geen proces-verbaal. Wildplassen is een overtreding, geen misdrijf. De mutatie is voor statistiek en bestuurlijke handhaving.",
+                "Dit gaat in de mutatie, niet in een PV. Voor een overtreding van de APV is dat voldoende."
+            ]
+        },
+        {
+            keys: ['hallo', 'hoi', 'goedemorgen', 'goedemiddag', 'goedenavond', 'hey'],
+            answers: [
+                "Hallo. Waarmee kan ik je helpen? Vraag maar door over het incident.",
+                "Hallo. Stel je vragen — ik vertel je graag wat ik heb gezien."
+            ]
+        },
+        {
+            keys: ['dank', 'bedankt', 'thanks'],
+            answers: [
+                "Graag gedaan. Succes met het opstellen van de mutatie.",
+                "Geen probleem. Als je nog vragen hebt, hoor ik het wel."
+            ]
+        },
+        {
+            keys: ['hoe gaat', 'alles goed'],
+            answers: [
+                "Goed, dank je. Ik ben net klaar met de surveillance. Stel je vragen maar."
+            ]
+        },
+        {
+            keys: ['wat moet ik doen', 'hoe begin', 'uitleg', 'help'],
+            answers: [
+                "Stel me vragen over het incident — wie, wat, waar, wanneer, waarom en hoe. Aan de hand van mijn antwoorden kun je zelf de mutatie opstellen in de vakken rechts.",
+                "Je kunt me van alles vragen over wat ik heb gezien. Vraag naar de persoon, de locatie, het tijdstip, enz."
+            ]
+        },
+        {
+            keys: ['meneer jansen', 'jansen', 'verdachte'],
+            answers: [
+                "Meneer Jansen, 23 jaar, uit Amersfoort. Rustige man, meegaand. Geen eerdere antecedenten die ik heb gezien."
+            ]
+        },
+        {
+            keys: ['antecedenten', 'eerdere', 'strafblad'],
+            answers: [
+                "Geen strafblad dat ik heb gezien. Hij leek het zelf ook niet als iets groots te beschouwen."
+            ]
+        },
+        {
+            keys: ['camera', 'beveiliging', 'toezicht'],
+            answers: [
+                "Er hangen in het centrum wel camera's, maar ik heb daar geen beelden van opgevraagd. Niet nodig voor deze mutatie."
+            ]
+        },
+        {
+            keys: ['vervolg', 'daarna', 'afhandeling', 'wat gebeurt er nu'],
+            answers: [
+                "Ik heb de mutatie opgemaakt. De bekeuring wordt verwerkt. Meneer Jansen krijgt die per post thuisgestuurd.",
+                "Na het uitschrijven van de bekeuring heb ik meneer Jansen laten gaan. De mutatie is opgemaakt ten behoeve van statistiek en handhaving."
+            ]
+        },
+        {
+            keys: ['ben je klaar', 'einde', 'nog iets'],
+            answers: [
+                "Ik heb alles wat ik weet verteld. Als je nog iets mist voor de mutatie, vraag maar.",
+                "Volgens mij heb je nu alles. Als je een specifieke vraag hebt, stel hem gerust."
+            ]
+        },
+        {
+            keys: ['wanneer aankomst', 'hoe laat aankomst', 'aankomst'],
+            answers: [
+                "Ik was al ter plaatse — ik liep daar mijn surveillance. Ik zag het gebeuren en heb direct gehandeld."
+            ]
+        }
+    ];
+
+    const FALLBACK = [
+        "Dat heb ik niet direct paraat. Kun je je vraag anders formuleren?",
+        "Hmm, daar kan ik je zo niet mee helpen. Vraag me liever iets over het incident zelf.",
+        "Daar heb ik geen informatie over. Stel je vraag over het incident op de Langestraat.",
+        "Ik begrijp je vraag niet helemaal. Kun je specifieker zijn over wat je wilt weten?"
+    ];
+
+    function zoekAntwoord(vraag) {
+        const q = vraag.toLowerCase().trim();
+        if (!q) return null;
+        for (const entry of KB) {
+            for (const key of entry.keys) {
+                if (q.includes(key)) {
+                    const answers = entry.answers;
+                    return answers[Math.floor(Math.random() * answers.length)];
+                }
+            }
+        }
+        return FALLBACK[Math.floor(Math.random() * FALLBACK.length)];
+    }
+
+    function addChatMessage(role, text) {
+        const body = document.getElementById('chat-body'); if (!body) return;
+        const div = document.createElement('div');
+        div.className = 'chat-msg ' + role;
+        div.textContent = text;
+        body.appendChild(div);
+        body.scrollTop = body.scrollHeight;
+    }
+
+    function showTyping() {
+        const body = document.getElementById('chat-body'); if (!body) return;
+        const div = document.createElement('div');
+        div.className = 'chat-msg typing';
+        div.id = 'typing-indicator';
+        div.innerHTML = '<span></span><span></span><span></span>';
+        body.appendChild(div);
+        body.scrollTop = body.scrollHeight;
+    }
+
+    function hideTyping() {
+        const el = document.getElementById('typing-indicator');
+        if (el) el.remove();
+    }
+
+    window.sendChat = function() {
+        const input = document.getElementById('chat-input');
+        const text = input.value.trim();
+        if (!text) return;
+        input.value = '';
+        addChatMessage('user', text);
+        showTyping();
+        if (botTypingTimer) clearTimeout(botTypingTimer);
+        const delay = 700 + Math.random() * 800;
+        botTypingTimer = setTimeout(() => {
+            hideTyping();
+            const antwoord = zoekAntwoord(text);
+            addChatMessage('bot', antwoord);
+        }, delay);
+    };
+
+    window.quickAsk = function(vraag) {
+        const input = document.getElementById('chat-input');
+        if (input) input.value = vraag;
+        window.sendChat();
+    };
+
+    function initChatbot() {
+        if (chatbotInitialized) return;
+        chatbotInitialized = true;
+
+        const input = document.getElementById('chat-input');
+        if (input) {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); window.sendChat(); }
+            });
+        }
+
+        // Welkomstbericht
+        addChatMessage('bot', "Hallo. Ik ben Jeroen Voordewind, aspirant agent bij eenheid Amersfoort. Ik heb net een melding wildplassen afgehandeld op de Langestraat. Wat wil je weten?");
+
+        // Mutatie-invoer koppelen (debounce opslaan)
+        ['m-aanleiding', 'm-situatie', 'm-toedracht', 'm-maatregelen', 'm-afhandeling'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el || el._bound) return;
+            el._bound = true;
+            el.addEventListener('input', () => {
+                if (!userName || !userClass) return;
+                const status = document.getElementById('mutatie-save-status');
+                if (status) status.textContent = 'Bezig met opslaan...';
+                if (saveTimer) clearTimeout(saveTimer);
+                saveTimer = setTimeout(saveMyMutatie, 500);
+            });
+        });
+
+        // Voorvullen
+        onValue(ref(db, basePath() + '/mutaties/' + encodeKey(userName)), (snap) => {
+            const data = snap.val(); if (!data || !data.parts) return;
+            ['aanleiding','situatie','toedracht','maatregelen','afhandeling'].forEach(k => {
+                const el = document.getElementById('m-' + k);
+                if (el && document.activeElement !== el) el.value = data.parts[k] || '';
+            });
+        });
+    }
+
+    function saveMyMutatie() {
+        if (!userName || !userClass) return;
+        const parts = {};
+        ['aanleiding','situatie','toedracht','maatregelen','afhandeling'].forEach(k => {
+            const el = document.getElementById('m-' + k);
+            parts[k] = (el && el.value) ? el.value : '';
+        });
+        const payload = { name: userName, timestamp: Date.now(), parts: parts };
+        set(ref(db, basePath() + '/mutaties/' + encodeKey(userName)), payload)
             .then(() => {
-                document.getElementById('save-status').textContent =
-                    '✓ Opgeslagen om ' + new Date().toLocaleTimeString('nl-NL');
+                const status = document.getElementById('mutatie-save-status');
+                if (status) status.textContent = '✓ Opgeslagen om ' + new Date().toLocaleTimeString('nl-NL');
             })
             .catch(err => {
-                document.getElementById('save-status').textContent =
-                    '⚠️ Fout bij opslaan: ' + err.message;
+                const status = document.getElementById('mutatie-save-status');
+                if (status) status.textContent = '⚠️ Fout: ' + err.message;
             });
     }
 
     // ════════════ INIT ════════════
-    // Wanneer scherm 4 voor het eerst zichtbaar wordt, koppel de textarea-listeners
-    const _origShowScreen = window.showScreen;
-    window.showScreen = function(n) {
-        _origShowScreen(n);
-        if (n === 4) attachAnswerListeners();
-    };
+    setTimeout(() => {
+        if ('speechSynthesis' in window) speechSynthesis.getVoices();
+    }, 100);
 
-    // Auto-login of toon inlogscherm
     tryAutoLogin();
 
-    // Expose voor het geval inline code ze nodig heeft
     window.ref = ref; window.db = db; window.remove = remove;
 </script>
 </body>
