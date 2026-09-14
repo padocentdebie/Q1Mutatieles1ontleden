@@ -1151,7 +1151,21 @@ Einde bericht.</div>
     }, 100);
 
     tryAutoLogin();
-
+// ════════════ LIGHTBOX ════════════
+window.openLightbox = function(src) {
+    const lb = document.getElementById('img-lightbox');
+    const img = document.getElementById('img-lightbox-img');
+    if (!lb || !img) return;
+    img.src = src;
+    lb.classList.add('open');
+};
+window.closeLightbox = function() {
+    const lb = document.getElementById('img-lightbox');
+    if (lb) lb.classList.remove('open');
+};
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') window.closeLightbox();
+});
     window.ref = ref; window.db = db; window.remove = remove;
 </script>
 </body>
