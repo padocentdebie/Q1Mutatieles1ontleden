@@ -82,14 +82,17 @@
         .oc-controls .speed-label { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #555; margin-left: auto; }
         .oc-controls input[type=range] { width: 120px; }
 
-        <div class="oc-image">
-    <img
-        src="Screenshot 2026-09-14 14.39.07.png"
-        alt="Bijgevoegde afbeelding bij het incident"
-        onclick="openLightbox(this.src)"
-    />
-    <div class="caption">📎 Bijgevoegde afbeelding — situatieschets bij de melding</div>
-</div>
+        /* ─── Afbeelding in OC-paneel ─── */
+        .oc-image { padding: 12px 18px; background: #ecf0f1; border-top: 2px solid #ddd; text-align: center; }
+        .oc-image img { max-width: 100%; max-height: 340px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: zoom-in; transition: transform 0.2s; display: inline-block; }
+        .oc-image img:hover { transform: scale(1.01); }
+        .oc-image .caption { font-size: 0.85rem; color: #7f8c8d; margin-top: 8px; font-style: italic; }
+
+        /* ─── Lightbox voor fullscreen weergave ─── */
+        .img-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 30px; cursor: zoom-out; }
+        .img-lightbox.open { display: flex; }
+        .img-lightbox img { max-width: 95vw; max-height: 95vh; border-radius: 6px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+        .img-lightbox .close-hint { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 0.9rem; opacity: 0.7; }
 
         /* Chatbot */
         .chat-panel { background: #fff; border: 3px solid #333; border-radius: 12px; height: 720px; display: flex; flex-direction: column; overflow: hidden; }
@@ -130,58 +133,6 @@
         .review-area { margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
         .reviewers { font-size: 0.8rem; color: #7f8c8d; }
         .reviewers strong { color: #27ae60; }
-
-        /* ─── Afbeelding in OC-paneel ─── */
-.oc-image {
-    padding: 12px 18px;
-    background: #ecf0f1;
-    border-top: 2px solid #ddd;
-    text-align: center;
-}
-.oc-image img {
-    max-width: 100%;
-    max-height: 340px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    cursor: zoom-in;
-    transition: transform 0.2s;
-    display: inline-block;
-}
-.oc-image img:hover { transform: scale(1.01); }
-.oc-image .caption {
-    font-size: 0.85rem;
-    color: #7f8c8d;
-    margin-top: 8px;
-    font-style: italic;
-}
-
-/* ─── Lightbox voor fullscreen weergave ─── */
-.img-lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.88);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    padding: 30px;
-    cursor: zoom-out;
-}
-.img-lightbox.open { display: flex; }
-.img-lightbox img {
-    max-width: 95vw;
-    max-height: 95vh;
-    border-radius: 6px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-}
-.img-lightbox .close-hint {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: #fff;
-    font-size: 0.9rem;
-    opacity: 0.7;
-}
     </style>
 </head>
 <body>
@@ -308,6 +259,14 @@ Signalement: man, rond 1 meter 80, lichtblauwe spijkerbroek, donker jack, kaal h
 De persoon is nog ter plaatse. Willen jullie een kijkje nemen?
 
 Einde bericht.</div>
+            <div class="oc-image">
+                <img
+                    src="Screenshot%202026-09-14%2014.39.07.png"
+                    alt="Bijgevoegde afbeelding bij het incident"
+                    onclick="openLightbox(this.src)"
+                />
+                <div class="caption">📎 Bijgevoegde afbeelding — situatieschets bij de melding</div>
+            </div>
             <div class="oc-controls">
                 <button class="btn-speak" onclick="speakOC()">▶ Voorlezen</button>
                 <button class="btn-stop" onclick="stopOC()">⏹ Stop</button>
@@ -366,6 +325,12 @@ Einde bericht.</div>
             <button class="btn-warning" onclick="resetMutaties()">Wis mutaties (eigen klas)</button>
             <button class="btn-hard-reset" onclick="resetMyClass()">Reset klas (alles)</button>
         </div>
+    </div>
+
+    <!-- Lightbox voor afbeeldingen -->
+    <div class="img-lightbox" id="img-lightbox" onclick="closeLightbox()">
+        <span class="close-hint">Klik om te sluiten ✕</span>
+        <img id="img-lightbox-img" src="" alt="Vergrote afbeelding" />
     </div>
 
 <script type="module">
@@ -773,248 +738,138 @@ Einde bericht.</div>
     let chatbotInitialized = false;
     let botTypingTimer = null;
 
-    // Kennisbank van RAPP Voordewind
     const KB = [
-        {
-            keys: ['wie ben', 'uw naam', 'je naam', 'wie bent', 'naam'],
-            answers: [
-                "Ik ben Jeroen Voordewind, aspirant agent bij eenheid Amersfoort. Ik loop vanavond voetsurveillance in het uitgaansgebied.",
-                "Jeroen Voordewind, RAPP bij eenheid Amersfoort. Ik was op de Langestraat op het moment van de melding."
-            ]
-        },
-        {
-            keys: ['bevoegdheid', 'rang', 'functie', 'aspirant'],
-            answers: [
-                "Ik ben aspirant agent. Ik loop stage bij eenheid Amersfoort en doe mee aan de voetsurveillance in het centrum."
-            ]
-        },
-        {
-            keys: ['wat is er gebeurd', 'wat gebeurde', 'incident', 'wat deed hij', 'wat heb je gezien', 'wat zag je'],
-            answers: [
-                "Ik zag een man die tegen de muur van een hoekpand stond te urineren. Zijn gulp was open en er kwam urine tegen de muur en op de stoep terecht.",
-                "Een manspersoon stond staand te urineren in de openbare ruimte, tegen de muur van een hoekpand. Openlijk in het zicht van iedereen."
-            ]
-        },
-        {
-            keys: ['waar', 'locatie', 'plek', 'adres'],
-            answers: [
-                "Op de Langestraat in Amersfoort, ter hoogte van de kruising met de Kamp. Tegen de muur van het hoekpand.",
-                "Langestraat, hoek Kamp, in het centrum van Amersfoort."
-            ]
-        },
-        {
-            keys: ['wanneer', 'hoe laat', 'tijd', 'datum', 'welke dag'],
-            answers: [
-                "Het was vrijdag 6 maart 2026, omstreeks 23:45 uur. Midden in het uitgaansgebied, dus vrij druk op straat.",
-                "Vrijdagavond 6 maart, rond kwart voor twaalf 's nachts."
-            ]
-        },
-        {
-            keys: ['waarom', 'reden', 'motief', 'excuses'],
-            answers: [
-                "Hij zei dat hij geen toilet kon vinden. Maar er is een openbaar toilet op ongeveer 150 meter afstand, dus dat klopte niet. Hij leek ook niet in nood.",
-                "Hij gaf aan dat hij het niet op tijd kon halen. Ik heb hem verteld dat er een openbaar toilet in de buurt was, waar hij niets van zei te weten."
-            ]
-        },
-        {
-            keys: ['op welke wijze', 'manier', 'hoe deed', 'wijze'],
-            answers: [
-                "Staand, met zijn gulp open, tegen de muur. Gewoon openlijk op straat. Hij deed geen enkele moeite om het aan het zicht te onttrekken.",
-                "Hij stond rechtop tegen de muur. Urine kwam tegen de muur én op de stoep. Mensen liepen er gewoon langs."
-            ]
-        },
-        {
-            keys: ['signalement', 'uiterlijk', 'beschrijving', 'hoe zag'],
-            answers: [
-                "Een man, rond 1 meter 80, lichtblauwe spijkerbroek, donker jack en een kaal hoofd. Dat was ook het signalement dat de melder doorgaf.",
-                "Man, ongeveer 1.80 m. Lichtblauwe spijkerbroek, donker jack, kaal hoofd."
-            ]
-        },
-        {
-            keys: ['naam verdachte', 'wie is hij', 'betrokkene', 'naam'],
-            answers: [
-                "Meneer M. Jansen, 23 jaar, woonachtig in Amersfoort. Hij gaf zijn personalia zonder problemen op.",
-                "Hij stelde zich voor als M. Jansen, 23 jaar oud, uit Amersfoort."
-            ]
-        },
-        {
-            keys: ['leeftijd', 'hoe oud'],
-            answers: ["Hij is 23 jaar."]
-        },
-        {
-            keys: ['woonplaats', 'waar woont', 'adres van hem'],
-            answers: ["Hij woont in Amersfoort. Ik heb geen straatnaam genoteerd — dat was voor deze mutatie niet nodig."]
-        },
-        {
-            keys: ['wat heeft u gedaan', 'wat deed u', 'wat heb je gedaan', 'actie', 'maatregel'],
-            answers: [
-                "Ik heb hem aangesproken, zijn personalia laten opnemen en hem meegedeeld dat wildplassen een overtreding is van de APV. Vervolgens heb ik een bekeuring aangezegd.",
-                "Ik heb hem staande gehouden, aangesproken op zijn gedrag, zijn gegevens gecontroleerd en hem een bekeuring aangezegd."
-            ]
-        },
-        {
-            keys: ['bekeuring', 'boete', 'straf', 'gevolg', 'consequentie'],
-            answers: [
-                "Hij krijgt een bekeuring voor het overtreden van de APV. Dat is een bestuurlijke boete.",
-                "Er is een bekeuring aangezegd wegens overtreding van de APV. Hij heeft daarna het terrein mogen verlaten."
-            ]
-        },
-        {
-            keys: ['laten gaan', 'vrijgelaten', 'meegenomen', 'aanhouding'],
-            answers: [
-                "Ik heb hem niet aangehouden. Wildplassen is een overtreding, geen misdrijf. Hij kreeg een bekeuring en mocht daarna gaan.",
-                "Geen aanhouding. Hij kreeg een bekeuring aangezegd en is daarna vertrokken."
-            ]
-        },
-        {
-            keys: ['getuige', 'melder', 'wie belde'],
-            answers: [
-                "De melding kwam van een passant, de heer D. Kuipers. Hij zag het gebeuren en belde direct het OC.",
-                "Een voorbijganger, meneer Kuipers, heeft de melding gedaan."
-            ]
-        },
-        {
-            keys: ['wat deed u daar', 'waarom was u daar', 'taak', 'surveillance', 'bezig'],
-            answers: [
-                "Ik was op de Langestraat in het kader van voetsurveillance in het uitgaansgebied. Dat doen we in het weekend vaker, ter voorkoming van overlast.",
-                "Ik liep voetsurveillance in het uitgaansgebied. Ik was daar met nog een collega in de buurt."
-            ]
-        },
-        {
-            keys: ['collega', 'met wie', 'alleen'],
-            answers: [
-                "Ik was op dat moment alleen op de Langestraat, maar een collega was op loopafstand in de buurt."
-            ]
-        },
-        {
-            keys: ['weer', 'omstandigheden', 'hoe was het weer'],
-            answers: [
-                "Het was droog, donker. De straatlantaarns brandden. Er liepen redelijk wat mensen op straat."
-            ]
-        },
-        {
-            keys: ['hoe voelde hij', 'emotie', 'gedrag', 'reactie'],
-            answers: [
-                "Hij leek zich opgelaten te voelen. Niet agressief, niet ontkennend. Hij erkende het direct en bood geen verzet.",
-                "Hij was rustig, een tikje beschaamd. Hij gaf het meteen toe."
-            ]
-        },
-        {
-            keys: ['ruzie', 'agressief', 'geweld', 'verzet'],
-            answers: [
-                "Nee, totaal geen verzet. Hij werkte mee en gaf zijn gegevens direct."
-            ]
-        },
-        {
-            keys: ['alcohol', 'dronken', 'onder invloed'],
-            answers: [
-                "Hij rook naar alcohol, dat klopt. Maar hij was goed aanspreekbaar. Geen reden voor een ademtest."
-            ]
-        },
-        {
-            keys: ['openbaar toilet', 'toilet in de buurt', 'alternatief'],
-            answers: [
-                "Ja, op ongeveer 150 meter afstand is een openbaar toilet. Hij zei dat niet te weten, maar dat lijkt me sterk.",
-                "Er is een openbaar toilet op zo'n 150 meter. Dat heb ik hem ook verteld."
-            ]
-        },
-        {
-            keys: ['hoeveel mensen', 'hoe druk', 'omstanders'],
-            answers: [
-                "Het was redelijk druk — het is het uitgaansgebied op vrijdagavond. Er waren meerdere mensen in de buurt die het hadden kunnen zien.",
-                "Er liepen op dat moment meerdere mensen op straat."
-            ]
-        },
-        {
-            keys: ['straat', 'muur', 'gebouw', 'pand'],
-            answers: [
-                "Een hoekpand op de kruising Langestraat / Kamp. Een winkelpand, 's avonds gesloten."
-            ]
-        },
-        {
-            keys: ['rook', 'hoorde', 'voelde'],
-            answers: [
-                "Ik rook de urine tegen de muur. Ik zag het gebeuren. Verder geen bijzonderheden."
-            ]
-        },
-        {
-            keys: ['foto', 'camera', 'bewijs'],
-            answers: [
-                "Nee, geen foto's gemaakt. Voor een mutatie is dat ook niet nodig. De eigen waarneming is voldoende."
-            ]
-        },
-        {
-            keys: ['mutatie', 'pv', 'proces-verbaal'],
-            answers: [
-                "Ik maak een mutatie op, geen proces-verbaal. Wildplassen is een overtreding, geen misdrijf. De mutatie is voor statistiek en bestuurlijke handhaving.",
-                "Dit gaat in de mutatie, niet in een PV. Voor een overtreding van de APV is dat voldoende."
-            ]
-        },
-        {
-            keys: ['hallo', 'hoi', 'goedemorgen', 'goedemiddag', 'goedenavond', 'hey'],
-            answers: [
-                "Hallo. Waarmee kan ik je helpen? Vraag maar door over het incident.",
-                "Hallo. Stel je vragen — ik vertel je graag wat ik heb gezien."
-            ]
-        },
-        {
-            keys: ['dank', 'bedankt', 'thanks'],
-            answers: [
-                "Graag gedaan. Succes met het opstellen van de mutatie.",
-                "Geen probleem. Als je nog vragen hebt, hoor ik het wel."
-            ]
-        },
-        {
-            keys: ['hoe gaat', 'alles goed'],
-            answers: [
-                "Goed, dank je. Ik ben net klaar met de surveillance. Stel je vragen maar."
-            ]
-        },
-        {
-            keys: ['wat moet ik doen', 'hoe begin', 'uitleg', 'help'],
-            answers: [
-                "Stel me vragen over het incident — wie, wat, waar, wanneer, waarom en hoe. Aan de hand van mijn antwoorden kun je zelf de mutatie opstellen in de vakken rechts.",
-                "Je kunt me van alles vragen over wat ik heb gezien. Vraag naar de persoon, de locatie, het tijdstip, enz."
-            ]
-        },
-        {
-            keys: ['meneer jansen', 'jansen', 'verdachte'],
-            answers: [
-                "Meneer Jansen, 23 jaar, uit Amersfoort. Rustige man, meegaand. Geen eerdere antecedenten die ik heb gezien."
-            ]
-        },
-        {
-            keys: ['antecedenten', 'eerdere', 'strafblad'],
-            answers: [
-                "Geen strafblad dat ik heb gezien. Hij leek het zelf ook niet als iets groots te beschouwen."
-            ]
-        },
-        {
-            keys: ['camera', 'beveiliging', 'toezicht'],
-            answers: [
-                "Er hangen in het centrum wel camera's, maar ik heb daar geen beelden van opgevraagd. Niet nodig voor deze mutatie."
-            ]
-        },
-        {
-            keys: ['vervolg', 'daarna', 'afhandeling', 'wat gebeurt er nu'],
-            answers: [
-                "Ik heb de mutatie opgemaakt. De bekeuring wordt verwerkt. Meneer Jansen krijgt die per post thuisgestuurd.",
-                "Na het uitschrijven van de bekeuring heb ik meneer Jansen laten gaan. De mutatie is opgemaakt ten behoeve van statistiek en handhaving."
-            ]
-        },
-        {
-            keys: ['ben je klaar', 'einde', 'nog iets'],
-            answers: [
-                "Ik heb alles wat ik weet verteld. Als je nog iets mist voor de mutatie, vraag maar.",
-                "Volgens mij heb je nu alles. Als je een specifieke vraag hebt, stel hem gerust."
-            ]
-        },
-        {
-            keys: ['wanneer aankomst', 'hoe laat aankomst', 'aankomst'],
-            answers: [
-                "Ik was al ter plaatse — ik liep daar mijn surveillance. Ik zag het gebeuren en heb direct gehandeld."
-            ]
-        }
+        { keys: ['wie ben', 'uw naam', 'je naam', 'wie bent', 'naam'], answers: [
+            "Ik ben Jeroen Voordewind, aspirant agent bij eenheid Amersfoort. Ik loop vanavond voetsurveillance in het uitgaansgebied.",
+            "Jeroen Voordewind, RAPP bij eenheid Amersfoort. Ik was op de Langestraat op het moment van de melding."
+        ]},
+        { keys: ['bevoegdheid', 'rang', 'functie', 'aspirant'], answers: [
+            "Ik ben aspirant agent. Ik loop stage bij eenheid Amersfoort en doe mee aan de voetsurveillance in het centrum."
+        ]},
+        { keys: ['wat is er gebeurd', 'wat gebeurde', 'incident', 'wat deed hij', 'wat heb je gezien', 'wat zag je'], answers: [
+            "Ik zag een man die tegen de muur van een hoekpand stond te urineren. Zijn gulp was open en er kwam urine tegen de muur en op de stoep terecht.",
+            "Een manspersoon stond staand te urineren in de openbare ruimte, tegen de muur van een hoekpand. Openlijk in het zicht van iedereen."
+        ]},
+        { keys: ['waar', 'locatie', 'plek', 'adres'], answers: [
+            "Op de Langestraat in Amersfoort, ter hoogte van de kruising met de Kamp. Tegen de muur van het hoekpand.",
+            "Langestraat, hoek Kamp, in het centrum van Amersfoort."
+        ]},
+        { keys: ['wanneer', 'hoe laat', 'tijd', 'datum', 'welke dag'], answers: [
+            "Het was vrijdag 6 maart 2026, omstreeks 23:45 uur. Midden in het uitgaansgebied, dus vrij druk op straat.",
+            "Vrijdagavond 6 maart, rond kwart voor twaalf 's nachts."
+        ]},
+        { keys: ['waarom', 'reden', 'motief', 'excuses'], answers: [
+            "Hij zei dat hij geen toilet kon vinden. Maar er is een openbaar toilet op ongeveer 150 meter afstand, dus dat klopte niet. Hij leek ook niet in nood.",
+            "Hij gaf aan dat hij het niet op tijd kon halen. Ik heb hem verteld dat er een openbaar toilet in de buurt was, waar hij niets van zei te weten."
+        ]},
+        { keys: ['op welke wijze', 'manier', 'hoe deed', 'wijze'], answers: [
+            "Staand, met zijn gulp open, tegen de muur. Gewoon openlijk op straat. Hij deed geen enkele moeite om het aan het zicht te onttrekken.",
+            "Hij stond rechtop tegen de muur. Urine kwam tegen de muur én op de stoep. Mensen liepen er gewoon langs."
+        ]},
+        { keys: ['signalement', 'uiterlijk', 'beschrijving', 'hoe zag'], answers: [
+            "Een man, rond 1 meter 80, lichtblauwe spijkerbroek, donker jack en een kaal hoofd. Dat was ook het signalement dat de melder doorgaf.",
+            "Man, ongeveer 1.80 m. Lichtblauwe spijkerbroek, donker jack, kaal hoofd."
+        ]},
+        { keys: ['naam verdachte', 'wie is hij', 'betrokkene', 'naam'], answers: [
+            "Meneer M. Jansen, 23 jaar, woonachtig in Amersfoort. Hij gaf zijn personalia zonder problemen op.",
+            "Hij stelde zich voor als M. Jansen, 23 jaar oud, uit Amersfoort."
+        ]},
+        { keys: ['leeftijd', 'hoe oud'], answers: ["Hij is 23 jaar."] },
+        { keys: ['woonplaats', 'waar woont', 'adres van hem'], answers: [
+            "Hij woont in Amersfoort. Ik heb geen straatnaam genoteerd — dat was voor deze mutatie niet nodig."
+        ]},
+        { keys: ['wat heeft u gedaan', 'wat deed u', 'wat heb je gedaan', 'actie', 'maatregel'], answers: [
+            "Ik heb hem aangesproken, zijn personalia laten opnemen en hem meegedeeld dat wildplassen een overtreding is van de APV. Vervolgens heb ik een bekeuring aangezegd.",
+            "Ik heb hem staande gehouden, aangesproken op zijn gedrag, zijn gegevens gecontroleerd en hem een bekeuring aangezegd."
+        ]},
+        { keys: ['bekeuring', 'boete', 'straf', 'gevolg', 'consequentie'], answers: [
+            "Hij krijgt een bekeuring voor het overtreden van de APV. Dat is een bestuurlijke boete.",
+            "Er is een bekeuring aangezegd wegens overtreding van de APV. Hij heeft daarna het terrein mogen verlaten."
+        ]},
+        { keys: ['laten gaan', 'vrijgelaten', 'meegenomen', 'aanhouding'], answers: [
+            "Ik heb hem niet aangehouden. Wildplassen is een overtreding, geen misdrijf. Hij kreeg een bekeuring en mocht daarna gaan.",
+            "Geen aanhouding. Hij kreeg een bekeuring aangezegd en is daarna vertrokken."
+        ]},
+        { keys: ['getuige', 'melder', 'wie belde'], answers: [
+            "De melding kwam van een passant, de heer D. Kuipers. Hij zag het gebeuren en belde direct het OC.",
+            "Een voorbijganger, meneer Kuipers, heeft de melding gedaan."
+        ]},
+        { keys: ['wat deed u daar', 'waarom was u daar', 'taak', 'surveillance', 'bezig'], answers: [
+            "Ik was op de Langestraat in het kader van voetsurveillance in het uitgaansgebied. Dat doen we in het weekend vaker, ter voorkoming van overlast.",
+            "Ik liep voetsurveillance in het uitgaansgebied. Ik was daar met nog een collega in de buurt."
+        ]},
+        { keys: ['collega', 'met wie', 'alleen'], answers: [
+            "Ik was op dat moment alleen op de Langestraat, maar een collega was op loopafstand in de buurt."
+        ]},
+        { keys: ['weer', 'omstandigheden', 'hoe was het weer'], answers: [
+            "Het was droog, donker. De straatlantaarns brandden. Er liepen redelijk wat mensen op straat."
+        ]},
+        { keys: ['hoe voelde hij', 'emotie', 'gedrag', 'reactie'], answers: [
+            "Hij leek zich opgelaten te voelen. Niet agressief, niet ontkennend. Hij erkende het direct en bood geen verzet.",
+            "Hij was rustig, een tikje beschaamd. Hij gaf het meteen toe."
+        ]},
+        { keys: ['ruzie', 'agressief', 'geweld', 'verzet'], answers: [
+            "Nee, totaal geen verzet. Hij werkte mee en gaf zijn gegevens direct."
+        ]},
+        { keys: ['alcohol', 'dronken', 'onder invloed'], answers: [
+            "Hij rook naar alcohol, dat klopt. Maar hij was goed aanspreekbaar. Geen reden voor een ademtest."
+        ]},
+        { keys: ['openbaar toilet', 'toilet in de buurt', 'alternatief'], answers: [
+            "Ja, op ongeveer 150 meter afstand is een openbaar toilet. Hij zei dat niet te weten, maar dat lijkt me sterk.",
+            "Er is een openbaar toilet op zo'n 150 meter. Dat heb ik hem ook verteld."
+        ]},
+        { keys: ['hoeveel mensen', 'hoe druk', 'omstanders'], answers: [
+            "Het was redelijk druk — het is het uitgaansgebied op vrijdagavond. Er waren meerdere mensen in de buurt die het hadden kunnen zien.",
+            "Er liepen op dat moment meerdere mensen op straat."
+        ]},
+        { keys: ['straat', 'muur', 'gebouw', 'pand'], answers: [
+            "Een hoekpand op de kruising Langestraat / Kamp. Een winkelpand, 's avonds gesloten."
+        ]},
+        { keys: ['rook', 'hoorde', 'voelde'], answers: [
+            "Ik rook de urine tegen de muur. Ik zag het gebeuren. Verder geen bijzonderheden."
+        ]},
+        { keys: ['foto', 'camera', 'bewijs'], answers: [
+            "Nee, geen foto's gemaakt. Voor een mutatie is dat ook niet nodig. De eigen waarneming is voldoende."
+        ]},
+        { keys: ['mutatie', 'pv', 'proces-verbaal'], answers: [
+            "Ik maak een mutatie op, geen proces-verbaal. Wildplassen is een overtreding, geen misdrijf. De mutatie is voor statistiek en bestuurlijke handhaving.",
+            "Dit gaat in de mutatie, niet in een PV. Voor een overtreding van de APV is dat voldoende."
+        ]},
+        { keys: ['hallo', 'hoi', 'goedemorgen', 'goedemiddag', 'goedenavond', 'hey'], answers: [
+            "Hallo. Waarmee kan ik je helpen? Vraag maar door over het incident.",
+            "Hallo. Stel je vragen — ik vertel je graag wat ik heb gezien."
+        ]},
+        { keys: ['dank', 'bedankt', 'thanks'], answers: [
+            "Graag gedaan. Succes met het opstellen van de mutatie.",
+            "Geen probleem. Als je nog vragen hebt, hoor ik het wel."
+        ]},
+        { keys: ['hoe gaat', 'alles goed'], answers: [
+            "Goed, dank je. Ik ben net klaar met de surveillance. Stel je vragen maar."
+        ]},
+        { keys: ['wat moet ik doen', 'hoe begin', 'uitleg', 'help'], answers: [
+            "Stel me vragen over het incident — wie, wat, waar, wanneer, waarom en hoe. Aan de hand van mijn antwoorden kun je zelf de mutatie opstellen in de vakken rechts.",
+            "Je kunt me van alles vragen over wat ik heb gezien. Vraag naar de persoon, de locatie, het tijdstip, enz."
+        ]},
+        { keys: ['meneer jansen', 'jansen', 'verdachte'], answers: [
+            "Meneer Jansen, 23 jaar, uit Amersfoort. Rustige man, meegaand. Geen eerdere antecedenten die ik heb gezien."
+        ]},
+        { keys: ['antecedenten', 'eerdere', 'strafblad'], answers: [
+            "Geen strafblad dat ik heb gezien. Hij leek het zelf ook niet als iets groots te beschouwen."
+        ]},
+        { keys: ['camera', 'beveiliging', 'toezicht'], answers: [
+            "Er hangen in het centrum wel camera's, maar ik heb daar geen beelden van opgevraagd. Niet nodig voor deze mutatie."
+        ]},
+        { keys: ['vervolg', 'daarna', 'afhandeling', 'wat gebeurt er nu'], answers: [
+            "Ik heb de mutatie opgemaakt. De bekeuring wordt verwerkt. Meneer Jansen krijgt die per post thuisgestuurd.",
+            "Na het uitschrijven van de bekeuring heb ik meneer Jansen laten gaan. De mutatie is opgemaakt ten behoeve van statistiek en handhaving."
+        ]},
+        { keys: ['ben je klaar', 'einde', 'nog iets'], answers: [
+            "Ik heb alles wat ik weet verteld. Als je nog iets mist voor de mutatie, vraag maar.",
+            "Volgens mij heb je nu alles. Als je een specifieke vraag hebt, stel hem gerust."
+        ]},
+        { keys: ['wanneer aankomst', 'hoe laat aankomst', 'aankomst'], answers: [
+            "Ik was al ter plaatse — ik liep daar mijn surveillance. Ik zag het gebeuren en heb direct gehandeld."
+        ]}
     ];
 
     const FALLBACK = [
@@ -1095,10 +950,8 @@ Einde bericht.</div>
             });
         }
 
-        // Welkomstbericht
         addChatMessage('bot', "Hallo. Ik ben Jeroen Voordewind, aspirant agent bij eenheid Amersfoort. Ik heb net een melding wildplassen afgehandeld op de Langestraat. Wat wil je weten?");
 
-        // Mutatie-invoer koppelen (debounce opslaan)
         ['m-aanleiding', 'm-situatie', 'm-toedracht', 'm-maatregelen', 'm-afhandeling'].forEach(id => {
             const el = document.getElementById(id);
             if (!el || el._bound) return;
@@ -1112,7 +965,6 @@ Einde bericht.</div>
             });
         });
 
-        // Voorvullen
         onValue(ref(db, basePath() + '/mutaties/' + encodeKey(userName)), (snap) => {
             const data = snap.val(); if (!data || !data.parts) return;
             ['aanleiding','situatie','toedracht','maatregelen','afhandeling'].forEach(k => {
@@ -1140,32 +992,30 @@ Einde bericht.</div>
                 if (status) status.textContent = '⚠️ Fout: ' + err.message;
             });
     }
-<!-- Lightbox voor afbeeldingen -->
-<div class="img-lightbox" id="img-lightbox" onclick="closeLightbox()">
-    <span class="close-hint">Klik om te sluiten ✕</span>
-    <img id="img-lightbox-img" src="" alt="Vergrote afbeelding" />
-</div>
+
+    // ════════════ LIGHTBOX ════════════
+    window.openLightbox = function(src) {
+        const lb = document.getElementById('img-lightbox');
+        const img = document.getElementById('img-lightbox-img');
+        if (!lb || !img) return;
+        img.src = src;
+        lb.classList.add('open');
+    };
+    window.closeLightbox = function() {
+        const lb = document.getElementById('img-lightbox');
+        if (lb) lb.classList.remove('open');
+    };
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') window.closeLightbox();
+    });
+
     // ════════════ INIT ════════════
     setTimeout(() => {
         if ('speechSynthesis' in window) speechSynthesis.getVoices();
     }, 100);
 
     tryAutoLogin();
-// ════════════ LIGHTBOX ════════════
-window.openLightbox = function(src) {
-    const lb = document.getElementById('img-lightbox');
-    const img = document.getElementById('img-lightbox-img');
-    if (!lb || !img) return;
-    img.src = src;
-    lb.classList.add('open');
-};
-window.closeLightbox = function() {
-    const lb = document.getElementById('img-lightbox');
-    if (lb) lb.classList.remove('open');
-};
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') window.closeLightbox();
-});
+
     window.ref = ref; window.db = db; window.remove = remove;
 </script>
 </body>
