@@ -97,7 +97,7 @@
         /* Chatbot */
         .chat-panel { background: #fff; border: 3px solid #333; border-radius: 12px; height: 720px; display: flex; flex-direction: column; overflow: hidden; }
         .chat-header { background: #2c3e50; color: #fff; padding: 12px 18px; display: flex; align-items: center; gap: 12px; }
-        .chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: #3498db; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; color: #fff; flex-shrink: 0; }
+        .chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: #c0392b; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; color: #fff; flex-shrink: 0; }
         .chat-header-info { display: flex; flex-direction: column; }
         .chat-header-info strong { font-size: 1rem; }
         .chat-header-info small { color: #bdc3c7; font-size: 0.78rem; }
@@ -236,14 +236,14 @@
         </div>
     </div>
 
-    <!-- ═══════════ SCHERM 5: Oefening 3 — Chatbot + Mutatie ═══════════ -->
+    <!-- ═══════════ SCHERM 5: Oefening 3 — Verhoor dader + Mutatie ═══════════ -->
     <div id="screen5" class="screen hidden">
         <div class="topbar">
             <div>Ingelogd als <strong id="tb-name-5">—</strong> · Klas <strong id="tb-class-5">—</strong></div>
             <button class="btn-logout" onclick="doLogout()">Uitloggen</button>
         </div>
         <h2>5. Oefening 3: Mutatie opstellen</h2>
-        <p>Je krijgt zo een OC-melding te horen. <strong>Ondervraag de agent in de chat</strong> om alle informatie te verzamelen. Stel daarna zelf een complete mutatie op volgens de ASTMA-structuur.</p>
+        <p>Je hoort zo een OC-melding. <strong>Jij bent de agent en ondervraagt de verdachte in de chat</strong> om alle informatie te verzamelen. Stel daarna zelf een complete mutatie op volgens de ASTMA-structuur.</p>
 
         <!-- OC-melding -->
         <div class="oc-panel">
@@ -274,30 +274,30 @@ Einde bericht.</div>
             </div>
         </div>
 
-        <!-- Chatbot + Mutatie -->
+        <!-- Verhoor + Mutatie -->
         <div class="oefening-layout">
-            <!-- Chatbot -->
+            <!-- Chat met verdachte -->
             <div class="chat-panel">
                 <div class="chat-header">
-                    <div class="chat-avatar">JV</div>
+                    <div class="chat-avatar">MJ</div>
                     <div class="chat-header-info">
-                        <strong>RAPP J. Voordewind</strong>
-                        <small>aspirant agent · eenheid Amersfoort</small>
+                        <strong>M. Jansen (23)</strong>
+                        <small>verdachte wildplassen · staande gehouden</small>
                     </div>
                 </div>
                 <div class="chat-body" id="chat-body"></div>
                 <div class="chat-hints" id="chat-hints">
-                    <button onclick="quickAsk('Wie bent u?')">Wie bent u?</button>
+                    <button onclick="quickAsk('Mag ik uw ID zien?')">Mag ik uw ID zien?</button>
+                    <button onclick="quickAsk('Waar woont u?')">Waar woont u?</button>
                     <button onclick="quickAsk('Wat is er precies gebeurd?')">Wat is er gebeurd?</button>
-                    <button onclick="quickAsk('Waar vond het plaats?')">Waar?</button>
-                    <button onclick="quickAsk('Hoe laat was het?')">Hoe laat?</button>
-                    <button onclick="quickAsk('Waarom deed hij dat?')">Waarom?</button>
-                    <button onclick="quickAsk('Wat was het signalement?')">Signalement?</button>
-                    <button onclick="quickAsk('Wat heeft u gedaan?')">Wat deed u?</button>
-                    <button onclick="quickAsk('Wat was het gevolg?')">Gevolg?</button>
+                    <button onclick="quickAsk('Waarom deed u dat?')">Waarom deed u dat?</button>
+                    <button onclick="quickAsk('Hebt u alcohol gedronken?')">Hebt u gedronken?</button>
+                    <button onclick="quickAsk('Waar was u mee bezig?')">Waar was u?</button>
+                    <button onclick="quickAsk('Weet u dat dit verboden is?')">Wist u dat het verboden is?</button>
+                    <button onclick="quickAsk('Wilt u nog wat verklaren?')">Wilt u nog wat verklaren?</button>
                 </div>
                 <div class="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="Typ je vraag..." autocomplete="off" />
+                    <input type="text" id="chat-input" placeholder="Typ je vraag aan de verdachte..." autocomplete="off" />
                     <button id="chat-send" onclick="sendChat()">Verstuur</button>
                 </div>
             </div>
@@ -422,7 +422,6 @@ Einde bericht.</div>
         if (activeListeners) return;
         activeListeners = true;
 
-        // 1. Zinnen
         addListener(onValue(ref(db, basePath() + '/sentences'), s => {
             const div = document.getElementById('displaySentence'); if (!div) return;
             div.innerHTML = '';
@@ -432,7 +431,6 @@ Einde bericht.</div>
             });
         }));
 
-        // 2. Tekeningen
         addListener(onValue(ref(db, basePath() + '/drawing'), s => {
             const data = s.val() || {};
             ['canvas1','canvas3'].forEach(id => {
@@ -449,7 +447,6 @@ Einde bericht.</div>
             });
         }));
 
-        // 3. Woorden
         addListener(onValue(ref(db, basePath() + '/words'), (snapshot) => {
             const data = snapshot.val();
             document.querySelectorAll('.word-card').forEach(el => { if (!data || !data[el.id]) el.remove(); });
@@ -490,7 +487,6 @@ Einde bericht.</div>
             });
         }));
 
-        // 4. Antwoorden (oefening 2)
         addListener(onValue(ref(db, basePath() + '/answers'), (snap) => {
             const feed = document.getElementById('answers-feed'); if (!feed) return;
             const data = snap.val();
@@ -530,7 +526,6 @@ Einde bericht.</div>
             });
         }));
 
-        // 5. Mutaties (oefening 3)
         addListener(onValue(ref(db, basePath() + '/mutaties'), (snap) => {
             const feed = document.getElementById('mutaties-feed'); if (!feed) return;
             const data = snap.val();
@@ -734,149 +729,162 @@ Einde bericht.</div>
         ocUtterance = null;
     };
 
-    // ════════════ OEFENING 3 — CHATBOT ════════════
+    // ════════════ OEFENING 3 — CHATBOT (DADER M. JANSEN) ════════════
     let chatbotInitialized = false;
     let botTypingTimer = null;
 
+    // Kennisbank van M. Jansen — antwoorden op vragen van de agent
     const KB = [
-        { keys: ['wie ben', 'uw naam', 'je naam', 'wie bent', 'naam'], answers: [
-            "Ik ben Jeroen Voordewind, aspirant agent bij eenheid Amersfoort. Ik loop vanavond voetsurveillance in het uitgaansgebied.",
-            "Jeroen Voordewind, RAPP bij eenheid Amersfoort. Ik was op de Langestraat op het moment van de melding."
+        { keys: ['id', 'id-kaart', 'identiteitsbewijs', 'identiteit', 'paspoort', 'rijbewijs', 'mag ik uw id'], answers: [
+            "Ja, moment. Hier is mijn rijbewijs. M. Jansen, woonachtig in Amersfoort.",
+            "Ja hoor. Ik heb mijn ID bij me. Hier is het.",
+            "Ja, alstublieft. Mijn identiteitsbewijs."
         ]},
-        { keys: ['bevoegdheid', 'rang', 'functie', 'aspirant'], answers: [
-            "Ik ben aspirant agent. Ik loop stage bij eenheid Amersfoort en doe mee aan de voetsurveillance in het centrum."
+        { keys: ['naam', 'wie bent u', 'wie ben je', 'hoe heet', 'uw naam', 'je naam'], answers: [
+            "M. Jansen. Martijn Jansen, woonachtig in Amersfoort.",
+            "Martijn Jansen. Ik ben 23 en woonachtig in Amersfoort."
         ]},
-        { keys: ['wat is er gebeurd', 'wat gebeurde', 'incident', 'wat deed hij', 'wat heb je gezien', 'wat zag je'], answers: [
-            "Ik zag een man die tegen de muur van een hoekpand stond te urineren. Zijn gulp was open en er kwam urine tegen de muur en op de stoep terecht.",
-            "Een manspersoon stond staand te urineren in de openbare ruimte, tegen de muur van een hoekpand. Openlijk in het zicht van iedereen."
+        { keys: ['leeftijd', 'hoe oud'], answers: [
+            "23 jaar. Ik ben woonachtig in Amersfoort."
         ]},
-        { keys: ['waar', 'locatie', 'plek', 'adres'], answers: [
-            "Op de Langestraat in Amersfoort, ter hoogte van de kruising met de Kamp. Tegen de muur van het hoekpand.",
-            "Langestraat, hoek Kamp, in het centrum van Amersfoort."
+        { keys: ['geboorte', 'geboortedatum'], answers: [
+            "Dat weet ik niet precies uit mijn hoofd. Ik kan het wel opzoeken als dat nodig is."
         ]},
-        { keys: ['wanneer', 'hoe laat', 'tijd', 'datum', 'welke dag'], answers: [
-            "Het was vrijdag 6 maart 2026, omstreeks 23:45 uur. Midden in het uitgaansgebied, dus vrij druk op straat.",
-            "Vrijdagavond 6 maart, rond kwart voor twaalf 's nachts."
+        { keys: ['woonplaats', 'waar woont', 'adres', 'waar komt u vandaan', 'waar bent u woonachtig'], answers: [
+            "Ik ben woonachtig in Amersfoort. Daar woon ik samen met mijn vriendin.",
+            "Ik ben woonachtig in Amersfoort. Gewoon in de stad.",
+            "Woonachtig in Amersfoort, ja. Dat klopt."
         ]},
-        { keys: ['waarom', 'reden', 'motief', 'excuses'], answers: [
-            "Hij zei dat hij geen toilet kon vinden. Maar er is een openbaar toilet op ongeveer 150 meter afstand, dus dat klopte niet. Hij leek ook niet in nood.",
-            "Hij gaf aan dat hij het niet op tijd kon halen. Ik heb hem verteld dat er een openbaar toilet in de buurt was, waar hij niets van zei te weten."
+        { keys: ['wat is er gebeurd', 'wat deed u', 'wat heb je gedaan', 'wat gebeurde', 'wat was er aan de hand', 'wat was je aan het doen'], answers: [
+            "Ik moest heel nodig plassen. Ik heb het niet meer gehaald tot een toilet.",
+            "Ik stond tegen de muur te plassen. Dat klopt."
         ]},
-        { keys: ['op welke wijze', 'manier', 'hoe deed', 'wijze'], answers: [
-            "Staand, met zijn gulp open, tegen de muur. Gewoon openlijk op straat. Hij deed geen enkele moeite om het aan het zicht te onttrekken.",
-            "Hij stond rechtop tegen de muur. Urine kwam tegen de muur én op de stoep. Mensen liepen er gewoon langs."
+        { keys: ['waarom', 'reden', 'motief', 'waarom deed', 'excuses'], answers: [
+            "Ik moest gewoon heel nodig. Ik kon niets anders vinden.",
+            "Ik had te veel gedronken en ik moest nodig. Ik heb het niet op tijd gehaald."
         ]},
-        { keys: ['signalement', 'uiterlijk', 'beschrijving', 'hoe zag'], answers: [
-            "Een man, rond 1 meter 80, lichtblauwe spijkerbroek, donker jack en een kaal hoofd. Dat was ook het signalement dat de melder doorgaf.",
-            "Man, ongeveer 1.80 m. Lichtblauwe spijkerbroek, donker jack, kaal hoofd."
+        { keys: ['waar', 'locatie', 'plek', 'waar was het'], answers: [
+            "Op de Langestraat, in het centrum. Bij de hoek met de Kamp.",
+            "Langestraat, hoek van de Kamp. Gewoon in het uitgaansgebied."
         ]},
-        { keys: ['naam verdachte', 'wie is hij', 'betrokkene', 'naam'], answers: [
-            "Meneer M. Jansen, 23 jaar, woonachtig in Amersfoort. Hij gaf zijn personalia zonder problemen op.",
-            "Hij stelde zich voor als M. Jansen, 23 jaar oud, uit Amersfoort."
+        { keys: ['wanneer', 'hoe laat', 'tijd', 'welke dag', 'welke datum', 'welke tijd'], answers: [
+            "Rond kwart voor twaalf 's nachts. Vrijdagavond.",
+            "Vrijdag, rond 23:45. Ja, zo rond die tijd."
         ]},
-        { keys: ['leeftijd', 'hoe oud'], answers: ["Hij is 23 jaar."] },
-        { keys: ['woonplaats', 'waar woont', 'adres van hem'], answers: [
-            "Hij woont in Amersfoort. Ik heb geen straatnaam genoteerd — dat was voor deze mutatie niet nodig."
+        { keys: ['op welke wijze', 'hoe deed', 'manier', 'wijze', 'hoe precies'], answers: [
+            "Ik stond gewoon rechtop tegen de muur. Ik deed niks geks.",
+            "Ik stond met mijn rug naar de straat, tegen de muur aan. Ik was aan het plassen."
         ]},
-        { keys: ['wat heeft u gedaan', 'wat deed u', 'wat heb je gedaan', 'actie', 'maatregel'], answers: [
-            "Ik heb hem aangesproken, zijn personalia laten opnemen en hem meegedeeld dat wildplassen een overtreding is van de APV. Vervolgens heb ik een bekeuring aangezegd.",
-            "Ik heb hem staande gehouden, aangesproken op zijn gedrag, zijn gegevens gecontroleerd en hem een bekeuring aangezegd."
+        { keys: ['drinken', 'gedronken', 'alcohol', 'dronken', 'onder invloed', 'bier'], answers: [
+            "Ja, ik heb wat gedronken vanavond. Een paar biertjes. Niet overdreven.",
+            "Ik was uit. Ik had wel wat op. Maar ik was nog gewoon aanspreekbaar."
         ]},
-        { keys: ['bekeuring', 'boete', 'straf', 'gevolg', 'consequentie'], answers: [
-            "Hij krijgt een bekeuring voor het overtreden van de APV. Dat is een bestuurlijke boete.",
-            "Er is een bekeuring aangezegd wegens overtreding van de APV. Hij heeft daarna het terrein mogen verlaten."
+        { keys: ['hoeveel', 'hoeveel gedronken', 'hoeveel bier'], answers: [
+            "Drie of vier biertjes, zoiets. Ik heb niet bijgehouden."
         ]},
-        { keys: ['laten gaan', 'vrijgelaten', 'meegenomen', 'aanhouding'], answers: [
-            "Ik heb hem niet aangehouden. Wildplassen is een overtreding, geen misdrijf. Hij kreeg een bekeuring en mocht daarna gaan.",
-            "Geen aanhouding. Hij kreeg een bekeuring aangezegd en is daarna vertrokken."
+        { keys: ['verboden', 'wist u dat', 'weet u dat', 'op de hoogte'], answers: [
+            "Ja, ik weet dat het eigenlijk niet mag. Het was gewoon even een stomme actie.",
+            "Dat weet ik. Ik had het ook niet moeten doen."
         ]},
-        { keys: ['getuige', 'melder', 'wie belde'], answers: [
-            "De melding kwam van een passant, de heer D. Kuipers. Hij zag het gebeuren en belde direct het OC.",
-            "Een voorbijganger, meneer Kuipers, heeft de melding gedaan."
+        { keys: ['toilet', 'wc', 'openbaar toilet', 'waarom niet naar een toilet'], answers: [
+            "Ik wist niet waar er een was. Ik kon niets vinden in de buurt.",
+            "Ik heb gezocht, maar ik kon er zo snel geen vinden."
         ]},
-        { keys: ['wat deed u daar', 'waarom was u daar', 'taak', 'surveillance', 'bezig'], answers: [
-            "Ik was op de Langestraat in het kader van voetsurveillance in het uitgaansgebied. Dat doen we in het weekend vaker, ter voorkoming van overlast.",
-            "Ik liep voetsurveillance in het uitgaansgebied. Ik was daar met nog een collega in de buurt."
+        { keys: ['waar kwam u vandaan', 'waar was je', 'stappen', 'uitgeweest', 'kroeg'], answers: [
+            "Ik was uit met een paar vrienden. Gewoon wat gedronken in de stad.",
+            "Ik was met vrienden uit. We liepen wat rond in het centrum."
         ]},
-        { keys: ['collega', 'met wie', 'alleen'], answers: [
-            "Ik was op dat moment alleen op de Langestraat, maar een collega was op loopafstand in de buurt."
+        { keys: ['waar ging u naartoe', 'bestemming', 'waar heen'], answers: [
+            "Ik was op weg naar huis. Ik wilde eigenlijk gewoon naar bed.",
+            "Naar huis. Ik was klaar met stappen."
         ]},
-        { keys: ['weer', 'omstandigheden', 'hoe was het weer'], answers: [
-            "Het was droog, donker. De straatlantaarns brandden. Er liepen redelijk wat mensen op straat."
+        { keys: ['alleen', 'met wie', 'vrienden', 'wie was erbij'], answers: [
+            "Ik was alleen op dat moment. Mijn vrienden waren al eerder weg.",
+            "Ik was met vrienden, maar die waren al weg. Ik stond er alleen."
         ]},
-        { keys: ['hoe voelde hij', 'emotie', 'gedrag', 'reactie'], answers: [
-            "Hij leek zich opgelaten te voelen. Niet agressief, niet ontkennend. Hij erkende het direct en bood geen verzet.",
-            "Hij was rustig, een tikje beschaamd. Hij gaf het meteen toe."
+        { keys: ['signalement', 'beschrijf uzelf', 'kleding'], answers: [
+            "Ik droeg een donker jack en een lichtblauwe spijkerbroek. En ik heb een kaal hoofd.",
+            "Gewone kleren: spijkerbroek, jack. Verder niets bijzonders."
         ]},
-        { keys: ['ruzie', 'agressief', 'geweld', 'verzet'], answers: [
-            "Nee, totaal geen verzet. Hij werkte mee en gaf zijn gegevens direct."
+        { keys: ['hoe voelt u zich', 'spijt', 'sorry', 'hoe is het nu'], answers: [
+            "Ik voel me een beetje stom, eerlijk gezegd. Het was gewoon een domme actie.",
+            "Ik heb er spijt van. Ik had het niet moeten doen."
         ]},
-        { keys: ['alcohol', 'dronken', 'onder invloed'], answers: [
-            "Hij rook naar alcohol, dat klopt. Maar hij was goed aanspreekbaar. Geen reden voor een ademtest."
+        { keys: ['agressief', 'verzet', 'ruzie', 'werkten mee'], answers: [
+            "Nee, ik heb niks gedaan. Ik heb gewoon mijn gegevens gegeven.",
+            "Ik heb niet tegengestribbeld. Waarom zou ik?"
         ]},
-        { keys: ['openbaar toilet', 'toilet in de buurt', 'alternatief'], answers: [
-            "Ja, op ongeveer 150 meter afstand is een openbaar toilet. Hij zei dat niet te weten, maar dat lijkt me sterk.",
-            "Er is een openbaar toilet op zo'n 150 meter. Dat heb ik hem ook verteld."
+        { keys: ['eerdere', 'strafblad', 'antecedenten', 'eerder gepakt', 'bekend bij politie'], answers: [
+            "Nee. Ik ben nooit eerder met de politie in aanraking geweest.",
+            "Nee, dit is de eerste keer. Ik heb geen strafblad."
         ]},
-        { keys: ['hoeveel mensen', 'hoe druk', 'omstanders'], answers: [
-            "Het was redelijk druk — het is het uitgaansgebied op vrijdagavond. Er waren meerdere mensen in de buurt die het hadden kunnen zien.",
-            "Er liepen op dat moment meerdere mensen op straat."
+        { keys: ['wat gebeurt er nu', 'wat nu', 'vervolg', 'consequentie', 'straf'], answers: [
+            "Ik begreep van die agent dat ik een boete krijg. Dat is het toch?",
+            "Ik krijg een bekeuring, zei hij. Verder niet."
         ]},
-        { keys: ['straat', 'muur', 'gebouw', 'pand'], answers: [
-            "Een hoekpand op de kruising Langestraat / Kamp. Een winkelpand, 's avonds gesloten."
+        { keys: ['bekeuring', 'boete', 'strafbedrag'], answers: [
+            "Ja, daar kwam het op neer. Een boete voor wildplassen.",
+            "Er is een bekeuring aangezegd. Ik krijg die thuisgestuurd, geloof ik."
         ]},
-        { keys: ['rook', 'hoorde', 'voelde'], answers: [
-            "Ik rook de urine tegen de muur. Ik zag het gebeuren. Verder geen bijzonderheden."
+        { keys: ['aangehouden', 'meegenomen', 'bureau'], answers: [
+            "Nee, ik ben niet meegenomen naar het bureau. Ik mocht gewoon gaan na de bekeuring.",
+            "Ik ben niet aangehouden. Ik heb mijn gegevens gegeven en mocht daarna weg."
         ]},
-        { keys: ['foto', 'camera', 'bewijs'], answers: [
-            "Nee, geen foto's gemaakt. Voor een mutatie is dat ook niet nodig. De eigen waarneming is voldoende."
-        ]},
-        { keys: ['mutatie', 'pv', 'proces-verbaal'], answers: [
-            "Ik maak een mutatie op, geen proces-verbaal. Wildplassen is een overtreding, geen misdrijf. De mutatie is voor statistiek en bestuurlijke handhaving.",
-            "Dit gaat in de mutatie, niet in een PV. Voor een overtreding van de APV is dat voldoende."
+        { keys: ['wilt u nog wat verklaren', 'nog wat verklaren', 'nog iets verklaren', 'nog verklaren', 'nog iets toe te voegen', 'nog iets kwijt'], answers: [
+            "Nee, volgens mij heb ik alles wel gezegd. Ik heb er spijt van, dat is alles.",
+            "Ik wil nog wel zeggen dat ik het niet expres deed. Ik was gewoon stom bezig.",
+            "Nee, verder niets. Ik heb verteld wat er gebeurd is.",
+            "Alleen dat ik het zelf ook stom vind. Verder niets."
         ]},
         { keys: ['hallo', 'hoi', 'goedemorgen', 'goedemiddag', 'goedenavond', 'hey'], answers: [
-            "Hallo. Waarmee kan ik je helpen? Vraag maar door over het incident.",
-            "Hallo. Stel je vragen — ik vertel je graag wat ik heb gezien."
+            "Hallo. Ja, ik weet dat ik staande ben gehouden. Wat wilt u weten?",
+            "Hoi. Eh... ja. Wat wilt u vragen?"
         ]},
         { keys: ['dank', 'bedankt', 'thanks'], answers: [
-            "Graag gedaan. Succes met het opstellen van de mutatie.",
-            "Geen probleem. Als je nog vragen hebt, hoor ik het wel."
+            "Ja, oké.",
+            "Prima. Is dat alles?"
         ]},
-        { keys: ['hoe gaat', 'alles goed'], answers: [
-            "Goed, dank je. Ik ben net klaar met de surveillance. Stel je vragen maar."
+        { keys: ['advocaat', 'rechtsbijstand'], answers: [
+            "Nee, dat leek me niet nodig. Het is maar een bekeuring.",
+            "Ik heb geen advocaat. Het gaat toch om wildplassen?"
         ]},
-        { keys: ['wat moet ik doen', 'hoe begin', 'uitleg', 'help'], answers: [
-            "Stel me vragen over het incident — wie, wat, waar, wanneer, waarom en hoe. Aan de hand van mijn antwoorden kun je zelf de mutatie opstellen in de vakken rechts.",
-            "Je kunt me van alles vragen over wat ik heb gezien. Vraag naar de persoon, de locatie, het tijdstip, enz."
+        { keys: ['getuige', 'wie zag', 'mensen in de buurt'], answers: [
+            "Er liepen wel mensen langs, ja. Ik weet niet of ze het gezien hebben.",
+            "Er waren wel wat mensen op straat. Ik heb er niet echt op gelet."
         ]},
-        { keys: ['meneer jansen', 'jansen', 'verdachte'], answers: [
-            "Meneer Jansen, 23 jaar, uit Amersfoort. Rustige man, meegaand. Geen eerdere antecedenten die ik heb gezien."
+        { keys: ['melder', 'wie belde', 'wie heeft gebeld'], answers: [
+            "Geen idee wie er gebeld heeft. Ik heb niemand horen bellen.",
+            "Ik weet niet wie de politie heeft gebeld."
         ]},
-        { keys: ['antecedenten', 'eerdere', 'strafblad'], answers: [
-            "Geen strafblad dat ik heb gezien. Hij leek het zelf ook niet als iets groots te beschouwen."
+        { keys: ['weer', 'omstandigheden'], answers: [
+            "Het was droog. Gewoon normaal weer voor de tijd van het jaar."
         ]},
-        { keys: ['camera', 'beveiliging', 'toezicht'], answers: [
-            "Er hangen in het centrum wel camera's, maar ik heb daar geen beelden van opgevraagd. Niet nodig voor deze mutatie."
+        { keys: ['muur', 'pand', 'gebouw'], answers: [
+            "Een muur van een gebouw daar. Ik weet niet welk pand precies.",
+            "Gewoon tegen de muur van een winkelpand, geloof ik."
         ]},
-        { keys: ['vervolg', 'daarna', 'afhandeling', 'wat gebeurt er nu'], answers: [
-            "Ik heb de mutatie opgemaakt. De bekeuring wordt verwerkt. Meneer Jansen krijgt die per post thuisgestuurd.",
-            "Na het uitschrijven van de bekeuring heb ik meneer Jansen laten gaan. De mutatie is opgemaakt ten behoeve van statistiek en handhaving."
+        { keys: ['rook', 'geur', 'zag u iets'], answers: [
+            "Nee, er was niets bijzonders. Gewoon een uitgaansavond."
+        ]},
+        { keys: ['collega', 'agent', 'politie', 'hoeveel agenten'], answers: [
+            "Er was één agent die mij aansprak. Ik zag niet echt meer agenten.",
+            "Eén agent kwam naar me toe. Volgens mij was hij alleen."
+        ]},
+        { keys: ['help', 'wat moet ik doen', 'hoe begin'], answers: [
+            "Ik weet niet wat u van me wilt. Vraag maar wat u wilt weten.",
+            "Ik vertel gewoon wat er gebeurd is. Wat wilt u weten?"
         ]},
         { keys: ['ben je klaar', 'einde', 'nog iets'], answers: [
-            "Ik heb alles wat ik weet verteld. Als je nog iets mist voor de mutatie, vraag maar.",
-            "Volgens mij heb je nu alles. Als je een specifieke vraag hebt, stel hem gerust."
-        ]},
-        { keys: ['wanneer aankomst', 'hoe laat aankomst', 'aankomst'], answers: [
-            "Ik was al ter plaatse — ik liep daar mijn surveillance. Ik zag het gebeuren en heb direct gehandeld."
+            "Eh, ik denk dat ik alles wel gezegd heb.",
+            "Volgens mij heb ik alles verteld. Klopt dat?"
         ]}
     ];
 
     const FALLBACK = [
-        "Dat heb ik niet direct paraat. Kun je je vraag anders formuleren?",
-        "Hmm, daar kan ik je zo niet mee helpen. Vraag me liever iets over het incident zelf.",
-        "Daar heb ik geen informatie over. Stel je vraag over het incident op de Langestraat.",
-        "Ik begrijp je vraag niet helemaal. Kun je specifieker zijn over wat je wilt weten?"
+        "Dat weet ik niet precies. Kunt u de vraag anders stellen?",
+        "Eh... daar heb ik geen antwoord op. Sorry.",
+        "Ik begrijp de vraag niet helemaal. Wat bedoelt u?",
+        "Dat zou ik niet weten. Kunt u het iets duidelijker vragen?"
     ];
 
     function zoekAntwoord(vraag) {
@@ -950,7 +958,7 @@ Einde bericht.</div>
             });
         }
 
-        addChatMessage('bot', "Hallo. Ik ben Jeroen Voordewind, aspirant agent bij eenheid Amersfoort. Ik wil u wat vragen stellen.");
+        addChatMessage('bot', "Ja... hallo. Ik ben M. Jansen, woonachtig in Amersfoort. De agent heeft me net staande gehouden. Wat wilt u van me weten?");
 
         ['m-aanleiding', 'm-situatie', 'm-toedracht', 'm-maatregelen', 'm-afhandeling'].forEach(id => {
             const el = document.getElementById(id);
