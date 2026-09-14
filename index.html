@@ -82,6 +82,15 @@
         .oc-controls .speed-label { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #555; margin-left: auto; }
         .oc-controls input[type=range] { width: 120px; }
 
+        <div class="oc-image">
+    <img
+        src="Screenshot 2026-09-14 14.39.07.png"
+        alt="Bijgevoegde afbeelding bij het incident"
+        onclick="openLightbox(this.src)"
+    />
+    <div class="caption">📎 Bijgevoegde afbeelding — situatieschets bij de melding</div>
+</div>
+
         /* Chatbot */
         .chat-panel { background: #fff; border: 3px solid #333; border-radius: 12px; height: 720px; display: flex; flex-direction: column; overflow: hidden; }
         .chat-header { background: #2c3e50; color: #fff; padding: 12px 18px; display: flex; align-items: center; gap: 12px; }
@@ -1131,7 +1140,11 @@ Einde bericht.</div>
                 if (status) status.textContent = '⚠️ Fout: ' + err.message;
             });
     }
-
+<!-- Lightbox voor afbeeldingen -->
+<div class="img-lightbox" id="img-lightbox" onclick="closeLightbox()">
+    <span class="close-hint">Klik om te sluiten ✕</span>
+    <img id="img-lightbox-img" src="" alt="Vergrote afbeelding" />
+</div>
     // ════════════ INIT ════════════
     setTimeout(() => {
         if ('speechSynthesis' in window) speechSynthesis.getVoices();
