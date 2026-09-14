@@ -121,6 +121,58 @@
         .review-area { margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
         .reviewers { font-size: 0.8rem; color: #7f8c8d; }
         .reviewers strong { color: #27ae60; }
+
+        /* ─── Afbeelding in OC-paneel ─── */
+.oc-image {
+    padding: 12px 18px;
+    background: #ecf0f1;
+    border-top: 2px solid #ddd;
+    text-align: center;
+}
+.oc-image img {
+    max-width: 100%;
+    max-height: 340px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    cursor: zoom-in;
+    transition: transform 0.2s;
+    display: inline-block;
+}
+.oc-image img:hover { transform: scale(1.01); }
+.oc-image .caption {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* ─── Lightbox voor fullscreen weergave ─── */
+.img-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 30px;
+    cursor: zoom-out;
+}
+.img-lightbox.open { display: flex; }
+.img-lightbox img {
+    max-width: 95vw;
+    max-height: 95vh;
+    border-radius: 6px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+.img-lightbox .close-hint {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
     </style>
 </head>
 <body>
