@@ -7,6 +7,75 @@
         :root { --primary: #2c3e50; --accent: #e74c3c; --bg: #ecf0f1; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--primary); overflow-x: hidden; }
         .screen { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1450px; margin: 0 auto; min-height: 85vh; position: relative; }
+        .hidden { display: none !important; }
+
+        /* ─── INLOG (scherm 0) ─── */
+        .login-wrap {
+            max-width: 480px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border-top: 8px solid var(--primary);
+        }
+        .login-wrap h1 { margin-top: 0; text-align: center; color: var(--primary); }
+        .login-wrap p.sub { text-align: center; color: #7f8c8d; margin-top: -10px; margin-bottom: 25px; }
+        .login-wrap label { display: block; font-weight: 700; margin-bottom: 6px; margin-top: 15px; color: var(--primary); }
+        .login-wrap input, .login-wrap select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .login-wrap input:focus, .login-wrap select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .login-wrap button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: var(--accent);
+            color: white;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+        .login-wrap button:hover { background: #c0392b; }
+        .login-wrap .hint { font-size: 0.85rem; color: #95a5a6; text-align: center; margin-top: 20px; }
+
+        /* ─── TOPBAR ─── */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2c3e50;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .topbar strong { color: #f39c12; }
+        .topbar .btn-logout {
+            background: #e74c3c;
+            color: #fff;
+            padding: 6px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .topbar .btn-logout:hover { background: #c0392b; }
         
         /* Whiteboard & Canvas */
         .whiteboard-container { position: relative; background: #fff; border: 5px solid #333; border-radius: 12px; height: 400px; overflow: hidden; margin-top: 15px; }
@@ -38,12 +107,9 @@
         .btn-next { background: #27ae60; color: white; }
         .btn-review { background: #3498db; color: white; padding: 8px 16px; font-size: 0.9rem; }
         .btn-reviewed { background: #27ae60; color: white; padding: 8px 16px; font-size: 0.9rem; cursor: default; }
+        .btn-warning { background: #e67e22; color: white; }
 
         /* ─── SCHERM 4: Oefening 2 ─── */
-        .name-bar { background: #dfe6e9; padding: 12px 18px; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .name-bar input { padding: 8px 12px; border: 2px solid var(--primary); border-radius: 8px; font-size: 1rem; }
-        .name-bar strong { color: var(--primary); }
-
         .oefening-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -178,7 +244,35 @@
 </head>
 <body>
 
-    <div id="screen1" class="screen">
+    <!-- ═══════════════ SCHERM 0: INLOGGEN ═══════════════ -->
+    <div id="screen0" class="screen">
+        <div class="login-wrap">
+            <h1>Inloggen</h1>
+            <p class="sub">Vul je naam in en kies je klas om te beginnen.</p>
+
+            <label for="login-name">Voornaam</label>
+            <input type="text" id="login-name" placeholder="bijv. Piet" autocomplete="off" />
+
+            <label for="login-class">Klas</label>
+            <select id="login-class">
+                <option value="">— Selecteer klas —</option>
+                <option>Alpha</option><option>Bravo</option><option>Charlie</option>
+                <option>Delta</option><option>Echo</option><option>Foxtrot</option>
+                <option>Golf</option><option>Hotel</option><option>Juliet</option>
+                <option>Kilo</option><option>Lima</option><option>Mike</option>
+            </select>
+
+            <button onclick="doLogin()">Start les →</button>
+            <p class="hint">Je naam en klas worden onthouden op dit apparaat.</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════ SCHERM 1: WHITEBOARD ═══════════════ -->
+    <div id="screen1" class="screen hidden">
+        <div class="topbar">
+            <div>Ingelogd als <strong id="tb-name">—</strong> · Klas <strong id="tb-class">—</strong></div>
+            <button class="btn-logout" onclick="doLogout()">Uitloggen</button>
+        </div>
         <h2>1. Whiteboard & Input</h2>
         <input type="text" placeholder="Zin voor het bord..." onkeydown="handleSentenceEnter(event)" style="width:95%; font-size: 1.5rem; padding: 10px; margin-bottom: 10px;">
         <div class="whiteboard-container"><div id="displaySentence"></div><canvas id="canvas1"></canvas></div>
@@ -190,12 +284,17 @@
             <div><label>Gez.</label><input type="text" onkeydown="handleWordSync(event, 4)"></div>
         </div>
         <div class="nav-bar">
-            <button class="btn-hard-reset" onclick="hardReset()">HARDE RESET</button>
+            <button class="btn-hard-reset" onclick="hardReset()">HARDE RESET (eigen klas)</button>
             <button class="btn-next" onclick="showScreen(3)">NAAR HET SPEELVELD (HUSSelen) →</button>
         </div>
     </div>
 
-    <div id="screen3" class="screen" style="display:none;">
+    <!-- ═══════════════ SCHERM 3: SPEELVELD ═══════════════ -->
+    <div id="screen3" class="screen hidden">
+        <div class="topbar">
+            <div>Ingelogd als <strong id="tb-name-3">—</strong> · Klas <strong id="tb-class-3">—</strong></div>
+            <button class="btn-logout" onclick="doLogout()">Uitloggen</button>
+        </div>
         <h2>3. Het Speelveld: Bouw je zinnen</h2>
         <p>Sleep woorden uit de bak hieronder naar het veld. Gebruik de pen voor correcties.</p>
         
@@ -216,27 +315,20 @@
 
         <div class="nav-bar">
             <button onclick="showScreen(1)">← Terug naar Whiteboard</button>
-            <button onclick="remove(ref(db, 'shared/drawing'))">Wis penstrepen</button>
+            <button onclick="clearDrawing()">Wis penstrepen</button>
             <button class="btn-hard-reset" onclick="clearWords()">Wis alle woorden</button>
             <button class="btn-next" onclick="showScreen(4)">NAAR OEFENING 2: MUTATIE →</button>
         </div>
     </div>
 
-    <!-- ═══════════════ SCHERM 4: Oefening 2 — Mutatie analyseren ═══════════════ -->
-    <div id="screen4" class="screen" style="display:none;">
+    <!-- ═══════════════ SCHERM 4: Oefening 2 ═══════════════ -->
+    <div id="screen4" class="screen hidden">
+        <div class="topbar">
+            <div>Ingelogd als <strong id="tb-name-4">—</strong> · Klas <strong id="tb-class-4">—</strong></div>
+            <button class="btn-logout" onclick="doLogout()">Uitloggen</button>
+        </div>
         <h2>4. Oefening 2: Mutatie analyseren</h2>
         <p>Lees de mutatie in het PDF-venster en beantwoord de 6 vragen. Je antwoorden verschijnen live bij je klasgenoten — jullie kijken elkaars antwoorden na.</p>
-
-        <!-- Naam-invoer (eenmalig, wordt onthouden) -->
-        <div class="name-bar" id="name-bar">
-            <strong>Jouw naam:</strong>
-            <input type="text" id="student-name-input" placeholder="Voornaam" />
-            <button class="btn-next" onclick="saveStudentName()" style="padding: 8px 20px;">Opslaan</button>
-        </div>
-        <div class="name-bar hidden" id="name-bar-saved" style="display:none;">
-            <strong>Ingelogd als:</strong> <span id="student-name-display"></span>
-            <button onclick="changeStudentName()" style="padding: 6px 14px; background:#95a5a6; color:white;">Wijzigen</button>
-        </div>
 
         <div class="oefening-layout">
             <!-- PDF-paneel -->
@@ -286,7 +378,7 @@
 
         <!-- Livefeed van klasgenoten -->
         <div class="feed-section">
-            <h3>📡 Live antwoorden van de klas</h3>
+            <h3>📡 Live antwoorden van klas <span id="feed-class-name"></span></h3>
             <div class="answers-feed" id="answers-feed">
                 <p style="color:#888;">Nog geen antwoorden...</p>
             </div>
@@ -295,7 +387,8 @@
         <div class="nav-bar">
             <button onclick="showScreen(3)">← Terug naar Speelveld</button>
             <button onclick="showScreen(1)">← Naar Whiteboard</button>
-            <button class="btn-hard-reset" onclick="resetAnswers()">Wis alle antwoorden</button>
+            <button class="btn-warning" onclick="resetAnswers()">Wis antwoorden (eigen klas)</button>
+            <button class="btn-hard-reset" onclick="resetMyClass()">Reset klas (alles)</button>
         </div>
     </div>
 
@@ -316,270 +409,193 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // --- DATA SYNC ---
-    window.handleSentenceEnter = (e) => { if (e.key === "Enter" && e.target.value) { push(ref(db, 'shared/sentences'), e.target.value); e.target.value = ""; } };
-    onValue(ref(db, 'shared/sentences'), s => {
-        const div = document.getElementById('displaySentence'); div.innerHTML = "";
-        const data = s.val(); if(data) Object.values(data).forEach(t => { const z = document.createElement('div'); z.innerText = t; div.appendChild(z); });
-    });
+    // ════════════ GLOBALE STATE ════════════
+    let userName = localStorage.getItem('kl_name') || '';
+    let userClass = localStorage.getItem('kl_class') || '';
+    let unsubscribers = [];    // lijst van Firebase onValue-unsubscribes
+    let activeListeners = null; // om dubbele listeners te voorkomen
 
-    window.handleWordSync = (e, zone) => {
-        if (e.key === "Enter" && e.target.value) {
-            push(ref(db, 'shared/words'), { text: e.target.value, x: 10, y: 10, location: 'ton' });
-            e.target.value = "";
-        }
-    };
-
-    // --- PEN FUNCTIE ---
-    const setupCanvas = (id) => {
-        const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
-        canvas.width = 1400; canvas.height = (id === 'canvas1') ? 400 : 600;
-        let drawing = false, strokeId = null;
-        canvas.onmousedown = (e) => { drawing = true; strokeId = "s_"+Date.now(); };
-        window.addEventListener('mouseup', () => { drawing = false; strokeId = null; });
-        canvas.onmousemove = (e) => {
-            if(!drawing) return; const r = canvas.getBoundingClientRect();
-            push(ref(db, `shared/drawing/${strokeId}`), { x: e.clientX - r.left, y: e.clientY - r.top });
-        };
-        onValue(ref(db, 'shared/drawing'), s => {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            ctx.lineWidth=5; ctx.strokeStyle="#e74c3c"; ctx.lineCap="round";
-            const data = s.val(); if(data) Object.values(data).forEach(st => {
-                ctx.beginPath(); const pts = Object.values(st);
-                pts.forEach((p, i) => { if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); });
-                ctx.stroke();
-            });
-        });
-    };
-    setupCanvas('canvas1'); setupCanvas('canvas3');
-
-    // --- HUSSEL DRAG & DROP (FIXED) ---
-    let draggedId = null;
-    let dragOffset = { x: 0, y: 0 };
-
-    // Canvas tijdelijk uitzetten tijdens drag zodat drop-events op #veld / #ton landen
-    function setCanvasPointerEvents(value) {
-        document.querySelectorAll('.speelveld canvas, .whiteboard-container canvas').forEach(c => {
-            c.style.pointerEvents = value;
-        });
+    // Basis-pad voor alle data van deze klas
+    function basePath() {
+        return `shared/${encodeKey(userClass)}`;
     }
-
-    onValue(ref(db, 'shared/words'), (snapshot) => {
-        const data = snapshot.val();
-        document.querySelectorAll('.word-card').forEach(el => { if (!data || !data[el.id]) el.remove(); });
-        if(!data) return;
-
-        Object.keys(data).forEach(id => {
-            let el = document.getElementById(id);
-            if (!el) {
-                el = document.createElement('div');
-                el.id = id;
-                el.className = 'word-card';
-                el.draggable = true;
-
-                el.addEventListener('dragstart', (e) => {
-                    draggedId = id;
-                    // Onthoud waar de cursor t.o.v. de linkerbovenhoek van het kaartje staat
-                    const rect = el.getBoundingClientRect();
-                    dragOffset.x = e.clientX - rect.left;
-                    dragOffset.y = e.clientY - rect.top;
-                    el.classList.add('dragging');
-                    try {
-                        e.dataTransfer.effectAllowed = 'move';
-                        e.dataTransfer.setData('text/plain', id);
-                    } catch (err) {}
-                    // Belangrijk: canvas uitzetten zodat drop op #veld / #ton valt
-                    setCanvasPointerEvents('none');
-                });
-
-                el.addEventListener('dragend', () => {
-                    el.classList.remove('dragging');
-                    draggedId = null;
-                    setCanvasPointerEvents('');
-                    document.getElementById('veld')?.classList.remove('drag-over');
-                    document.getElementById('ton')?.classList.remove('drag-over');
-                });
-            }
-
-            el.innerText = data[id].text;
-            const container = document.getElementById(data[id].location || 'ton');
-            if (container && el.parentElement !== container) container.appendChild(el);
-
-            if (data[id].location === 'veld') {
-                el.style.position = 'absolute';
-                // Clamp op 0 zodat woorden nooit buiten het veld verdwijnen
-                el.style.left = Math.max(0, data[id].x || 0) + "px";
-                el.style.top  = Math.max(0, data[id].y || 0) + "px";
-            } else {
-                el.style.position = 'relative';
-                el.style.left = '0';
-                el.style.top  = '0';
-            }
-        });
-    });
-
-    window.allowDrop = (e) => {
-        e.preventDefault();
-        try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
-    };
-
-    window.dragEnter = (e, targetLoc) => {
-        e.preventDefault();
-        const el = document.getElementById(targetLoc);
-        if (el) el.classList.add('drag-over');
-    };
-
-    window.dragLeave = (e, targetLoc) => {
-        e.preventDefault();
-        const el = document.getElementById(targetLoc);
-        if (!el) return;
-        const related = e.relatedTarget;
-        // Alleen de highlight weghalen als we het element écht verlaten
-        if (!related || !el.contains(related)) {
-            el.classList.remove('drag-over');
-        }
-    };
-
-    window.handleDrop = (e, targetLoc) => {
-        e.preventDefault();
-        document.getElementById('veld')?.classList.remove('drag-over');
-        document.getElementById('ton')?.classList.remove('drag-over');
-
-        // Id bij voorkeur uit dataTransfer, anders fallback op draggedId
-        let id = null;
-        try { id = e.dataTransfer.getData('text/plain'); } catch (err) {}
-        if (!id) id = draggedId;
-        if (!id) return;
-
-        const container = document.getElementById(targetLoc);
-        if (!container) return;
-
-        const rect = container.getBoundingClientRect();
-        // Gebruik de echte cursor-offset binnen het kaartje i.p.v. vaste -40 / -20
-        const x = Math.max(0, e.clientX - rect.left - dragOffset.x);
-        const y = Math.max(0, e.clientY - rect.top  - dragOffset.y);
-
-        update(ref(db, 'shared/words/' + id), { location: targetLoc, x: x, y: y });
-        draggedId = null;
-    };
-
-    // --- Navigatie ---
-    window.showScreen = (n) => {
-        document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
-        document.getElementById('screen'+n).style.display = 'block';
-    };
-    window.hardReset = () => { if(confirm("ALLES wissen?")) remove(ref(db, 'shared')); };
-    window.clearWords = () => { if(confirm("Woorden wissen?")) remove(ref(db, 'shared/words')); };
-
-    // ═════════════════════════════════════════════════════════════
-    // ═══ SCHERM 4: Oefening 2 — Mutatie analyseren ════════════════
-    // ═════════════════════════════════════════════════════════════
-
-    const QUESTION_KEYS = ['wie', 'wat', 'waar', 'wanneer', 'waarom', 'wijze'];
-    const QUESTION_LABELS = {
-        wie: 'Wie',
-        wat: 'Wat',
-        waar: 'Waar',
-        wanneer: 'Wanneer',
-        waarom: 'Waarom',
-        wijze: 'Op welke wijze'
-    };
-
-    let studentName = localStorage.getItem('mutatie_student_name') || '';
-    let saveTimer = null;
-
-    // --- Naam beheren ---
-    window.saveStudentName = function() {
-        const val = document.getElementById('student-name-input').value.trim();
-        if (!val) { alert('Vul je naam in.'); return; }
-        studentName = val;
-        localStorage.setItem('mutatie_student_name', val);
-        applyNameUI();
-        prefillMyAnswers();
-    };
-
-    window.changeStudentName = function() {
-        document.getElementById('name-bar').style.display = 'flex';
-        document.getElementById('name-bar-saved').style.display = 'none';
-        document.getElementById('student-name-input').value = studentName;
-        document.getElementById('student-name-input').focus();
-    };
-
-    function applyNameUI() {
-        const bar = document.getElementById('name-bar');
-        const saved = document.getElementById('name-bar-saved');
-        const display = document.getElementById('student-name-display');
-        if (!bar || !saved || !display) return;
-        if (studentName) {
-            bar.style.display = 'none';
-            saved.style.display = 'flex';
-            display.textContent = studentName;
-        } else {
-            bar.style.display = 'flex';
-            saved.style.display = 'none';
-        }
-    }
-
-    // --- Antwoorden opslaan (met debounce) ---
-    function attachAnswerListeners() {
-        QUESTION_KEYS.forEach(k => {
-            const el = document.getElementById('q-' + k);
-            if (!el) return;
-            el.addEventListener('input', () => {
-                if (!studentName) {
-                    document.getElementById('save-status').textContent = '⚠️ Vul eerst je naam in om antwoorden te bewaren.';
-                    return;
-                }
-                document.getElementById('save-status').textContent = 'Bezig met opslaan...';
-                if (saveTimer) clearTimeout(saveTimer);
-                saveTimer = setTimeout(saveMyAnswers, 500);
-            });
-        });
-    }
-
-    function saveMyAnswers() {
-        if (!studentName) return;
-        const payload = {
-            name: studentName,
-            timestamp: Date.now(),
-            answers: {}
-        };
-        QUESTION_KEYS.forEach(k => {
-            const el = document.getElementById('q-' + k);
-            payload.answers[k] = (el && el.value) ? el.value : '';
-        });
-        set(ref(db, 'shared/answers/' + encodeKey(studentName)), payload)
-            .then(() => {
-                document.getElementById('save-status').textContent = '✓ Opgeslagen om ' + new Date().toLocaleTimeString('nl-NL');
-            })
-            .catch(err => {
-                document.getElementById('save-status').textContent = '⚠️ Fout bij opslaan: ' + err.message;
-            });
-    }
-
-    // Firebase-keys mogen geen . # $ [ ] / bevatten
     function encodeKey(s) {
-        return s.replace(/[.#$\[\]\/]/g, '_');
+        return String(s || '').replace(/[.#$\[\]\/]/g, '_');
+    }
+    function escapeHtml(s) {
+        return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
     }
 
-    // --- Mijn antwoorden voorvullen vanuit Firebase ---
-    function prefillMyAnswers() {
-        if (!studentName) return;
-        onValue(ref(db, 'shared/answers/' + encodeKey(studentName)), (snap) => {
-            const data = snap.val();
-            if (!data || !data.answers) return;
-            QUESTION_KEYS.forEach(k => {
-                const el = document.getElementById('q-' + k);
-                if (el && document.activeElement !== el) {
-                    el.value = data.answers[k] || '';
+    // ════════════ INLOG / UITLOG ════════════
+    window.doLogin = function() {
+        const name = document.getElementById('login-name').value.trim();
+        const cls = document.getElementById('login-class').value;
+        if (!name) { alert('Vul je voornaam in.'); return; }
+        if (!cls) { alert('Kies een klas.'); return; }
+
+        userName = name;
+        userClass = cls;
+        localStorage.setItem('kl_name', name);
+        localStorage.setItem('kl_class', cls);
+
+        // UI updaten
+        ['tb-name','tb-name-3','tb-name-4'].forEach(id => {
+            const el = document.getElementById(id); if (el) el.textContent = name;
+        });
+        ['tb-class','tb-class-3','tb-class-4'].forEach(id => {
+            const el = document.getElementById(id); if (el) el.textContent = cls;
+        });
+        const fc = document.getElementById('feed-class-name');
+        if (fc) fc.textContent = cls;
+
+        startAllListeners();
+        showScreen(1);
+    };
+
+    window.doLogout = function() {
+        if (!confirm('Weet je zeker dat je wilt uitloggen? Je naam en klas worden gewist.')) return;
+        stopAllListeners();
+        userName = '';
+        userClass = '';
+        localStorage.removeItem('kl_name');
+        localStorage.removeItem('kl_class');
+
+        document.getElementById('login-name').value = '';
+        document.getElementById('login-class').value = '';
+        showScreen(0);
+    };
+
+    // Automatisch inloggen als naam+klas al bekend zijn
+    function tryAutoLogin() {
+        if (userName && userClass) {
+            document.getElementById('login-name').value = userName;
+            document.getElementById('login-class').value = userClass;
+            window.doLogin();
+        } else {
+            showScreen(0);
+        }
+    }
+
+    // ════════════ FIREBASE LISTENERS BEHEREN ════════════
+    function addListener(unsub) {
+        if (typeof unsub === 'function') unsubscribers.push(unsub);
+    }
+    function stopAllListeners() {
+        unsubscribers.forEach(u => { try { u(); } catch(e) {} });
+        unsubscribers = [];
+        activeListeners = null;
+
+        // Canvas leeghalen
+        ['canvas1','canvas3'].forEach(id => {
+            const c = document.getElementById(id);
+            if (c) { const ctx = c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); }
+        });
+        const disp = document.getElementById('displaySentence');
+        if (disp) disp.innerHTML = '';
+        document.querySelectorAll('.word-card').forEach(el => el.remove());
+        const feed = document.getElementById('answers-feed');
+        if (feed) feed.innerHTML = '<p style="color:#888;">Nog geen antwoorden...</p>';
+    }
+
+    function startAllListeners() {
+        if (activeListeners) return;   // al actief
+        activeListeners = true;
+
+        // 1. Zinnen
+        addListener(onValue(ref(db, basePath() + '/sentences'), s => {
+            const div = document.getElementById('displaySentence'); if (!div) return;
+            div.innerHTML = '';
+            const data = s.val();
+            if (data) Object.values(data).forEach(t => {
+                const z = document.createElement('div');
+                z.innerText = t;
+                div.appendChild(z);
+            });
+        }));
+
+        // 2. Tekeningen
+        addListener(onValue(ref(db, basePath() + '/drawing'), s => {
+            const data = s.val() || {};
+            ['canvas1','canvas3'].forEach(id => {
+                const canvas = document.getElementById(id);
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = "#e74c3c";
+                ctx.lineCap = "round";
+                Object.values(data).forEach(st => {
+                    ctx.beginPath();
+                    const pts = Object.values(st);
+                    pts.forEach((p, i) => {
+                        if (i === 0) ctx.moveTo(p.x, p.y);
+                        else ctx.lineTo(p.x, p.y);
+                    });
+                    ctx.stroke();
+                });
+            });
+        }));
+
+        // 3. Woorden (drag & drop)
+        addListener(onValue(ref(db, basePath() + '/words'), (snapshot) => {
+            const data = snapshot.val();
+            document.querySelectorAll('.word-card').forEach(el => {
+                if (!data || !data[el.id]) el.remove();
+            });
+            if (!data) return;
+
+            Object.keys(data).forEach(id => {
+                let el = document.getElementById(id);
+                if (!el) {
+                    el = document.createElement('div');
+                    el.id = id;
+                    el.className = 'word-card';
+                    el.draggable = true;
+
+                    el.addEventListener('dragstart', (e) => {
+                        draggedId = id;
+                        const rect = el.getBoundingClientRect();
+                        dragOffset.x = e.clientX - rect.left;
+                        dragOffset.y = e.clientY - rect.top;
+                        el.classList.add('dragging');
+                        try {
+                            e.dataTransfer.effectAllowed = 'move';
+                            e.dataTransfer.setData('text/plain', id);
+                        } catch (err) {}
+                        setCanvasPointerEvents('none');
+                    });
+
+                    el.addEventListener('dragend', () => {
+                        el.classList.remove('dragging');
+                        draggedId = null;
+                        setCanvasPointerEvents('');
+                        document.getElementById('veld')?.classList.remove('drag-over');
+                        document.getElementById('ton')?.classList.remove('drag-over');
+                    });
+                }
+
+                el.innerText = data[id].text;
+                const container = document.getElementById(data[id].location || 'ton');
+                if (container && el.parentElement !== container) container.appendChild(el);
+
+                if (data[id].location === 'veld') {
+                    el.style.position = 'absolute';
+                    el.style.left = Math.max(0, data[id].x || 0) + "px";
+                    el.style.top  = Math.max(0, data[id].y || 0) + "px";
+                } else {
+                    el.style.position = 'relative';
+                    el.style.left = '0';
+                    el.style.top  = '0';
                 }
             });
-        }, { onlyOnce: true });
-    }
+        }));
 
-    // --- Livefeed van alle antwoorden ---
-    function listenAnswersFeed() {
-        onValue(ref(db, 'shared/answers'), (snap) => {
+        // 4. Antwoorden livefeed
+        addListener(onValue(ref(db, basePath() + '/answers'), (snap) => {
             const feed = document.getElementById('answers-feed');
             if (!feed) return;
             const data = snap.val();
@@ -590,26 +606,31 @@
             }
 
             feed.innerHTML = '';
-            const entries = Object.entries(data).sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
+            const entries = Object.entries(data)
+                .sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
+
+            const QK = ['wie', 'wat', 'waar', 'wanneer', 'waarom', 'wijze'];
+            const QL = { wie: 'Wie', wat: 'Wat', waar: 'Waar', wanneer: 'Wanneer', waarom: 'Waarom', wijze: 'Op welke wijze' };
 
             entries.forEach(([key, item]) => {
                 const card = document.createElement('div');
                 card.className = 'answer-card';
 
                 const reviewers = item.reviews ? Object.keys(item.reviews) : [];
-                const isMine = (item.name === studentName);
-                const iReviewed = item.reviews && studentName && item.reviews[encodeKey(studentName)];
+                const isMine = (item.name === userName);
+                const iReviewed = item.reviews && userName && item.reviews[encodeKey(userName)];
 
                 let html = `<span class="student-name">${escapeHtml(item.name || 'Onbekend')}${isMine ? ' (jij)' : ''}</span>`;
-
-                QUESTION_KEYS.forEach(q => {
+                QK.forEach(q => {
                     const answer = (item.answers && item.answers[q]) ? item.answers[q] : '—';
-                    html += `<div class="qa"><span class="q">${QUESTION_LABELS[q]}:</span> <span class="a">${escapeHtml(answer)}</span></div>`;
+                    html += `<div class="qa"><span class="q">${QL[q]}:</span> <span class="a">${escapeHtml(answer)}</span></div>`;
                 });
 
                 html += `<div class="review-area">`;
-                html += `<div class="reviewers">${reviewers.length ? '✓ Nagekeken door: <strong>' + reviewers.map(escapeHtml).join(', ') + '</strong>' : 'Nog niet nagekeken'}</div>`;
-                if (!isMine && studentName) {
+                html += `<div class="reviewers">${reviewers.length
+                    ? '✓ Nagekeken door: <strong>' + reviewers.map(escapeHtml).join(', ') + '</strong>'
+                    : 'Nog niet nagekeken'}</div>`;
+                if (!isMine && userName) {
                     if (iReviewed) {
                         html += `<button class="btn-reviewed" disabled>✓ Door jou nagekeken</button>`;
                     } else {
@@ -617,58 +638,217 @@
                     }
                 }
                 html += `</div>`;
-
                 card.innerHTML = html;
                 feed.appendChild(card);
             });
 
-            // Koppel review-knoppen
             feed.querySelectorAll('[data-review-key]').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    if (!studentName) { alert('Vul eerst je naam in.'); return; }
+                    if (!userName) return;
                     const targetKey = btn.getAttribute('data-review-key');
-                    const myKey = encodeKey(studentName);
-                    update(ref(db, `shared/answers/${targetKey}/reviews`), { [myKey]: true });
+                    const myKey = encodeKey(userName);
+                    update(ref(db, basePath() + `/answers/${targetKey}/reviews`), { [myKey]: true });
                 });
+            });
+        }));
+    }
+
+    // ════════════ PEN FUNCTIE ════════════
+    const setupCanvas = (id) => {
+        const canvas = document.getElementById(id);
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = 1400;
+        canvas.height = (id === 'canvas1') ? 400 : 600;
+
+        let drawing = false, strokeId = null;
+        canvas.onmousedown = (e) => {
+            if (!userClass) return;
+            drawing = true;
+            strokeId = "s_" + Date.now() + "_" + Math.random().toString(36).slice(2,6);
+        };
+        window.addEventListener('mouseup', () => { drawing = false; strokeId = null; });
+        canvas.onmousemove = (e) => {
+            if (!drawing || !strokeId || !userClass) return;
+            const r = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / r.width;
+            const scaleY = canvas.height / r.height;
+            push(ref(db, basePath() + `/drawing/${strokeId}`), {
+                x: (e.clientX - r.left) * scaleX,
+                y: (e.clientY - r.top) * scaleY
+            });
+        };
+    };
+    setupCanvas('canvas1');
+    setupCanvas('canvas3');
+
+    // ════════════ DRAG & DROP ════════════
+    let draggedId = null;
+    let dragOffset = { x: 0, y: 0 };
+
+    function setCanvasPointerEvents(value) {
+        document.querySelectorAll('.speelveld canvas, .whiteboard-container canvas').forEach(c => {
+            c.style.pointerEvents = value;
+        });
+    }
+
+    window.allowDrop = (e) => {
+        e.preventDefault();
+        try { e.dataTransfer.dropEffect = 'move'; } catch (err) {}
+    };
+    window.dragEnter = (e, targetLoc) => {
+        e.preventDefault();
+        const el = document.getElementById(targetLoc);
+        if (el) el.classList.add('drag-over');
+    };
+    window.dragLeave = (e, targetLoc) => {
+        e.preventDefault();
+        const el = document.getElementById(targetLoc);
+        if (!el) return;
+        const related = e.relatedTarget;
+        if (!related || !el.contains(related)) el.classList.remove('drag-over');
+    };
+    window.handleDrop = (e, targetLoc) => {
+        e.preventDefault();
+        document.getElementById('veld')?.classList.remove('drag-over');
+        document.getElementById('ton')?.classList.remove('drag-over');
+
+        let id = null;
+        try { id = e.dataTransfer.getData('text/plain'); } catch (err) {}
+        if (!id) id = draggedId;
+        if (!id) return;
+
+        const container = document.getElementById(targetLoc);
+        if (!container) return;
+
+        const rect = container.getBoundingClientRect();
+        const x = Math.max(0, e.clientX - rect.left - dragOffset.x);
+        const y = Math.max(0, e.clientY - rect.top  - dragOffset.y);
+
+        update(ref(db, basePath() + '/words/' + id), { location: targetLoc, x: x, y: y });
+        draggedId = null;
+    };
+
+    // ════════════ INPUT HANDLERS ════════════
+    window.handleSentenceEnter = (e) => {
+        if (e.key === "Enter" && e.target.value && userClass) {
+            push(ref(db, basePath() + '/sentences'), e.target.value);
+            e.target.value = "";
+        }
+    };
+    window.handleWordSync = (e, zone) => {
+        if (e.key === "Enter" && e.target.value && userClass) {
+            push(ref(db, basePath() + '/words'), {
+                text: e.target.value, x: 10, y: 10, location: 'ton'
+            });
+            e.target.value = "";
+        }
+    };
+
+    // ════════════ RESET-FUNCTIES ════════════
+    window.hardReset = function() {
+        if (!userClass) return;
+        if (confirm(`ALLES van klas ${userClass} wissen? (bord, woorden, tekeningen, antwoorden)`)) {
+            remove(ref(db, basePath()));
+        }
+    };
+    window.clearWords = function() {
+        if (!userClass) return;
+        if (confirm(`Alle woorden van klas ${userClass} wissen?`)) {
+            remove(ref(db, basePath() + '/words'));
+        }
+    };
+    window.clearDrawing = function() {
+        if (!userClass) return;
+        remove(ref(db, basePath() + '/drawing'));
+    };
+    window.resetAnswers = function() {
+        if (!userClass) return;
+        if (confirm(`Alle antwoorden van klas ${userClass} wissen?`)) {
+            remove(ref(db, basePath() + '/answers'));
+        }
+    };
+    window.resetMyClass = function() {
+        if (!userClass) return;
+        if (confirm(`Reset klas ${userClass}? ALLES (bord, woorden, tekeningen, antwoorden) wordt gewist.`)) {
+            remove(ref(db, basePath()));
+        }
+    };
+    // Optionele "reset alles" (docent) — wist de complete shared-tree
+    window.resetEverything = function() {
+        if (confirm('LET OP! Dit wist ALLE klassen, ALLE antwoorden en ALLE borden. Zeker weten?')) {
+            remove(ref(db, 'shared'));
+        }
+    };
+
+    // ════════════ NAVIGATIE ════════════
+    window.showScreen = (n) => {
+        document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+        const el = document.getElementById('screen' + n);
+        if (el) el.classList.remove('hidden');
+    };
+
+    // ════════════ ANTWOORDEN SCHERM 4 ════════════
+    const QUESTION_KEYS = ['wie', 'wat', 'waar', 'wanneer', 'waarom', 'wijze'];
+    let saveTimer = null;
+    let answersInitialized = false;
+
+    function attachAnswerListeners() {
+        if (answersInitialized) return;
+        answersInitialized = true;
+
+        QUESTION_KEYS.forEach(k => {
+            const el = document.getElementById('q-' + k);
+            if (!el) return;
+            el.addEventListener('input', () => {
+                if (!userName || !userClass) return;
+                document.getElementById('save-status').textContent = 'Bezig met opslaan...';
+                if (saveTimer) clearTimeout(saveTimer);
+                saveTimer = setTimeout(saveMyAnswers, 500);
+            });
+        });
+
+        // Voorvullen
+        onValue(ref(db, basePath() + '/answers/' + encodeKey(userName)), (snap) => {
+            const data = snap.val();
+            if (!data || !data.answers) return;
+            QUESTION_KEYS.forEach(k => {
+                const el = document.getElementById('q-' + k);
+                if (el && document.activeElement !== el) el.value = data.answers[k] || '';
             });
         });
     }
 
-    function escapeHtml(s) {
-        return String(s == null ? '' : s)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;');
+    function saveMyAnswers() {
+        if (!userName || !userClass) return;
+        const payload = { name: userName, timestamp: Date.now(), answers: {} };
+        QUESTION_KEYS.forEach(k => {
+            const el = document.getElementById('q-' + k);
+            payload.answers[k] = (el && el.value) ? el.value : '';
+        });
+        set(ref(db, basePath() + '/answers/' + encodeKey(userName)), payload)
+            .then(() => {
+                document.getElementById('save-status').textContent =
+                    '✓ Opgeslagen om ' + new Date().toLocaleTimeString('nl-NL');
+            })
+            .catch(err => {
+                document.getElementById('save-status').textContent =
+                    '⚠️ Fout bij opslaan: ' + err.message;
+            });
     }
 
-    // --- Reset ---
-    window.resetAnswers = () => {
-        if (confirm('Alle antwoorden van alle leerlingen wissen?')) {
-            remove(ref(db, 'shared/answers'));
-        }
-    };
-
-    // --- Init scherm 4 ---
-    function initScreen4() {
-        applyNameUI();
-        attachAnswerListeners();
-        prefillMyAnswers();
-        listenAnswersFeed();
-    }
-
-    // Wanneer we naar scherm 4 gaan: eenmalige init
+    // ════════════ INIT ════════════
+    // Wanneer scherm 4 voor het eerst zichtbaar wordt, koppel de textarea-listeners
     const _origShowScreen = window.showScreen;
     window.showScreen = function(n) {
         _origShowScreen(n);
-        if (n === 4) {
-            if (!window.__screen4Init) {
-                window.__screen4Init = true;
-                initScreen4();
-            }
-        }
+        if (n === 4) attachAnswerListeners();
     };
 
+    // Auto-login of toon inlogscherm
+    tryAutoLogin();
+
+    // Expose voor het geval inline code ze nodig heeft
     window.ref = ref; window.db = db; window.remove = remove;
 </script>
 </body>
