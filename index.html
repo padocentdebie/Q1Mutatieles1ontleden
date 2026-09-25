@@ -8,7 +8,6 @@
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--primary); overflow-x: hidden; }
         .screen { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1450px; margin: 0 auto; min-height: 85vh; position: relative; }
         .hidden { display: none !important; }
-
         /* ─── INLOG ─── */
         .login-wrap { max-width: 480px; margin: 60px auto; background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-top: 8px solid var(--primary); }
         .login-wrap h1 { margin-top: 0; text-align: center; color: var(--primary); }
@@ -19,7 +18,6 @@
         .login-wrap button { width: 100%; margin-top: 25px; padding: 14px; background: var(--accent); color: white; font-size: 1.1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; letter-spacing: 1px; transition: 0.2s; }
         .login-wrap button:hover { background: #c0392b; }
         .login-wrap .hint { font-size: 0.85rem; color: #95a5a6; text-align: center; margin-top: 20px; }
-
         /* ─── TOPBAR ─── */
         .topbar { display: flex; justify-content: space-between; align-items: center; background: #2c3e50; color: #fff; padding: 10px 18px; border-radius: 10px; margin-bottom: 20px; font-size: 0.95rem; }
         .topbar strong { color: #f39c12; }
@@ -30,11 +28,9 @@
         .whiteboard-container { position: relative; background: #fff; border: 5px solid #333; border-radius: 12px; height: 400px; overflow: hidden; margin-top: 15px; }
         #displaySentence { position: absolute; top: 30px; left: 30px; font-size: 3rem; font-weight: 800; z-index: 1; pointer-events: none; display: flex; flex-direction: column; gap: 10px; }
         canvas { position: absolute; top: 0; left: 0; z-index: 5; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
-
         /* Inputs */
         .input-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 20px; background: #dfe6e9; padding: 15px; border-radius: 12px; }
         .input-bar input, .col-add-input { padding: 10px; border: 2px solid var(--primary); border-radius: 8px; font-size: 1rem; width: 80%; }
-
         /* ─── Preview van de bak op scherm 1 ─── */
         .bak-preview { margin-top: 15px; padding: 14px 18px; background: #dfe6e9; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; min-height: 50px; }
         .bak-preview .preview-label { font-weight: 700; color: var(--primary); font-size: 0.9rem; margin-right: 4px; }
@@ -43,7 +39,6 @@
         .preview-chip { background: var(--accent); color: #fff; padding: 5px 8px 5px 12px; border-radius: 14px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .preview-chip .chip-remove { background: rgba(255,255,255,0.28); border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.75rem; line-height: 1; transition: 0.15s; }
         .preview-chip .chip-remove:hover { background: rgba(255,255,255,0.55); }
-
         /* Hussel */
         .grabbelton { background: #34495e; padding: 20px; border-radius: 12px; min-height: 100px; display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; border: 4px dashed #2c3e50; align-items: center; transition: 0.2s; }
         .grabbelton.drag-over { background: #4a6278; border-color: var(--accent); }
@@ -52,7 +47,6 @@
         .word-card { padding: 12px 18px; background: var(--accent); color: white; border-radius: 8px; cursor: move; position: absolute; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); font-size: 1.3rem; z-index: 10; white-space: nowrap; user-select: none; }
         .word-card:active { cursor: grabbing; }
         .word-card.dragging { opacity: 0.4; }
-
         .nav-bar { display: flex; justify-content: space-between; margin-top: 20px; border-top: 2px solid #eee; padding-top: 15px; gap: 10px; flex-wrap: wrap; }
         button { padding: 12px 25px; font-weight: bold; border-radius: 8px; cursor: pointer; border: none; transition: 0.2s; }
         .btn-hard-reset { background: #c0392b; color: white; }
@@ -63,16 +57,13 @@
         .btn-speak { background: #9b59b6; color: white; padding: 10px 20px; }
         .btn-speak:hover { background: #8e44ad; }
         .btn-stop { background: #7f8c8d; color: white; padding: 10px 20px; }
-
         /* Layout oefeningen */
         .oefening-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 10px; }
         @media (max-width: 900px) { .oefening-layout { grid-template-columns: 1fr; } }
-
         .pdf-panel { background: #fff; border: 3px solid #333; border-radius: 12px; overflow: hidden; height: 720px; display: flex; flex-direction: column; }
         .pdf-panel h3 { margin: 0; padding: 10px 15px; background: #2c3e50; color: #fff; font-size: 1rem; letter-spacing: 1px; }
         .pdf-panel embed, .pdf-panel iframe { flex: 1; width: 100%; border: 0; }
         .pdf-fallback { padding: 20px; font-size: 0.9rem; color: #555; }
-
         .questions-panel { background: #f8f9fa; border: 3px solid #333; border-radius: 12px; padding: 20px; height: 720px; overflow-y: auto; }
         .questions-panel h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid #ccc; padding-bottom: 8px; }
         .question-item { margin-bottom: 14px; }
@@ -80,7 +71,6 @@
         .question-item textarea { width: 100%; min-height: 55px; padding: 8px 10px; border: 2px solid #ccc; border-radius: 8px; font-family: inherit; font-size: 0.95rem; resize: vertical; box-sizing: border-box; }
         .question-item textarea:focus { outline: none; border-color: var(--accent); }
         .save-status { font-size: 0.8rem; color: #27ae60; font-style: italic; margin-top: 8px; }
-
         /* OC-melding */
         .oc-panel { background: #fff; border: 3px solid #333; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
         .oc-header { background: #c0392b; color: #fff; padding: 12px 18px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
@@ -90,19 +80,16 @@
         .oc-controls { padding: 12px 18px; background: #ecf0f1; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-top: 2px solid #ddd; }
         .oc-controls .speed-label { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #555; margin-left: auto; }
         .oc-controls input[type=range] { width: 120px; }
-
         /* ─── Afbeelding in OC-paneel ─── */
         .oc-image { padding: 12px 18px; background: #ecf0f1; border-top: 2px solid #ddd; text-align: center; }
         .oc-image img { max-width: 100%; max-height: 340px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: zoom-in; transition: transform 0.2s; display: inline-block; }
         .oc-image img:hover { transform: scale(1.01); }
         .oc-image .caption { font-size: 0.85rem; color: #7f8c8d; margin-top: 8px; font-style: italic; }
-
         /* ─── Lightbox voor fullscreen weergave ─── */
         .img-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 30px; cursor: zoom-out; }
         .img-lightbox.open { display: flex; }
         .img-lightbox img { max-width: 95vw; max-height: 95vh; border-radius: 6px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
         .img-lightbox .close-hint { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 0.9rem; opacity: 0.7; }
-
         /* Chatbot */
         .chat-panel { background: #fff; border: 3px solid #333; border-radius: 12px; height: 720px; display: flex; flex-direction: column; overflow: hidden; }
         .chat-header { background: #2c3e50; color: #fff; padding: 12px 18px; display: flex; align-items: center; gap: 12px; }
@@ -129,7 +116,6 @@
         .chat-hints { padding: 10px 14px; background: #f8f9fa; border-top: 1px solid #eee; display: flex; flex-wrap: wrap; gap: 6px; }
         .chat-hints button { background: #ecf0f1; color: #2c3e50; padding: 6px 12px; font-size: 0.82rem; border-radius: 14px; border: 1px solid #d5dbdb; font-weight: 500; }
         .chat-hints button:hover { background: #dfe6e9; }
-
         /* Livefeed */
         .feed-section { margin-top: 25px; border-top: 3px solid #eee; padding-top: 15px; }
         .feed-section h3 { color: var(--primary); }
@@ -145,7 +131,6 @@
     </style>
 </head>
 <body>
-
     <!-- ═══════════ SCHERM 0: INLOGGEN ═══════════ -->
     <div id="screen0" class="screen">
         <div class="login-wrap">
@@ -165,7 +150,6 @@
             <p class="hint">Je naam en klas worden onthouden op dit apparaat.</p>
         </div>
     </div>
-
     <!-- ═══════════ SCHERM 1 ═══════════ -->
     <div id="screen1" class="screen hidden">
         <div class="topbar">
@@ -182,20 +166,17 @@
             <div><label>MV</label><input type="text" onkeydown="handleWordSync(event, 3)"></div>
             <div><label>Gez.</label><input type="text" onkeydown="handleWordSync(event, 4)"></div>
         </div>
-
         <!-- Preview van de bak (direct zichtbaar op scherm 1) -->
         <div class="bak-preview" id="bak-preview">
             <span class="preview-label">Toegevoegd aan de bak:</span>
             <span class="preview-empty" id="preview-empty">Nog geen woorden. Typ een woord of woordgroep in een van de velden hierboven en druk op Enter.</span>
             <div class="preview-chips" id="preview-chips"></div>
         </div>
-
         <div class="nav-bar">
             <button class="btn-hard-reset" onclick="hardReset()">HARDE RESET (eigen klas)</button>
             <button class="btn-next" onclick="showScreen(3)">NAAR HET SPEELVELD (HUSSelen) →</button>
         </div>
     </div>
-
     <!-- ═══════════ SCHERM 3 ═══════════ -->
     <div id="screen3" class="screen hidden">
         <div class="topbar">
@@ -215,7 +196,6 @@
             <button class="btn-next" onclick="showScreen(4)">NAAR OEFENING 2: MUTATIE →</button>
         </div>
     </div>
-
     <!-- ═══════════ SCHERM 4 ═══════════ -->
     <div id="screen4" class="screen hidden">
         <div class="topbar">
@@ -252,8 +232,7 @@
             <button class="btn-next" onclick="showScreen(5)">NAAR OEFENING 3: MUTATIE OPSTELLEN →</button>
         </div>
     </div>
-
-    <!-- ═══════════ SCHERM 5: Oefening 3 — Verhoor dader + Mutatie ═══════════ -->
+    <!-- ═══════════ SCHERM 5: Oefening 3 — Verhoor verdachte + Mutatie ═══════════ -->
     <div id="screen5" class="screen hidden">
         <div class="topbar">
             <div>Ingelogd als <strong id="tb-name-5">—</strong> · Klas <strong id="tb-class-5">—</strong></div>
@@ -261,20 +240,9 @@
         </div>
         <h2>5. Oefening 3: Mutatie opstellen</h2>
         <p>Je hoort zo een OC-melding. <strong>Jij bent de agent en ondervraagt de verdachte in de chat</strong> om alle informatie te verzamelen. Stel daarna zelf een complete mutatie op volgens de ASTMA-structuur.</p>
-
         <div class="oc-panel">
             <div class="oc-header"><span class="dot"></span> OPERATIONEEL CENTRUM — LIVE MELDING</div>
-            <div class="oc-text" id="oc-tekst">Hier het Operationeel Centrum.
-
-Eenheid 21-05, ik heb een melding voor jullie.
-
-Op de hoek van de Langestraat met de Kamp in Amersfoort wordt een persoon gesignaleerd die staat te urineren in de openbare ruimte. Een passant heeft dit gemeld.
-
-Signalement: man, rond 1 meter 80, lichtblauwe spijkerbroek, donker jack, kaal hoofd.
-
-De persoon is nog ter plaatse. Willen jullie een kijkje nemen?
-
-Einde bericht.</div>
+            <div class="oc-text" id="oc-tekst">Bezig met laden van melding...</div>
             <div class="oc-image">
                 <img
                     src="Screenshot%202026-09-14%2014.39.07.png"
@@ -289,33 +257,22 @@ Einde bericht.</div>
                 <label class="speed-label">Snelheid <input type="range" id="oc-speed" min="0.5" max="1.5" step="0.1" value="0.95" /></label>
             </div>
         </div>
-
         <div class="oefening-layout">
             <div class="chat-panel">
                 <div class="chat-header">
-                    <div class="chat-avatar">MJ</div>
+                    <div class="chat-avatar" id="chat-avatar">--</div>
                     <div class="chat-header-info">
-                        <strong>M. Jansen (23)</strong>
-                        <small>verdachte wildplassen · staande gehouden</small>
+                        <strong id="chat-name">Laden...</strong>
+                        <small id="chat-sub">verdachte wildplassen</small>
                     </div>
                 </div>
                 <div class="chat-body" id="chat-body"></div>
-                <div class="chat-hints" id="chat-hints">
-                    <button onclick="quickAsk('Mag ik uw ID zien?')">Mag ik uw ID zien?</button>
-                    <button onclick="quickAsk('Waar woont u?')">Waar woont u?</button>
-                    <button onclick="quickAsk('Wat is er precies gebeurd?')">Wat is er gebeurd?</button>
-                    <button onclick="quickAsk('Waarom deed u dat?')">Waarom deed u dat?</button>
-                    <button onclick="quickAsk('Hebt u alcohol gedronken?')">Hebt u gedronken?</button>
-                    <button onclick="quickAsk('Waar was u mee bezig?')">Waar was u?</button>
-                    <button onclick="quickAsk('Weet u dat dit verboden is?')">Wist u dat het verboden is?</button>
-                    <button onclick="quickAsk('Wilt u nog wat verklaren?')">Wilt u nog wat verklaren?</button>
-                </div>
+                <div class="chat-hints" id="chat-hints"></div>
                 <div class="chat-input-area">
                     <input type="text" id="chat-input" placeholder="Typ je vraag aan de verdachte..." autocomplete="off" />
                     <button id="chat-send" onclick="sendChat()">Verstuur</button>
                 </div>
             </div>
-
             <div class="questions-panel">
                 <h3>Jouw mutatie</h3>
                 <div class="question-item"><label>Aanleiding</label><textarea id="m-aanleiding" placeholder="Wie ben je, wat is je bevoegdheid, wat is je taak en wat kreeg je binnen?"></textarea></div>
@@ -326,12 +283,10 @@ Einde bericht.</div>
                 <div class="save-status" id="mutatie-save-status"></div>
             </div>
         </div>
-
         <div class="feed-section">
             <h3>📡 Live mutaties van klas <span id="feed-class-name-5"></span></h3>
             <div class="answers-feed" id="mutaties-feed"><p style="color:#888;">Nog geen mutaties...</p></div>
         </div>
-
         <div class="nav-bar">
             <button onclick="showScreen(4)">← Terug naar Oefening 2</button>
             <button onclick="showScreen(1)">← Naar Whiteboard</button>
@@ -339,16 +294,13 @@ Einde bericht.</div>
             <button class="btn-hard-reset" onclick="resetMyClass()">Reset klas (alles)</button>
         </div>
     </div>
-
     <div class="img-lightbox" id="img-lightbox" onclick="closeLightbox()">
         <span class="close-hint">Klik om te sluiten ✕</span>
         <img id="img-lightbox-img" src="" alt="Vergrote afbeelding" />
     </div>
-
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getDatabase, ref, set, onValue, push, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
     const firebaseConfig = {
         apiKey: "AIzaSyC-Of0AUOd-kVo2RKxYc-68Gr-RO4HdRk0",
         authDomain: "q2aangifteles2.firebaseapp.com",
@@ -358,22 +310,18 @@ Einde bericht.</div>
         messagingSenderId: "696806554615",
         appId: "1:696806554615:web:bd877b1caee23c5283ccf2"
     };
-
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-
     let userName = localStorage.getItem('kl_name') || '';
     let userClass = localStorage.getItem('kl_class') || '';
     let unsubscribers = [];
     let activeListeners = null;
-
     function basePath() { return `shared/${encodeKey(userClass)}`; }
     function encodeKey(s) { return String(s || '').replace(/[.#$\[\]\/]/g, '_'); }
     function escapeHtml(s) {
         return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
             .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
-
     // ════════════ INLOG ════════════
     window.doLogin = function() {
         const name = document.getElementById('login-name').value.trim();
@@ -388,9 +336,9 @@ Einde bericht.</div>
         const fc = document.getElementById('feed-class-name'); if (fc) fc.textContent = cls;
         const fc5 = document.getElementById('feed-class-name-5'); if (fc5) fc5.textContent = cls;
         startAllListeners();
+        assignCasus();
         showScreen(1);
     };
-
     window.doLogout = function() {
         if (!confirm('Weet je zeker dat je wilt uitloggen?')) return;
         stopOC();
@@ -402,7 +350,6 @@ Einde bericht.</div>
         document.getElementById('login-class').value = '';
         showScreen(0);
     };
-
     function tryAutoLogin() {
         if (userName && userClass) {
             document.getElementById('login-name').value = userName;
@@ -412,7 +359,6 @@ Einde bericht.</div>
             showScreen(0);
         }
     }
-
     // ════════════ LISTENERS ════════════
     function addListener(unsub) { if (typeof unsub === 'function') unsubscribers.push(unsub); }
     function stopAllListeners() {
@@ -431,7 +377,6 @@ Einde bericht.</div>
         const mfeed = document.getElementById('mutaties-feed');
         if (mfeed) mfeed.innerHTML = '<p style="color:#888;">Nog geen mutaties...</p>';
     }
-
     // ─── Hulpfunctie: update preview op scherm 1 ───
     function updateBakPreview(data) {
         const chips = document.getElementById('preview-chips');
@@ -461,11 +406,9 @@ Einde bericht.</div>
             chips.appendChild(chip);
         });
     }
-
     function startAllListeners() {
         if (activeListeners) return;
         activeListeners = true;
-
         addListener(onValue(ref(db, basePath() + '/sentences'), s => {
             const div = document.getElementById('displaySentence'); if (!div) return;
             div.innerHTML = '';
@@ -474,7 +417,6 @@ Einde bericht.</div>
                 const z = document.createElement('div'); z.innerText = t; div.appendChild(z);
             });
         }));
-
         addListener(onValue(ref(db, basePath() + '/drawing'), s => {
             const data = s.val() || {};
             ['canvas1','canvas3'].forEach(id => {
@@ -490,11 +432,8 @@ Einde bericht.</div>
                 });
             });
         }));
-
         addListener(onValue(ref(db, basePath() + '/words'), (snapshot) => {
             const data = snapshot.val();
-
-            // Woorden in de speelveld-bak (scherm 3)
             document.querySelectorAll('.word-card').forEach(el => { if (!data || !data[el.id]) el.remove(); });
             if (data) {
                 Object.keys(data).forEach(id => {
@@ -532,11 +471,8 @@ Einde bericht.</div>
                     }
                 });
             }
-
-            // Preview op scherm 1
             updateBakPreview(data);
         }));
-
         addListener(onValue(ref(db, basePath() + '/answers'), (snap) => {
             const feed = document.getElementById('answers-feed'); if (!feed) return;
             const data = snap.val();
@@ -575,7 +511,6 @@ Einde bericht.</div>
                 });
             });
         }));
-
         addListener(onValue(ref(db, basePath() + '/mutaties'), (snap) => {
             const feed = document.getElementById('mutaties-feed'); if (!feed) return;
             const data = snap.val();
@@ -598,6 +533,9 @@ Einde bericht.</div>
                 const isMine = (item.name === userName);
                 const iReviewed = item.reviews && userName && item.reviews[encodeKey(userName)];
                 let html = `<span class="student-name">${escapeHtml(item.name || 'Onbekend')}${isMine ? ' (jij)' : ''}</span>`;
+                if (item.casus) {
+                    html += `<div style="font-size:0.82rem; color:#e74c3c; font-weight:bold; margin-bottom:6px;">📋 Verdachte: ${escapeHtml(item.casus)}</div>`;
+                }
                 MK.forEach(([k, label]) => {
                     const answer = (item.parts && item.parts[k]) ? item.parts[k] : '—';
                     html += `<div class="qa"><span class="q">${label}:</span> <span class="a">${escapeHtml(answer)}</span></div>`;
@@ -620,7 +558,6 @@ Einde bericht.</div>
             });
         }));
     }
-
     // ════════════ PEN ════════════
     const setupCanvas = (id) => {
         const canvas = document.getElementById(id); if (!canvas) return;
@@ -644,7 +581,6 @@ Einde bericht.</div>
         };
     };
     setupCanvas('canvas1'); setupCanvas('canvas3');
-
     // ════════════ DRAG & DROP ════════════
     let draggedId = null;
     let dragOffset = { x: 0, y: 0 };
@@ -672,7 +608,6 @@ Einde bericht.</div>
         update(ref(db, basePath() + '/words/' + id), { location: targetLoc, x: x, y: y });
         draggedId = null;
     };
-
     // ════════════ INPUT ════════════
     window.handleSentenceEnter = (e) => {
         if (e.key === "Enter" && e.target.value && userClass) {
@@ -686,7 +621,6 @@ Einde bericht.</div>
             e.target.value = "";
         }
     };
-
     // ════════════ RESET ════════════
     window.hardReset = function() {
         if (!userClass) return;
@@ -712,7 +646,6 @@ Einde bericht.</div>
         if (!userClass) return;
         if (confirm(`Reset klas ${userClass}? ALLES wordt gewist.`)) remove(ref(db, basePath()));
     };
-
     // ════════════ NAVIGATIE ════════════
     window.showScreen = (n) => {
         document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
@@ -720,12 +653,10 @@ Einde bericht.</div>
         if (n === 4) attachAnswerListeners();
         if (n === 5) initChatbot();
     };
-
     // ════════════ OEFENING 2 ════════════
     const QUESTION_KEYS = ['wie', 'wat', 'waar', 'wanneer', 'waarom', 'wijze'];
     let saveTimer = null;
     let answersInitialized = false;
-
     function attachAnswerListeners() {
         if (answersInitialized) return;
         answersInitialized = true;
@@ -746,7 +677,6 @@ Einde bericht.</div>
             });
         });
     }
-
     function saveMyAnswers() {
         if (!userName || !userClass) return;
         const payload = { name: userName, timestamp: Date.now(), answers: {} };
@@ -758,7 +688,6 @@ Einde bericht.</div>
             .then(() => { document.getElementById('save-status').textContent = '✓ Opgeslagen om ' + new Date().toLocaleTimeString('nl-NL'); })
             .catch(err => { document.getElementById('save-status').textContent = '⚠️ Fout: ' + err.message; });
     }
-
     // ════════════ OEFENING 3 — OC-MELDING VOORLEZEN ════════════
     let ocUtterance = null;
     window.speakOC = function() {
@@ -779,167 +708,187 @@ Einde bericht.</div>
         ocUtterance = null;
     };
 
-    // ════════════ OEFENING 3 — CHATBOT (DADER M. JANSEN) ════════════
+    // ════════════ OEFENING 3 — 5 CASUSSEN ROND WILDPLASSEN ════════════
+    const CASUSSEN = [
+        {
+            id: 0,
+            avatar: "MJ",
+            name: "M. Jansen (23)",
+            sub: "verdachte wildplassen · spijtoptant",
+            ocText: `Hier het Operationeel Centrum.
+Eenheid 21-05, ik heb een melding van wildplassen voor jullie.
+Op de hoek van de Langestraat met de Kamp in Amersfoort wordt een persoon gesignaleerd die staat te urineren in de openbare ruimte. Een passant heeft dit gemeld.
+Signalement: man, rond 1 meter 80, lichtblauwe spijkerbroek, donker jack, kaal hoofd.
+Verdachte toont spijt en werkt mee. Willen jullie poolshoogte nemen?
+Einde bericht.`,
+            welcomeMsg: "Ja... hallo. Ik ben M. Jansen, 23 jaar en woonachtig in Amersfoort. De agent heeft me net staande gehouden voor wildplassen. Wat wilt u weten?",
+            hints: [
+                "Mag ik uw ID zien?", "Waar woont u?", "Wat is er gebeurd?", "Waarom deed u dat?", "Hebt u gedronken?", "Wist u dat het verboden is?", "Wilt u nog wat verklaren?"
+            ],
+            kb: [
+                { keys: ['id', 'identiteitsbewijs', 'paspoort', 'rijbewijs', 'mag ik uw id'], answers: ["Ja, moment. Hier is mijn rijbewijs. M. Jansen, woonachtig in Amersfoort."] },
+                { keys: ['naam', 'wie bent u', 'wie ben je', 'hoe heet'], answers: ["M. Jansen. Martijn Jansen, 23 jaar en woonachtig in Amersfoort."] },
+                { keys: ['woonplaats', 'waar woont', 'adres'], answers: ["Ik ben woonachtig in Amersfoort. Gewoon hier in het centrum."] },
+                { keys: ['gebeurd', 'geplast', 'wat deed u'], answers: ["Ik moest heel nodig plassen. Ik heb het niet meer gehaald tot een toilet."] },
+                { keys: ['waarom', 'reden'], answers: ["Ik had een paar biertjes op en kon nergens een wc vinden."] },
+                { keys: ['gedronken', 'alcohol', 'bier'], answers: ["Drie of vier biertjes, niet overdreven veel."] },
+                { keys: ['verboden', 'wist u dat'], answers: ["Ja, dat weet ik. Het was gewoon een stomme actie, het spijt me."] },
+                { keys: ['verklaren', 'nog wat'], answers: ["Alleen dat ik er erg veel spijt van heb. Verder niets."] }
+            ],
+            fallback: ["Dat weet ik niet precies. Kunt u de vraag anders stellen?", "Ik begrijp de vraag niet helemaal. Wat bedoelt u?"]
+        },
+        {
+            id: 1,
+            avatar: "RJ",
+            name: "R. de Jong (28)",
+            sub: "verdachte wildplassen & openbare dronkenschap (art. 453 WvSr)",
+            ocText: `Hier het Operationeel Centrum.
+Eenheid 21-05, spoedmelding op de Utrechtsestraat in Amersfoort.
+Een man loopt hevig zwalkend over straat en staat nu openlijk tegen een etalageruit van een kledingwinkel te plassen. Voorbijgangers moeten eromheen lopen. Hij stinkt zwaar naar alcohol en valt bijna om.
+Signalement: man, ca. 28 jaar, rode hoodie, grijze joggingbroek, kort bruin haar, zwalkende gang.
+Mogelijke aanhouding voor openbare dronkenschap + wildplassen.
+Einde bericht.`,
+            welcomeMsg: "Lal... hallooo *hiks*... Wie ben jijjj? Ikuh... Remco de Jong... 28 ofzo... uit Soest... Waarissumun bier?! *zwalkt*",
+            hints: [
+                "Mag ik uw ID zien?", "Waar woont u?", "Hoeveel heeft u gedronken?", "Waarom plast u tegen de etalage?", "U bent aangehouden voor dronkenschap!"
+            ],
+            kb: [
+                { keys: ['id', 'naam', 'wie', 'rijbewijs'], answers: ["*hiks* Remco de Jong... 28 jaar... uit Soest... rijbewijs zit ergens in m'n zak... *valt bijna om*"] },
+                { keys: ['woont', 'adres', 'woonplaats'], answers: ["Soest... of Amersfoort... ergens in Soest woongik... *brabbelt*"] },
+                { keys: ['gedronken', 'bier', 'hoeveel', 'alcohol', 'dronken'], answers: ["Gewoon... kistje bier... paar liter wodka... ik ben helemaal niet dronken man! *zwalkt hevig*"] },
+                { keys: ['etalage', 'geplast', 'waarom', 'wildplassen'], answers: ["Moest plassen jonguh! Etalage leek net op een plei... wc... *hiks*"] },
+                { keys: ['aangehouden', 'dronkenschap', 'bureau', 'mee'], answers: ["Aangehouden?! Waarvoor?! Ik loop gewoon rustig naar huis toch... *valt tegen muur*"] },
+                { keys: ['verklaren', 'nog wat'], answers: ["Ik wil nog een bier! Geef me een bier! *brabbelt onverstaanbaar*"] }
+            ],
+            fallback: ["*brabbelt onverstaanbaar*... Wat zeg je nouuu?", "Ik snap er niks van... *hiks*... geef bier man!"]
+        },
+        {
+            id: 2,
+            avatar: "GW",
+            name: "G. Willems (54)",
+            sub: "verdachte wildplassen · dakloze / veelpleger (100e aanhouding)",
+            ocText: `Hier het Operationeel Centrum.
+Eenheid 21-05, melding in de Veenestraat te Amersfoort.
+Bekende dakloze staat opnieuw te plassen in het portiek van een winkelpand.
+Signalement: man, ca. 54 jaar, grijze baard, versleten donkere jas, grote lege rugzak.
+Dit is reeds de 100e controle/melding voor wildplassen op naam van betrokkene.
+Einde bericht.`,
+            welcomeMsg: "Dag agent. Tja, Gerrit Willems weer, 54 jaar, Geen Vaste Woon- of Verblijfplaats. Het is mijn 100e keer geloof ik... De opvang was al dicht. Schrijf de bon maar uit...",
+            hints: [
+                "Heeft u een ID bij u?", "Waarom plast u in het portiek?", "Waar slaapt u vanacht?", "Weet u dat dit de 100e keer is?", "Wilt u hulp van de opvang?"
+            ],
+            kb: [
+                { keys: ['id', 'naam', 'wie', 'adres', 'woont'], answers: ["Gerrit Willems, 54 jaar. Geen Vaste Woon- of Verblijfplaats (GVVP). Postadres is bij de Maatschappelijke Opvang Amersfoort."] },
+                { keys: ['100', 'honderd', 'veelpleger', 'vroeger'], answers: ["Ja, de teller staat op 100 vandaag. Jullie collega's kennen me onderhand wel. Schrijf de bon maar uit, geld heb ik toch niet."] },
+                { keys: ['portiek', 'waarom', 'geplast', 'wc'], answers: ["Alle wc's in het centrum zijn 's nachts dicht. Waar moet ik anders heen, agent? In m'n broek?"] },
+                { keys: ['opvang', 'slapen', 'hulp'], answers: ["De nachtopvang zat om 22:00 uur al vol. Ik sliep op straat."] },
+                { keys: ['verklaren', 'nog wat'], answers: ["Schrijf de bekeuring maar op mijn postbusadres. Ik zoek wel weer een droge plek."] }
+            ],
+            fallback: ["Dat weet u beter dan ik, agent. Ik ben gewoon dakloos.", "Tja, het is niet anders. Vraag maar wat u moet vragen voor uw rapportje."]
+        },
+        {
+            id: 3,
+            avatar: "HD",
+            name: "H. van Dijk (61)",
+            sub: "verdachte wildplassen · medische noodzaak (diabetes)",
+            ocText: `Hier het Operationeel Centrum.
+Eenheid 21-05, melding bij het parkeerterrein van het Eemplein te Amersfoort.
+Een oudere heer is gesignaleerd die achter de heg stond te plassen.
+Signalement: man, ca. 60-65 jaar, net grijs pak, bril, keurige uitstraling.
+Betrokkene geeft aan een medisch probleem te hebben. Willen jullie dit verifiëren?
+Einde bericht.`,
+            welcomeMsg: "Goedendag agent... Mijn excuses, ik schaam me kapot. Ik ben Henk van Dijk, 61 jaar, uit Amersfoort-Noord. Ik heb ernstige diabetes en slik plaspillen, ik kon het echt niet meer ophouden...",
+            hints: [
+                "Mag ik uw ID zien?", "Heeft u een medische verklaring?", "Waarom kon u niet naar een wc?", "Voelt u zich verder goed?", "Wilt u nog wat verklaren?"
+            ],
+            kb: [
+                { keys: ['id', 'naam', 'wie', 'adres', 'woont'], answers: ["Henk van Dijk, 61 jaar. Ik woon aan de Ringweg in Amersfoort-Noord. Hier is mijn identiteitskaart."] },
+                { keys: ['medisch', 'suiker', 'diabetes', 'ziek', 'plaspillen'], answers: ["Ik heb diabetes type 1 en slik zware vochtdrijvers op doktersvoorschrift. Als de drang komt, heb ik hooguit 60 seconden voordat het misgaat."] },
+                { keys: ['waarom', 'heg', 'geplast', 'wc'], answers: ["Ik was op weg naar mijn auto op het Eemplein. Alle horeca was dicht en ik kon het echt niet meer redden. Ik ben achter de heg gekropen uit schaamte."] },
+                { keys: ['excuses', 'spijt', 'politie'], answers: ["Het spijt me verschrikkelijk. Ik ben nog nooit met de politie in aanraking geweest. Ik hoop dat u begrip heeft voor mijn situatie."] },
+                { keys: ['verklaren', 'nog wat'], answers: ["Ik wil graag laten opnemen in het verslag dat het om een medische noodsituatie ging vanwege mijn suikerziekte."] }
+            ],
+            fallback: ["Excuses, ik ben een beetje van de kaart. Wat vroeg u precies?", "Mijn excuses, ik probeer gewoon heel netjes antwoord te geven op uw vraag."]
+        },
+        {
+            id: 4,
+            avatar: "KB",
+            name: "K. Bakker (22)",
+            sub: "verdachte wildplassen & belediging ambtenaar (art. 267 WvSr)",
+            ocText: `Hier het Operationeel Centrum.
+Eenheid 21-05, assistentie gevraagd in de Muurhuizen te Amersfoort.
+Verdachte plaste tegen een monumentale muur. Toen een passant er wat van zei, werd hij agressief. Blijft ontkennen en scheldt agenten uit.
+Signalement: man, ca. 22 jaar, zwarte hoodie, petje, agressieve houding.
+Mogelijke aanhouding voor belediging ('mongool') + wildplassen.
+Einde bericht.`,
+            welcomeMsg: "Wat moet je man?! Ik heb helemaal niet geplast! Je ziet ze vliegen man, mongool! Ik keek gewoon op mijn mobiel! Rot op!",
+            hints: [
+                "Werk mee en laat je ID zien!", "Waarom noemt u mij mongool?", "U bent aangehouden voor belediging!", "Waar woont u?", "Bekent u dat u geplast heeft?"
+            ],
+            kb: [
+                { keys: ['id', 'naam', 'wie', 'adres', 'woont'], answers: ["Kevin Bakker, 22 uit Leusden! En nou opzouten! Je krijgt helemaal niks van me te zien, vuile wout!"] },
+                { keys: ['mongool', 'beledig', 'uitschelden', 'schelden'], answers: ["Je bent ook een mongool! Je beschuldigt me zomaar van iets wat ik niet gedaan heb! Vlieg op man!"] },
+                { keys: ['geplast', 'wildplassen', 'ontken', 'gezien'], answers: ["Ik heb niet geplast sukkel! Ik stond mijn riem goed te doen en een appje te sturen! Je hebt stront in je ogen!"] },
+                { keys: ['aangehouden', 'bureau', 'boei', 'handboeien'], answers: ["Raak me niet aan man! Aangehouden?! Waarvoor?! Ik pik dit niet, ik klaag je aan!"] },
+                { keys: ['verklaren', 'nog wat'], answers: ["Ik verklaar dat jullie waardeloze wouten zijn en dat ik niks gedaan heb!"] }
+            ],
+            fallback: ["Vlieg op man! Waar bemoei je je mee?!", "Ik zeg niks meer tegen jou, vieze mongool!"]
+        }
+    ];
+
+    let currentCasus = null;
     let chatbotInitialized = false;
     let botTypingTimer = null;
 
-    const KB = [
-        { keys: ['id', 'id-kaart', 'identiteitsbewijs', 'identiteit', 'paspoort', 'rijbewijs', 'mag ik uw id'], answers: [
-            "Ja, moment. Hier is mijn rijbewijs. M. Jansen, woonachtig in Amersfoort.",
-            "Ja hoor. Ik heb mijn ID bij me. Hier is het.",
-            "Ja, alstublieft. Mijn identiteitsbewijs."
-        ]},
-        { keys: ['naam', 'wie bent u', 'wie ben je', 'hoe heet', 'uw naam', 'je naam'], answers: [
-            "M. Jansen. Martijn Jansen, woonachtig in Amersfoort.",
-            "Martijn Jansen. Ik ben 23 en woonachtig in Amersfoort."
-        ]},
-        { keys: ['leeftijd', 'hoe oud'], answers: [
-            "23 jaar. Ik ben woonachtig in Amersfoort."
-        ]},
-        { keys: ['geboorte', 'geboortedatum'], answers: [
-            "Dat weet ik niet precies uit mijn hoofd. Ik kan het wel opzoeken als dat nodig is."
-        ]},
-        { keys: ['woonplaats', 'waar woont', 'adres', 'waar komt u vandaan', 'waar bent u woonachtig'], answers: [
-            "Ik ben woonachtig in Amersfoort. Daar woon ik samen met mijn vriendin.",
-            "Ik ben woonachtig in Amersfoort. Gewoon in de stad.",
-            "Woonachtig in Amersfoort, ja. Dat klopt."
-        ]},
-        { keys: ['wat is er gebeurd', 'wat deed u', 'wat heb je gedaan', 'wat gebeurde', 'wat was er aan de hand', 'wat was je aan het doen'], answers: [
-            "Ik moest heel nodig plassen. Ik heb het niet meer gehaald tot een toilet.",
-            "Ik stond tegen de muur te plassen. Dat klopt."
-        ]},
-        { keys: ['waarom', 'reden', 'motief', 'waarom deed', 'excuses'], answers: [
-            "Ik moest gewoon heel nodig. Ik kon niets anders vinden.",
-            "Ik had te veel gedronken en ik moest nodig. Ik heb het niet op tijd gehaald."
-        ]},
-        { keys: ['waar', 'locatie', 'plek', 'waar was het'], answers: [
-            "Op de Langestraat, in het centrum. Bij de hoek met de Kamp.",
-            "Langestraat, hoek van de Kamp. Gewoon in het uitgaansgebied."
-        ]},
-        { keys: ['wanneer', 'hoe laat', 'tijd', 'welke dag', 'welke datum', 'welke tijd'], answers: [
-            "Rond kwart voor twaalf 's nachts. Vrijdagavond.",
-            "Vrijdag, rond 23:45. Ja, zo rond die tijd."
-        ]},
-        { keys: ['op welke wijze', 'hoe deed', 'manier', 'wijze', 'hoe precies'], answers: [
-            "Ik stond gewoon rechtop tegen de muur. Ik deed niks geks.",
-            "Ik stond met mijn rug naar de straat, tegen de muur aan. Ik was aan het plassen."
-        ]},
-        { keys: ['drinken', 'gedronken', 'alcohol', 'dronken', 'onder invloed', 'bier'], answers: [
-            "Ja, ik heb wat gedronken vanavond. Een paar biertjes. Niet overdreven.",
-            "Ik was uit. Ik had wel wat op. Maar ik was nog gewoon aanspreekbaar."
-        ]},
-        { keys: ['hoeveel', 'hoeveel gedronken', 'hoeveel bier'], answers: [
-            "Drie of vier biertjes, zoiets. Ik heb niet bijgehouden."
-        ]},
-        { keys: ['verboden', 'wist u dat', 'weet u dat', 'op de hoogte'], answers: [
-            "Ja, ik weet dat het eigenlijk niet mag. Het was gewoon even een stomme actie.",
-            "Dat weet ik. Ik had het ook niet moeten doen."
-        ]},
-        { keys: ['toilet', 'wc', 'openbaar toilet', 'waarom niet naar een toilet'], answers: [
-            "Ik wist niet waar er een was. Ik kon niets vinden in de buurt.",
-            "Ik heb gezocht, maar ik kon er zo snel geen vinden."
-        ]},
-        { keys: ['waar kwam u vandaan', 'waar was je', 'stappen', 'uitgeweest', 'kroeg'], answers: [
-            "Ik was uit met een paar vrienden. Gewoon wat gedronken in de stad.",
-            "Ik was met vrienden uit. We liepen wat rond in het centrum."
-        ]},
-        { keys: ['waar ging u naartoe', 'bestemming', 'waar heen'], answers: [
-            "Ik was op weg naar huis. Ik wilde eigenlijk gewoon naar bed.",
-            "Naar huis. Ik was klaar met stappen."
-        ]},
-        { keys: ['alleen', 'met wie', 'vrienden', 'wie was erbij'], answers: [
-            "Ik was alleen op dat moment. Mijn vrienden waren al eerder weg.",
-            "Ik was met vrienden, maar die waren al weg. Ik stond er alleen."
-        ]},
-        { keys: ['signalement', 'beschrijf uzelf', 'kleding'], answers: [
-            "Ik droeg een donker jack en een lichtblauwe spijkerbroek. En ik heb een kaal hoofd.",
-            "Gewone kleren: spijkerbroek, jack. Verder niets bijzonders."
-        ]},
-        { keys: ['hoe voelt u zich', 'spijt', 'sorry', 'hoe is het nu'], answers: [
-            "Ik voel me een beetje stom, eerlijk gezegd. Het was gewoon een domme actie.",
-            "Ik heb er spijt van. Ik had het niet moeten doen."
-        ]},
-        { keys: ['agressief', 'verzet', 'ruzie', 'werkten mee'], answers: [
-            "Nee, ik heb niks gedaan. Ik heb gewoon mijn gegevens gegeven.",
-            "Ik heb niet tegengestribbeld. Waarom zou ik?"
-        ]},
-        { keys: ['eerdere', 'strafblad', 'antecedenten', 'eerder gepakt', 'bekend bij politie'], answers: [
-            "Nee. Ik ben nooit eerder met de politie in aanraking geweest.",
-            "Nee, dit is de eerste keer. Ik heb geen strafblad."
-        ]},
-        { keys: ['wat gebeurt er nu', 'wat nu', 'vervolg', 'consequentie', 'straf'], answers: [
-            "Ik begreep van die agent dat ik een boete krijg. Dat is het toch?",
-            "Ik krijg een bekeuring, zei hij. Verder niet."
-        ]},
-        { keys: ['bekeuring', 'boete', 'strafbedrag'], answers: [
-            "Ja, daar kwam het op neer. Een boete voor wildplassen.",
-            "Er is een bekeuring aangezegd. Ik krijg die thuisgestuurd, geloof ik."
-        ]},
-        { keys: ['aangehouden', 'meegenomen', 'bureau'], answers: [
-            "Nee, ik ben niet meegenomen naar het bureau. Ik mocht gewoon gaan na de bekeuring.",
-            "Ik ben niet aangehouden. Ik heb mijn gegevens gegeven en mocht daarna weg."
-        ]},
-        { keys: ['wilt u nog wat verklaren', 'nog wat verklaren', 'nog iets verklaren', 'nog verklaren', 'nog iets toe te voegen', 'nog iets kwijt'], answers: [
-            "Nee, volgens mij heb ik alles wel gezegd. Ik heb er spijt van, dat is alles.",
-            "Ik wil nog wel zeggen dat ik het niet expres deed. Ik was gewoon stom bezig.",
-            "Nee, verder niets. Ik heb verteld wat er gebeurd is.",
-            "Alleen dat ik het zelf ook stom vind. Verder niets."
-        ]},
-        { keys: ['hallo', 'hoi', 'goedemorgen', 'goedemiddag', 'goedenavond', 'hey'], answers: [
-            "Hallo. Ja, ik weet dat ik staande ben gehouden. Wat wilt u weten?",
-            "Hoi. Eh... ja. Wat wilt u vragen?"
-        ]},
-        { keys: ['dank', 'bedankt', 'thanks'], answers: [
-            "Ja, oké.",
-            "Prima. Is dat alles?"
-        ]},
-        { keys: ['advocaat', 'rechtsbijstand'], answers: [
-            "Nee, dat leek me niet nodig. Het is maar een bekeuring.",
-            "Ik heb geen advocaat. Het gaat toch om wildplassen?"
-        ]},
-        { keys: ['getuige', 'wie zag', 'mensen in de buurt'], answers: [
-            "Er liepen wel mensen langs, ja. Ik weet niet of ze het gezien hebben.",
-            "Er waren wel wat mensen op straat. Ik heb er niet echt op gelet."
-        ]},
-        { keys: ['melder', 'wie belde', 'wie heeft gebeld'], answers: [
-            "Geen idee wie er gebeld heeft. Ik heb niemand horen bellen.",
-            "Ik weet niet wie de politie heeft gebeld."
-        ]},
-        { keys: ['weer', 'omstandigheden'], answers: [
-            "Het was droog. Gewoon normaal weer voor de tijd van het jaar."
-        ]},
-        { keys: ['muur', 'pand', 'gebouw'], answers: [
-            "Een muur van een gebouw daar. Ik weet niet welk pand precies.",
-            "Gewoon tegen de muur van een winkelpand, geloof ik."
-        ]},
-        { keys: ['rook', 'geur', 'zag u iets'], answers: [
-            "Nee, er was niets bijzonders. Gewoon een uitgaansavond."
-        ]},
-        { keys: ['collega', 'agent', 'politie', 'hoeveel agenten'], answers: [
-            "Er was één agent die mij aansprak. Ik zag niet echt meer agenten.",
-            "Eén agent kwam naar me toe. Volgens mij was hij alleen."
-        ]},
-        { keys: ['help', 'wat moet ik doen', 'hoe begin'], answers: [
-            "Ik weet niet wat u van me wilt. Vraag maar wat u wilt weten.",
-            "Ik vertel gewoon wat er gebeurd is. Wat wilt u weten?"
-        ]},
-        { keys: ['ben je klaar', 'einde', 'nog iets'], answers: [
-            "Eh, ik denk dat ik alles wel gezegd heb.",
-            "Volgens mij heb ik alles verteld. Klopt dat?"
-        ]}
-    ];
+    function assignCasus() {
+        if (!userName || !userClass) return;
+        const str = (userName + '_' + userClass).toLowerCase();
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = (hash << 5) - hash + str.charCodeAt(i);
+            hash |= 0;
+        }
+        const idx = Math.abs(hash) % CASUSSEN.length;
+        currentCasus = CASUSSEN[idx];
+        applyCasusToUI();
+    }
 
-    const FALLBACK = [
-        "Dat weet ik niet precies. Kunt u de vraag anders stellen?",
-        "Eh... daar heb ik geen antwoord op. Sorry.",
-        "Ik begrijp de vraag niet helemaal. Wat bedoelt u?",
-        "Dat zou ik niet weten. Kunt u het iets duidelijker vragen?"
-    ];
+    function applyCasusToUI() {
+        if (!currentCasus) return;
+        const ocEl = document.getElementById('oc-tekst');
+        if (ocEl) ocEl.innerText = currentCasus.ocText;
+
+        const avatarEl = document.getElementById('chat-avatar');
+        if (avatarEl) avatarEl.innerText = currentCasus.avatar;
+
+        const nameEl = document.getElementById('chat-name');
+        if (nameEl) nameEl.innerText = currentCasus.name;
+
+        const subEl = document.getElementById('chat-sub');
+        if (subEl) subEl.innerText = currentCasus.sub;
+
+        const hintsEl = document.getElementById('chat-hints');
+        if (hintsEl) {
+            hintsEl.innerHTML = '';
+            currentCasus.hints.forEach(hintText => {
+                const btn = document.createElement('button');
+                btn.innerText = hintText;
+                btn.onclick = () => window.quickAsk(hintText);
+                hintsEl.appendChild(btn);
+            });
+        }
+
+        const body = document.getElementById('chat-body');
+        if (body && body.children.length === 0) {
+            addChatMessage('bot', currentCasus.welcomeMsg);
+        }
+    }
 
     function zoekAntwoord(vraag) {
+        if (!currentCasus) assignCasus();
         const q = vraag.toLowerCase().trim();
         if (!q) return null;
-        for (const entry of KB) {
+        for (const entry of currentCasus.kb) {
             for (const key of entry.keys) {
                 if (q.includes(key)) {
                     const answers = entry.answers;
@@ -947,7 +896,7 @@ Einde bericht.</div>
                 }
             }
         }
-        return FALLBACK[Math.floor(Math.random() * FALLBACK.length)];
+        return currentCasus.fallback[Math.floor(Math.random() * currentCasus.fallback.length)];
     }
 
     function addChatMessage(role, text) {
@@ -997,18 +946,15 @@ Einde bericht.</div>
     };
 
     function initChatbot() {
+        assignCasus();
         if (chatbotInitialized) return;
         chatbotInitialized = true;
-
         const input = document.getElementById('chat-input');
         if (input) {
             input.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') { e.preventDefault(); window.sendChat(); }
             });
         }
-
-        addChatMessage('bot', "Ja... hallo. Ik ben M. Jansen, woonachtig in Amersfoort. De agent heeft me net staande gehouden. Wat wilt u van me weten?");
-
         ['m-aanleiding', 'm-situatie', 'm-toedracht', 'm-maatregelen', 'm-afhandeling'].forEach(id => {
             const el = document.getElementById(id);
             if (!el || el._bound) return;
@@ -1021,7 +967,6 @@ Einde bericht.</div>
                 saveTimer = setTimeout(saveMyMutatie, 500);
             });
         });
-
         onValue(ref(db, basePath() + '/mutaties/' + encodeKey(userName)), (snap) => {
             const data = snap.val(); if (!data || !data.parts) return;
             ['aanleiding','situatie','toedracht','maatregelen','afhandeling'].forEach(k => {
@@ -1032,13 +977,18 @@ Einde bericht.</div>
     }
 
     function saveMyMutatie() {
-        if (!userName || !userClass) return;
+        if (!userName || !userClass || !currentCasus) return;
         const parts = {};
         ['aanleiding','situatie','toedracht','maatregelen','afhandeling'].forEach(k => {
             const el = document.getElementById('m-' + k);
             parts[k] = (el && el.value) ? el.value : '';
         });
-        const payload = { name: userName, timestamp: Date.now(), parts: parts };
+        const payload = { 
+            name: userName, 
+            casus: currentCasus.name, 
+            timestamp: Date.now(), 
+            parts: parts 
+        };
         set(ref(db, basePath() + '/mutaties/' + encodeKey(userName)), payload)
             .then(() => {
                 const status = document.getElementById('mutatie-save-status');
@@ -1065,14 +1015,11 @@ Einde bericht.</div>
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') window.closeLightbox();
     });
-
     // ════════════ INIT ════════════
     setTimeout(() => {
         if ('speechSynthesis' in window) speechSynthesis.getVoices();
     }, 100);
-
     tryAutoLogin();
-
     window.ref = ref; window.db = db; window.remove = remove;
 </script>
 </body>
