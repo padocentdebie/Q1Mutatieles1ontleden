@@ -355,7 +355,13 @@
         <div class="oefening-layout">
             <div class="pdf-panel">
                 <h3>📄 Mutatie 29-1-2026 — Artikel 130</h3>
-                <embed src="mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf" type="application/pdf" />
+                <div style="padding:8px 12px; background:#ecf0f1; border-bottom:2px solid #ddd; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <button type="button" onclick="document.getElementById('pdf-file-input').click()" style="background:#3498db; color:#fff; padding:8px 14px; font-size:0.85rem; border-radius:6px;">📂 Zoek PDF op schijf</button>
+                    <button type="button" id="pdf-reset-btn" onclick="resetPdfViewer()" style="background:#7f8c8d; color:#fff; padding:8px 14px; font-size:0.85rem; border-radius:6px;">↺ Originele PDF</button>
+                    <span id="pdf-file-name" style="font-size:0.82rem; color:#555; font-style:italic;"></span>
+                    <input type="file" id="pdf-file-input" accept="application/pdf,.pdf" style="display:none;" onchange="loadLocalPdf(event)" />
+                </div>
+                <embed id="pdf-viewer" src="mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf" type="application/pdf" />
                 <div class="pdf-fallback">Werkt de PDF niet? <a href="mutatie 29-1-2026 artikel 130corrdjdebie2feb2026 (1).pdf" target="_blank" rel="noopener">Open de PDF in een nieuw tabblad</a>.</div>
             </div>
             <div class="questions-panel">
@@ -1231,6 +1237,38 @@ Einde bericht.`,
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') window.closeLightbox();
     });
+
+    // ════════════ LOKALE PDF LADEN (scherm 4) ════════════
+    let localPdfUrl = null;
+    window.loadLocalPdf = function(event) {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+        if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+            alert('Kies een PDF-bestand.');
+            return;
+        }
+        if (localPdfUrl) { URL.revokeObjectURL(localPdfUrl); localPdfUrl = null; }
+        localPdfUrl = URL.createObjectURL(file);
+        const viewer = document.getElementById('pdf-viewer');
+        if (viewer) {
+            viewer.removeAttribute('src');
+            viewer.setAttribute('src', localPdfUrl);
+            viewer.setAttribute('type', 'application/pdf');
+        }
+        const nameEl = document.getElementById('pdf-file-name');
+        if (nameEl) nameEl.textContent = '📄 ' + file.name;
+    };
+
+    window.resetPdfViewer = function() {
+        if (localPdfUrl) { URL.revokeObjectURL(localPdfUrl); localPdfUrl = null; }
+        const viewer = document.getElementById('pdf-viewer');
+        if (viewer) viewer.setAttribute('src', "mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf");
+        const input = document.getElementById('pdf-file-input');
+        if (input) input.value = '';
+        const nameEl = document.getElementById('pdf-file-name');
+        if (nameEl) nameEl.textContent = '';
+    };
+
     // ════════════ INIT ════════════
     setTimeout(() => {
         if ('speechSynthesis' in window) speechSynthesis.getVoices();
