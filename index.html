@@ -35,7 +35,7 @@
         .input-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 20px; background: #dfe6e9; padding: 15px; border-radius: 12px; }
         .input-bar input, .col-add-input { padding: 10px; border: 2px solid var(--primary); border-radius: 8px; font-size: 1rem; width: 80%; }
 
-        /* ─── Preview van de bak op scherm 1 ─── */
+        /* Preview van de bak */
         .bak-preview { margin-top: 15px; padding: 14px 18px; background: #dfe6e9; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; min-height: 50px; }
         .bak-preview .preview-label { font-weight: 700; color: var(--primary); font-size: 0.9rem; margin-right: 4px; }
         .bak-preview .preview-empty { color: #95a5a6; font-style: italic; font-size: 0.9rem; }
@@ -70,8 +70,7 @@
 
         .pdf-panel { background: #fff; border: 3px solid #333; border-radius: 12px; overflow: hidden; height: 720px; display: flex; flex-direction: column; }
         .pdf-panel h3 { margin: 0; padding: 10px 15px; background: #2c3e50; color: #fff; font-size: 1rem; letter-spacing: 1px; }
-        .pdf-panel embed, .pdf-panel iframe { flex: 1; width: 100%; border: 0; }
-        .pdf-fallback { padding: 20px; font-size: 0.9rem; color: #555; }
+        .pdf-panel iframe { flex: 1; width: 100%; border: 0; }
 
         .questions-panel { background: #f8f9fa; border: 3px solid #333; border-radius: 12px; padding: 20px; height: 720px; overflow-y: auto; }
         .questions-panel h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid #ccc; padding-bottom: 8px; }
@@ -91,13 +90,11 @@
         .oc-controls .speed-label { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #555; margin-left: auto; }
         .oc-controls input[type=range] { width: 120px; }
 
-        /* ─── Afbeelding in OC-paneel ─── */
         .oc-image { padding: 12px 18px; background: #ecf0f1; border-top: 2px solid #ddd; text-align: center; }
         .oc-image img { max-width: 100%; max-height: 340px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: zoom-in; transition: transform 0.2s; display: inline-block; }
         .oc-image img:hover { transform: scale(1.01); }
         .oc-image .caption { font-size: 0.85rem; color: #7f8c8d; margin-top: 8px; font-style: italic; }
 
-        /* ─── Lightbox voor fullscreen weergave ─── */
         .img-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 30px; cursor: zoom-out; }
         .img-lightbox.open { display: flex; }
         .img-lightbox img { max-width: 95vw; max-height: 95vh; border-radius: 6px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
@@ -183,7 +180,6 @@
             <div><label>Gez.</label><input type="text" onkeydown="handleWordSync(event, 4)"></div>
         </div>
 
-        <!-- Preview van de bak (direct zichtbaar op scherm 1) -->
         <div class="bak-preview" id="bak-preview">
             <span class="preview-label">Toegevoegd aan de bak:</span>
             <span class="preview-empty" id="preview-empty">Nog geen woorden. Typ een woord of woordgroep in een van de velden hierboven en druk op Enter.</span>
@@ -216,7 +212,7 @@
         </div>
     </div>
 
-    <!-- ═══════════ SCHERM 4 ═══════════ -->
+    <!-- ═══════════ SCHERM 4: MET PDF ZOEK & UPLOAD FUNCTIONALITEIT ═══════════ -->
     <div id="screen4" class="screen hidden">
         <div class="topbar">
             <div>Ingelogd als <strong id="tb-name-4">—</strong> · Klas <strong id="tb-class-4">—</strong></div>
@@ -226,10 +222,28 @@
         <p>Lees de mutatie in het PDF-venster en beantwoord de 6 vragen. Je antwoorden verschijnen live bij je klasgenoten.</p>
         <div class="oefening-layout">
             <div class="pdf-panel">
-                <h3>📄 Mutatie</h3>
-                <embed src="mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf" type="application/pdf" />
-                <div class="pdf-fallback">Werkt de PDF niet? <a href="corrdjdebie6okt2026Mutatie simulatie 1.3 jeugd docx.pdf" target="_blank" rel="noopener">Open de PDF in een nieuw tabblad</a>.</div>
+                <h3>📄 Mutatie & Geüploade PDF's</h3>
+                
+                <!-- Upload & Zoeksectie voor schijf/USB-stick -->
+                <div style="padding: 10px 15px; background: #ecf0f1; border-bottom: 2px solid #ccc; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <label style="font-weight: bold; font-size: 0.85rem;">Upload vanaf schijf/USB:</label>
+                        <input type="file" id="pdf-file-input" accept="application/pdf" style="font-size: 0.85rem;" />
+                        <button class="btn-next" style="padding: 6px 12px; font-size: 0.85rem;" onclick="uploadPDF()">Upload naar klas</button>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 5px;">
+                        <label style="font-weight: bold; font-size: 0.85rem;">Beschikbare PDF's:</label>
+                        <select id="pdf-select" onchange="changePDF(this.value)" style="flex: 1; padding: 4px; font-size: 0.85rem;">
+                            <option value="default">Standaard Mutatie PDF</option>
+                        </select>
+                        <button class="btn-warning" style="padding: 4px 8px; font-size: 0.8rem;" onclick="resetPDFs()">Wis PDF's</button>
+                    </div>
+                </div>
+
+                <!-- PDF Viewer -->
+                <iframe id="pdf-viewer" src="mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf"></iframe>
             </div>
+            
             <div class="questions-panel">
                 <h3>Beantwoord de vragen</h3>
                 <div class="question-item"><label>Wie?</label><textarea id="q-wie" placeholder="Wie is betrokken?"></textarea></div>
@@ -347,6 +361,7 @@
     let userClass = localStorage.getItem('kl_class') || '';
     let unsubscribers = [];
     let activeListeners = null;
+    let loadedPDFs = {};
 
     function basePath() { return `shared/${encodeKey(userClass)}`; }
     function encodeKey(s) { return String(s || '').replace(/[.#$\[\]\/]/g, '_'); }
@@ -414,7 +429,6 @@
         if (mfeed) mfeed.innerHTML = '<p style="color:#888;">Nog geen mutaties...</p>';
     }
 
-    // ─── Hulpfunctie: update preview op scherm 1 ───
     function updateBakPreview(data) {
         const chips = document.getElementById('preview-chips');
         const empty = document.getElementById('preview-empty');
@@ -447,6 +461,7 @@
     function startAllListeners() {
         if (activeListeners) return;
         activeListeners = true;
+        
         addListener(onValue(ref(db, basePath() + '/sentences'), s => {
             const div = document.getElementById('displaySentence'); if (!div) return;
             div.innerHTML = '';
@@ -455,6 +470,7 @@
                 const z = document.createElement('div'); z.innerText = t; div.appendChild(z);
             });
         }));
+
         addListener(onValue(ref(db, basePath() + '/drawing'), s => {
             const data = s.val() || {};
             ['canvas1','canvas3'].forEach(id => {
@@ -470,6 +486,7 @@
                 });
             });
         }));
+
         addListener(onValue(ref(db, basePath() + '/words'), (snapshot) => {
             const data = snapshot.val();
             document.querySelectorAll('.word-card').forEach(el => { if (!data || !data[el.id]) el.remove(); });
@@ -511,6 +528,35 @@
             }
             updateBakPreview(data);
         }));
+
+        // Listener voor geüploade PDF's in de klas
+        addListener(onValue(ref(db, basePath() + '/uploaded_pdfs'), (snap) => {
+            const data = snap.val();
+            const select = document.getElementById('pdf-select');
+            if (!select) return;
+
+            const currentVal = select.value;
+            select.innerHTML = '<option value="default">Standaard Mutatie PDF</option>';
+            loadedPDFs = {};
+
+            if (data) {
+                Object.entries(data).forEach(([id, item]) => {
+                    loadedPDFs[id] = item.data;
+                    const opt = document.createElement('option');
+                    opt.value = id;
+                    opt.textContent = item.name + ' (door ' + (item.uploadedBy || 'Onbekend') + ')';
+                    select.appendChild(opt);
+                });
+            }
+
+            if (loadedPDFs[currentVal]) {
+                select.value = currentVal;
+            } else if (currentVal !== 'default' && !loadedPDFs[currentVal]) {
+                select.value = 'default';
+                changePDF('default');
+            }
+        }));
+
         addListener(onValue(ref(db, basePath() + '/answers'), (snap) => {
             const feed = document.getElementById('answers-feed'); if (!feed) return;
             const data = snap.val();
@@ -549,6 +595,7 @@
                 });
             });
         }));
+
         addListener(onValue(ref(db, basePath() + '/mutaties'), (snap) => {
             const feed = document.getElementById('mutaties-feed'); if (!feed) return;
             const data = snap.val();
@@ -596,6 +643,61 @@
             });
         }));
     }
+
+    // ════════════ PDF LOGICA ════════════
+    window.changePDF = function(val) {
+        const viewer = document.getElementById('pdf-viewer');
+        if (!viewer) return;
+        if (val === 'default') {
+            viewer.src = "mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf";
+        } else if (loadedPDFs[val]) {
+            viewer.src = loadedPDFs[val];
+        }
+    };
+
+    window.uploadPDF = function() {
+        const fileInput = document.getElementById('pdf-file-input');
+        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+            alert('Selecteer eerst een PDF-bestand op je computer of USB-stick.');
+            return;
+        }
+        const file = fileInput.files[0];
+        if (file.type !== 'application/pdf') {
+            alert('Selecteer een geldig PDF-bestand.');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Het bestand is te groot. Kies een PDF kleiner dan 5 MB.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64Data = e.target.result;
+            const pdfRef = push(ref(db, basePath() + '/uploaded_pdfs'));
+            set(pdfRef, {
+                name: file.name,
+                data: base64Data,
+                uploadedBy: userName,
+                timestamp: Date.now()
+            }).then(() => {
+                alert('PDF succesvol geüpload naar de klas!');
+                fileInput.value = '';
+            }).catch(err => {
+                alert('Fout bij uploaden: ' + err.message);
+            });
+        };
+        reader.readAsDataURL(file);
+    };
+
+    window.resetPDFs = function() {
+        if (!userClass) return;
+        if (confirm(`Weet je zeker dat je alle geüploade PDF-bestanden van klas ${userClass} wilt wissen uit de database?`)) {
+            remove(ref(db, basePath() + '/uploaded_pdfs')).then(() => {
+                changePDF('default');
+            });
+        }
+    };
 
     // ════════════ PEN ════════════
     const setupCanvas = (id) => {
@@ -666,7 +768,7 @@
     // ════════════ RESET ════════════
     window.hardReset = function() {
         if (!userClass) return;
-        if (confirm(`ALLES van klas ${userClass} wissen? (bord, woorden, tekeningen, antwoorden, mutaties)`)) remove(ref(db, basePath()));
+        if (confirm(`ALLES van klas ${userClass} wissen? (bord, woorden, tekeningen, antwoorden, mutaties, PDF's)`)) remove(ref(db, basePath()));
     };
     window.clearWords = function() {
         if (!userClass) return;
@@ -1070,3 +1172,5 @@ Einde bericht.`,
 </script>
 </body>
 </html>
+
+```
