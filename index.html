@@ -134,13 +134,9 @@
         .kwis-box { background: #fff; border: 3px solid #333; border-radius: 12px; padding: 20px; }
         .kwis-box h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid #ccc; padding-bottom: 8px; }
         .hint-list { padding-left: 20px; line-height: 1.6; font-size: 0.95rem; }
-        .grid-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
-        .grid-table th, .grid-table td { border: 1px solid #bdc3c7; text-align: center; padding: 6px; }
-        .grid-table th { background: #2c3e50; color: white; font-weight: 600; }
-        .grid-table td.cell { cursor: pointer; font-weight: bold; font-size: 1.1rem; width: 32px; height: 32px; user-select: none; }
-        .grid-table td.cell:hover { background: #ecf0f1; }
-        .grid-table td.cell.vink { color: #27ae60; background: #e8f8f5; }
-        .grid-table td.cell.kruis { color: #e74c3c; background: #fadbd8; }
+        .kwis-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding: 8px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; }
+        .kwis-row span { font-weight: bold; width: 30px; text-align: center; }
+        .kwis-row select { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -319,45 +315,168 @@
             <button class="btn-logout" onclick="doLogout()">Uitloggen</button>
         </div>
         <h2>6. Afsluitende Opdracht: Logikwis (Casus-analyse)</h2>
-        <p>Gebruik de aanwijzingen om de juiste combinatie tussen <strong>Naam</strong>, <strong>Locatie incident</strong>, <strong>Oorzaak</strong> en <strong>Beschikking</strong> te vinden. Klik 1x voor een kruisje (❌) en 2x voor een vinkje (✔️).</p>
+        <p>Gebruik de aanwijzingen om per combinatie de juiste <strong>Achternaam</strong>, <strong>Straat delict</strong> en <strong>Oorzaak</strong> te selecteren.</p>
         
         <div class="kwis-container">
-            <!-- Aanwijzingen (Uitdagende editie) -->
+            <!-- Aanwijzingen -->
             <div class="kwis-box">
                 <h3>💡 Aanwijzingen</h3>
                 <ol class="hint-list">
-                    <li>De verdachte op het <strong>Eemplein</strong> handelde niet uit onwil, maar door een aantoonbare lichamelijke conditie; zijn dossier leidt uiteindelijk niet tot een bekeuring.</li>
-                    <li><strong>K. Bakker</strong> veroorzaakte een incident op de <strong>Muurhuizen</strong> omdat hij fysiek uithaalde na te zijn getriggerd door een voorbijganger, wat leidde tot een strafbaar feit gericht tegen de functionaris in functie.</li>
-                    <li>De verdachte in de <strong>Veenestraat</strong> plaste niet vanwege een uitgaansnacht, maar omdat hij nergens binnen kon slapen; zijn beschikking kan niet op een woonadres worden bezorgd.</li>
-                    <li><strong>M. Jansen</strong> plaste op de <strong>Langestraat / Kamp</strong> puur omdat zijn blaas vol was na een avondje stappen; hij krijgt de bekeuring direct in handen.</li>
-                    <li>Het incident in de <strong>Utrechtsestraat</strong> ontstond niet door een blaasprobleem of medische oorzaak, maar door extreme invloed van verdovende middelen, wat leidde tot een aanhouding op basis van openbare orde verstoring.</li>
+                    <li>De verdachte op het <strong>Eemplein</strong> handelde niet uit onwil, maar door een aantoonbare lichamelijke conditie (diabetes).</li>
+                    <li><strong>Bakker</strong> veroorzaakte een incident op de <strong>Muurhuizen</strong> nadat hij agressief reageerde en een ambtenaar beledigde.</li>
+                    <li>De verdachte in de <strong>Veenestraat</strong> plaste niet vanwege een uitgaansnacht, maar omdat hij geen vaste woonplaats heeft (dakloos).</li>
+                    <li><strong>Jansen</strong> plaste op de <strong>Langestraat / Kamp</strong> puur omdat zijn blaas vol was na het nuttigen van alcohol/bier.</li>
+                    <li>Het incident in de <strong>Utrechtsestraat</strong> ontstond door extreme invloed van alcohol/dronkenschap.</li>
                 </ol>
-                <button onclick="resetKwisGrid()" class="btn-warning" style="margin-top: 15px;">Wis raster</button>
+            </div>
+
+            <!-- Oplossingsformulier per regel: 3 blokken -->
+            <div class="kwis-box">
+                <h3>🧩 Combineer de Gegevens (3 Blokken per regel)</h3>
+                
+                <div class="kwis-row">
+                    <span>1.</span>
+                    <select class="kwis-naam">
+                        <option value="">-- Achternaam --</option>
+                        <option value="Jansen">Jansen</option>
+                        <option value="de Jong">de Jong</option>
+                        <option value="Willems">Willems</option>
+                        <option value="van Dijk">van Dijk</option>
+                        <option value="Bakker">Bakker</option>
+                    </select>
+                    <select class="kwis-straat">
+                        <option value="">-- Straat delict --</option>
+                        <option value="Langestraat / Kamp">Langestraat / Kamp</option>
+                        <option value="Utrechtsestraat">Utrechtsestraat</option>
+                        <option value="Veenestraat">Veenestraat</option>
+                        <option value="Eemplein">Eemplein</option>
+                        <option value="Muurhuizen">Muurhuizen</option>
+                    </select>
+                    <select class="kwis-oorzaak">
+                        <option value="">-- Oorzaak --</option>
+                        <option value="Bier/Alcohol">Bier/Alcohol</option>
+                        <option value="Openbare dronkenschap">Openbare dronkenschap</option>
+                        <option value="Dakloos">Dakloos</option>
+                        <option value="Diabetes/Plaspillen">Diabetes/Plaspillen</option>
+                        <option value="Agressie/Belediging">Agressie/Belediging</option>
+                    </select>
+                </div>
+
+                <div class="kwis-row">
+                    <span>2.</span>
+                    <select class="kwis-naam">
+                        <option value="">-- Achternaam --</option>
+                        <option value="Jansen">Jansen</option>
+                        <option value="de Jong">de Jong</option>
+                        <option value="Willems">Willems</option>
+                        <option value="van Dijk">van Dijk</option>
+                        <option value="Bakker">Bakker</option>
+                    </select>
+                    <select class="kwis-straat">
+                        <option value="">-- Straat delict --</option>
+                        <option value="Langestraat / Kamp">Langestraat / Kamp</option>
+                        <option value="Utrechtsestraat">Utrechtsestraat</option>
+                        <option value="Veenestraat">Veenestraat</option>
+                        <option value="Eemplein">Eemplein</option>
+                        <option value="Muurhuizen">Muurhuizen</option>
+                    </select>
+                    <select class="kwis-oorzaak">
+                        <option value="">-- Oorzaak --</option>
+                        <option value="Bier/Alcohol">Bier/Alcohol</option>
+                        <option value="Openbare dronkenschap">Openbare dronkenschap</option>
+                        <option value="Dakloos">Dakloos</option>
+                        <option value="Diabetes/Plaspillen">Diabetes/Plaspillen</option>
+                        <option value="Agressie/Belediging">Agressie/Belediging</option>
+                    </select>
+                </div>
+
+                <div class="kwis-row">
+                    <span>3.</span>
+                    <select class="kwis-naam">
+                        <option value="">-- Achternaam --</option>
+                        <option value="Jansen">Jansen</option>
+                        <option value="de Jong">de Jong</option>
+                        <option value="Willems">Willems</option>
+                        <option value="van Dijk">van Dijk</option>
+                        <option value="Bakker">Bakker</option>
+                    </select>
+                    <select class="kwis-straat">
+                        <option value="">-- Straat delict --</option>
+                        <option value="Langestraat / Kamp">Langestraat / Kamp</option>
+                        <option value="Utrechtsestraat">Utrechtsestraat</option>
+                        <option value="Veenestraat">Veenestraat</option>
+                        <option value="Eemplein">Eemplein</option>
+                        <option value="Muurhuizen">Muurhuizen</option>
+                    </select>
+                    <select class="kwis-oorzaak">
+                        <option value="">-- Oorzaak --</option>
+                        <option value="Bier/Alcohol">Bier/Alcohol</option>
+                        <option value="Openbare dronkenschap">Openbare dronkenschap</option>
+                        <option value="Dakloos">Dakloos</option>
+                        <option value="Diabetes/Plaspillen">Diabetes/Plaspillen</option>
+                        <option value="Agressie/Belediging">Agressie/Belediging</option>
+                    </select>
+                </div>
+
+                <div class="kwis-row">
+                    <span>4.</span>
+                    <select class="kwis-naam">
+                        <option value="">-- Achternaam --</option>
+                        <option value="Jansen">Jansen</option>
+                        <option value="de Jong">de Jong</option>
+                        <option value="Willems">Willems</option>
+                        <option value="van Dijk">van Dijk</option>
+                        <option value="Bakker">Bakker</option>
+                    </select>
+                    <select class="kwis-straat">
+                        <option value="">-- Straat delict --</option>
+                        <option value="Langestraat / Kamp">Langestraat / Kamp</option>
+                        <option value="Utrechtsestraat">Utrechtsestraat</option>
+                        <option value="Veenestraat">Veenestraat</option>
+                        <option value="Eemplein">Eemplein</option>
+                        <option value="Muurhuizen">Muurhuizen</option>
+                    </select>
+                    <select class="kwis-oorzaak">
+                        <option value="">-- Oorzaak --</option>
+                        <option value="Bier/Alcohol">Bier/Alcohol</option>
+                        <option value="Openbare dronkenschap">Openbare dronkenschap</option>
+                        <option value="Dakloos">Dakloos</option>
+                        <option value="Diabetes/Plaspillen">Diabetes/Plaspillen</option>
+                        <option value="Agressie/Belediging">Agressie/Belediging</option>
+                    </select>
+                </div>
+
+                <div class="kwis-row">
+                    <span>5.</span>
+                    <select class="kwis-naam">
+                        <option value="">-- Achternaam --</option>
+                        <option value="Jansen">Jansen</option>
+                        <option value="de Jong">de Jong</option>
+                        <option value="Willems">Willems</option>
+                        <option value="van Dijk">van Dijk</option>
+                        <option value="Bakker">Bakker</option>
+                    </select>
+                    <select class="kwis-straat">
+                        <option value="">-- Straat delict --</option>
+                        <option value="Langestraat / Kamp">Langestraat / Kamp</option>
+                        <option value="Utrechtsestraat">Utrechtsestraat</option>
+                        <option value="Veenestraat">Veenestraat</option>
+                        <option value="Eemplein">Eemplein</option>
+                        <option value="Muurhuizen">Muurhuizen</option>
+                    </select>
+                    <select class="kwis-oorzaak">
+                        <option value="">-- Oorzaak --</option>
+                        <option value="Bier/Alcohol">Bier/Alcohol</option>
+                        <option value="Openbare dronkenschap">Openbare dronkenschap</option>
+                        <option value="Dakloos">Dakloos</option>
+                        <option value="Diabetes/Plaspillen">Diabetes/Plaspillen</option>
+                        <option value="Agressie/Belediging">Agressie/Belediging</option>
+                    </select>
+                </div>
+
+                <button onclick="resetKwisGrid()" class="btn-warning" style="margin-top: 15px;">Wis alle keuzes</button>
                 <button onclick="checkKwisOplossing()" class="btn-next" style="margin-top: 15px;">Controleer oplossing</button>
                 <div id="kwis-feedback" style="margin-top: 10px; font-weight: bold;"></div>
-            </div>
-            <!-- Matrix Raster: Naam vs Locatie -->
-            <div class="kwis-box" style="overflow-x: auto;">
-                <h3>🧩 Logisch Raster (Naam vs. Locatie & Beschikking)</h3>
-                <table class="grid-table" id="kwis-grid">
-                    <thead>
-                        <tr>
-                            <th colspan="2"></th>
-                            <th>Langestraat / Kamp</th>
-                            <th>Utrechtsestraat</th>
-                            <th>Veenestraat</th>
-                            <th>Eemplein</th>
-                            <th>Muurhuizen</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><th rowspan="5">Naam</th><th>M. Jansen</th><td class="cell" data-r="0" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                        <tr><th>R. de Jong</th><td class="cell" data-r="1" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                        <tr><th>G. Willems</th><td class="cell" data-r="2" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                        <tr><th>H. van Dijk</th><td class="cell" data-r="3" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                        <tr><th>K. Bakker</th><td class="cell" data-r="4" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                    </tbody>
-                </table>
             </div>
         </div>
         <div class="nav-bar">
@@ -1048,136 +1167,4 @@ Einde bericht.`,
             });
         }
         ['m-aanleiding', 'm-situatie', 'm-toedracht', 'm-maatregelen', 'm-afhandeling'].forEach(id => {
-            const el = document.getElementById(id);
-            if (!el || el._bound) return;
-            el._bound = true;
-            el.addEventListener('input', () => {
-                if (!userName || !userClass) return;
-                const status = document.getElementById('mutatie-save-status');
-                if (status) status.textContent = 'Bezig met opslaan...';
-                if (saveTimer) clearTimeout(saveTimer);
-                saveTimer = setTimeout(saveMyMutatie, 500);
-            });
-        });
-        onValue(ref(db, basePath() + '/mutaties/' + encodeKey(userName)), (snap) => {
-            const data = snap.val(); if (!data || !data.parts) return;
-            ['aanleiding','situatie','toedracht','maatregelen','afhandeling'].forEach(k => {
-                const el = document.getElementById('m-' + k);
-                if (el && document.activeElement !== el) el.value = data.parts[k] || '';
-            });
-        });
-    }
-    function saveMyMutatie() {
-        if (!userName || !userClass || !currentCasus) return;
-        const parts = {};
-        ['aanleiding','situatie','toedracht','maatregelen','afhandeling'].forEach(k => {
-            const el = document.getElementById('m-' + k);
-            parts[k] = (el && el.value) ? el.value : '';
-        });
-        const payload = { 
-            name: userName, 
-            casus: currentCasus.name, 
-            timestamp: Date.now(), 
-            parts: parts 
-        };
-        set(ref(db, basePath() + '/mutaties/' + encodeKey(userName)), payload)
-            .then(() => {
-                const status = document.getElementById('mutatie-save-status');
-                if (status) status.textContent = '✓ Opgeslagen om ' + new Date().toLocaleTimeString('nl-NL');
-            })
-            .catch(err => {
-                const status = document.getElementById('mutatie-save-status');
-                if (status) status.textContent = '⚠️ Fout: ' + err.message;
-            });
-    }
-    // ════════════ LOGIKWIS FUNCTIONALITEIT ════════════
-    window.toggleKwisCell = function(cell) {
-        if (cell.classList.contains('kruis')) {
-            cell.classList.remove('kruis');
-            cell.classList.add('vink');
-            cell.innerText = '✔️';
-            autoCrossRowAndCol(cell);
-        } else if (cell.classList.contains('vink')) {
-            cell.classList.remove('vink');
-            cell.innerText = '';
-        } else {
-            cell.classList.add('kruis');
-            cell.innerText = '❌';
-        }
-    };
-    function autoCrossRowAndCol(targetCell) {
-        const row = targetCell.parentElement;
-        const cellsInRow = Array.from(row.querySelectorAll('.cell'));
-        const cellIndex = cellsInRow.indexOf(targetCell);
-        cellsInRow.forEach(c => {
-            if (c !== targetCell && !c.classList.contains('vink')) {
-                c.classList.remove('vink');
-                c.classList.add('kruis');
-                c.innerText = '❌';
-            }
-        });
-        const allRows = targetCell.closest('tbody').querySelectorAll('tr');
-        allRows.forEach(r => {
-            const c = r.querySelectorAll('.cell')[cellIndex];
-            if (c && c !== targetCell && !c.classList.contains('vink')) {
-                c.classList.remove('vink');
-                c.classList.add('kruis');
-                c.innerText = '❌';
-            }
-        });
-    }
-    window.resetKwisGrid = function() {
-        document.querySelectorAll('#kwis-grid .cell').forEach(cell => {
-            cell.className = 'cell';
-            cell.innerText = '';
-        });
-        document.getElementById('kwis-feedback').innerText = '';
-    };
-    window.checkKwisOplossing = function() {
-        const feedback = document.getElementById('kwis-feedback');
-        const correctPairs = [[0,0], [1,1], [2,2], [3,3], [4,4]];
-        
-        let correct = true;
-        let vinkjesCount = 0;
-        document.querySelectorAll('#kwis-grid .cell').forEach(cell => {
-            const r = parseInt(cell.getAttribute('data-r'));
-            const c = parseInt(cell.getAttribute('data-c'));
-            const isVink = cell.classList.contains('vink');
-            const isCorrectPair = correctPairs.some(p => p[0] === r && p[1] === c);
-            if (isVink) {
-                vinkjesCount++;
-                if (!isCorrectPair) correct = false;
-            }
-        });
-        if (vinkjesCount === 5 && correct) {
-            feedback.style.color = '#27ae60';
-            feedback.innerText = '🎉 Uitstekend! Je hebt alle casussen en beschikkingen correct geanalyseerd.';
-        } else {
-            feedback.style.color = '#e74c3c';
-            feedback.innerText = '❌ Nog niet helemaal juist. Controleer de aanwijzingen en beschikkingen nog eens!';
-        }
-    };
-    // ════════════ LIGHTBOX ════════════
-    window.openLightbox = function(src) {
-        const lb = document.getElementById('img-lightbox');
-        const img = document.getElementById('img-lightbox-img');
-        if (!lb || !img) return;
-        img.src = src;
-        lb.classList.add('open');
-    };
-    window.closeLightbox = function() {
-        const lb = document.getElementById('img-lightbox');
-        if (lb) lb.classList.remove('open');
-    };
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') window.closeLightbox();
-    });
-    // ════════════ INIT ════════════
-    setTimeout(() => {
-        if ('speechSynthesis' in window) speechSynthesis.getVoices();
-    }, 100);
-    tryAutoLogin();
-    window.ref = ref; window.db = db; window.remove = remove;
-</script>
-</body>
-</html>
+            const
