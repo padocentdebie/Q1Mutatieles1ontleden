@@ -128,7 +128,6 @@
         .review-area { margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
         .reviewers { font-size: 0.8rem; color: #7f8c8d; }
         .reviewers strong { color: #27ae60; }
-
         /* ─── LOGIKWIS (SCHERM 6) ─── */
         .kwis-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
         @media (max-width: 900px) { .kwis-container { grid-template-columns: 1fr; } }
@@ -220,9 +219,13 @@
         <p>Lees de mutatie in het PDF-venster en beantwoord de 6 vragen. Je antwoorden verschijnen live bij je klasgenoten.</p>
         <div class="oefening-layout">
             <div class="pdf-panel">
-                <h3>📄 Mutatie 29-1-2026 — Artikel 130</h3>
-                <embed src="mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf" type="application/pdf" />
-                <div class="pdf-fallback">Werkt de PDF niet? <a href="mutatie 29-1-2026 artikel 130corrdjdebie2feb2026 (1).pdf" target="_blank" rel="noopener">Open de PDF in een nieuw tabblad</a>.</div>
+                <h3>📄 Mutatie PDF</h3>
+                <div style="padding: 10px 15px; background: #ecf0f1; border-bottom: 2px solid #ccc; display: flex; gap: 10px; align-items: center;">
+                    <input type="file" id="pdf-file-input" accept="application/pdf" style="font-size: 0.85rem;" />
+                    <button onclick="uploadPDF()" class="btn-review" style="padding: 6px 12px;">Upload PDF naar Klas</button>
+                </div>
+                <iframe id="pdf-viewer-frame" src="mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf" style="flex:1; width:100%; border:0;"></iframe>
+                <div class="pdf-fallback">Werkt de PDF niet? <a id="pdf-download-link" href="mutatie 29-1-2026 artikel 130corrdjdebie2feb2026 (1).pdf" target="_blank" rel="noopener">Open de PDF in een nieuw tabblad</a>.</div>
             </div>
             <div class="questions-panel">
                 <h3>Beantwoord de vragen</h3>
@@ -309,7 +312,6 @@
             <button class="btn-next" onclick="showScreen(6)">NAAR AFSLUITING: LOGIKWIS →</button>
         </div>
     </div>
-
     <!-- ═══════════ SCHERM 6: AFSLUITENDE LOGIKWIS ═══════════ -->
     <div id="screen6" class="screen hidden">
         <div class="topbar">
@@ -334,7 +336,6 @@
                 <button onclick="checkKwisOplossing()" class="btn-next" style="margin-top: 15px;">Controleer oplossing</button>
                 <div id="kwis-feedback" style="margin-top: 10px; font-weight: bold;"></div>
             </div>
-
             <!-- Matrix Raster: Naam vs Locatie -->
             <div class="kwis-box" style="overflow-x: auto;">
                 <h3>🧩 Logisch Raster (Naam vs. Locatie & Beschikking)</h3>
@@ -359,13 +360,11 @@
                 </table>
             </div>
         </div>
-
         <div class="nav-bar">
             <button onclick="showScreen(5)">← Terug naar Oefening 3</button>
             <button onclick="showScreen(1)">← Terug naar Whiteboard</button>
         </div>
     </div>
-
     <div class="img-lightbox" id="img-lightbox" onclick="closeLightbox()">
         <span class="close-hint">Klik om te sluiten ✕</span>
         <img id="img-lightbox-img" src="" alt="Vergrote afbeelding" />
@@ -481,6 +480,7 @@
     function startAllListeners() {
         if (activeListeners) return;
         activeListeners = true;
+        startPDFListener();
         addListener(onValue(ref(db, basePath() + '/sentences'), s => {
             const div = document.getElementById('displaySentence'); if (!div) return;
             div.innerHTML = '';
@@ -759,6 +759,42 @@
         set(ref(db, basePath() + '/answers/' + encodeKey(userName)), payload)
             .then(() => { document.getElementById('save-status').textContent = '✓ Opgeslagen om ' + new Date().toLocaleTimeString('nl-NL'); })
             .catch(err => { document.getElementById('save-status').textContent = '⚠️ Fout: ' + err.message; });
+    }
+    // ════════════ PDF UPLOAD & REALTIME SYNC ════════════
+    window.uploadPDF = function() {
+        const fileInput = document.getElementById('pdf-file-input');
+        const file = fileInput.files[0];
+        if (!file) { alert('Selecteer eerst een PDF-bestand op je computer.'); return; }
+        if (file.type !== 'application/pdf') { alert('Selecteer een geldig PDF-bestand.'); return; }
+        if (file.size > 8 * 1024 * 1024) { alert('Het PDF-bestand is te groot. Kies een bestand kleiner dan 8MB.'); return; }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64PDF = e.target.result;
+            set(ref(db, basePath() + '/sharedPDF'), {
+                filename: file.name,
+                data: base64PDF,
+                uploadedBy: userName,
+                timestamp: Date.now()
+            }).then(() => {
+                alert('PDF succesvol gedeeld met de klas!');
+                fileInput.value = '';
+            }).catch(err => { alert('Fout bij uploaden: ' + err.message); });
+        };
+        reader.readAsDataURL(file);
+    };
+    function startPDFListener() {
+        addListener(onValue(ref(db, basePath() + '/sharedPDF'), (snap) => {
+            const data = snap.val();
+            const iframe = document.getElementById('pdf-viewer-frame');
+            const downloadLink = document.getElementById('pdf-download-link');
+            if (data && data.data) {
+                if (iframe) iframe.src = data.data;
+                if (downloadLink) {
+                    downloadLink.href = data.data;
+                    downloadLink.textContent = `Open geüploade PDF (${data.filename}) in nieuw tabblad`;
+                }
+            }
+        }));
     }
     // ════════════ OEFENING 3 — OC-MELDING VOORLEZEN ════════════
     let ocUtterance = null;
@@ -1054,7 +1090,6 @@ Einde bericht.`,
                 if (status) status.textContent = '⚠️ Fout: ' + err.message;
             });
     }
-
     // ════════════ LOGIKWIS FUNCTIONALITEIT ════════════
     window.toggleKwisCell = function(cell) {
         if (cell.classList.contains('kruis')) {
@@ -1070,12 +1105,10 @@ Einde bericht.`,
             cell.innerText = '❌';
         }
     };
-
     function autoCrossRowAndCol(targetCell) {
         const row = targetCell.parentElement;
         const cellsInRow = Array.from(row.querySelectorAll('.cell'));
         const cellIndex = cellsInRow.indexOf(targetCell);
-
         cellsInRow.forEach(c => {
             if (c !== targetCell && !c.classList.contains('vink')) {
                 c.classList.remove('vink');
@@ -1083,7 +1116,6 @@ Einde bericht.`,
                 c.innerText = '❌';
             }
         });
-
         const allRows = targetCell.closest('tbody').querySelectorAll('tr');
         allRows.forEach(r => {
             const c = r.querySelectorAll('.cell')[cellIndex];
@@ -1094,7 +1126,6 @@ Einde bericht.`,
             }
         });
     }
-
     window.resetKwisGrid = function() {
         document.querySelectorAll('#kwis-grid .cell').forEach(cell => {
             cell.className = 'cell';
@@ -1102,26 +1133,22 @@ Einde bericht.`,
         });
         document.getElementById('kwis-feedback').innerText = '';
     };
-
     window.checkKwisOplossing = function() {
         const feedback = document.getElementById('kwis-feedback');
         const correctPairs = [[0,0], [1,1], [2,2], [3,3], [4,4]];
         
         let correct = true;
         let vinkjesCount = 0;
-
         document.querySelectorAll('#kwis-grid .cell').forEach(cell => {
             const r = parseInt(cell.getAttribute('data-r'));
             const c = parseInt(cell.getAttribute('data-c'));
             const isVink = cell.classList.contains('vink');
             const isCorrectPair = correctPairs.some(p => p[0] === r && p[1] === c);
-
             if (isVink) {
                 vinkjesCount++;
                 if (!isCorrectPair) correct = false;
             }
         });
-
         if (vinkjesCount === 5 && correct) {
             feedback.style.color = '#27ae60';
             feedback.innerText = '🎉 Uitstekend! Je hebt alle casussen en beschikkingen correct geanalyseerd.';
@@ -1130,7 +1157,6 @@ Einde bericht.`,
             feedback.innerText = '❌ Nog niet helemaal juist. Controleer de aanwijzingen en beschikkingen nog eens!';
         }
     };
-
     // ════════════ LIGHTBOX ════════════
     window.openLightbox = function(src) {
         const lb = document.getElementById('img-lightbox');
