@@ -8,7 +8,6 @@
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--primary); overflow-x: hidden; }
         .screen { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 1450px; margin: 0 auto; min-height: 85vh; position: relative; }
         .hidden { display: none !important; }
-
         /* ─── INLOG ─── */
         .login-wrap { max-width: 480px; margin: 60px auto; background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-top: 8px solid var(--primary); }
         .login-wrap h1 { margin-top: 0; text-align: center; color: var(--primary); }
@@ -19,7 +18,6 @@
         .login-wrap button { width: 100%; margin-top: 25px; padding: 14px; background: var(--accent); color: white; font-size: 1.1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; letter-spacing: 1px; transition: 0.2s; }
         .login-wrap button:hover { background: #c0392b; }
         .login-wrap .hint { font-size: 0.85rem; color: #95a5a6; text-align: center; margin-top: 20px; }
-
         /* ─── TOPBAR ─── */
         .topbar { display: flex; justify-content: space-between; align-items: center; background: #2c3e50; color: #fff; padding: 10px 18px; border-radius: 10px; margin-bottom: 20px; font-size: 0.95rem; }
         .topbar strong { color: #f39c12; }
@@ -30,12 +28,10 @@
         .whiteboard-container { position: relative; background: #fff; border: 5px solid #333; border-radius: 12px; height: 400px; overflow: hidden; margin-top: 15px; }
         #displaySentence { position: absolute; top: 30px; left: 30px; font-size: 3rem; font-weight: 800; z-index: 1; pointer-events: none; display: flex; flex-direction: column; gap: 10px; }
         canvas { position: absolute; top: 0; left: 0; z-index: 5; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
-
         /* Inputs */
         .input-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 20px; background: #dfe6e9; padding: 15px; border-radius: 12px; }
         .input-bar input, .col-add-input { padding: 10px; border: 2px solid var(--primary); border-radius: 8px; font-size: 1rem; width: 80%; }
-
-        /* Preview van de bak */
+        /* ─── Preview van de bak op scherm 1 ─── */
         .bak-preview { margin-top: 15px; padding: 14px 18px; background: #dfe6e9; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; min-height: 50px; }
         .bak-preview .preview-label { font-weight: 700; color: var(--primary); font-size: 0.9rem; margin-right: 4px; }
         .bak-preview .preview-empty { color: #95a5a6; font-style: italic; font-size: 0.9rem; }
@@ -43,7 +39,6 @@
         .preview-chip { background: var(--accent); color: #fff; padding: 5px 8px 5px 12px; border-radius: 14px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .preview-chip .chip-remove { background: rgba(255,255,255,0.28); border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.75rem; line-height: 1; transition: 0.15s; }
         .preview-chip .chip-remove:hover { background: rgba(255,255,255,0.55); }
-
         /* Hussel */
         .grabbelton { background: #34495e; padding: 20px; border-radius: 12px; min-height: 100px; display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; border: 4px dashed #2c3e50; align-items: center; transition: 0.2s; }
         .grabbelton.drag-over { background: #4a6278; border-color: var(--accent); }
@@ -52,7 +47,6 @@
         .word-card { padding: 12px 18px; background: var(--accent); color: white; border-radius: 8px; cursor: move; position: absolute; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); font-size: 1.3rem; z-index: 10; white-space: nowrap; user-select: none; }
         .word-card:active { cursor: grabbing; }
         .word-card.dragging { opacity: 0.4; }
-
         .nav-bar { display: flex; justify-content: space-between; margin-top: 20px; border-top: 2px solid #eee; padding-top: 15px; gap: 10px; flex-wrap: wrap; }
         button { padding: 12px 25px; font-weight: bold; border-radius: 8px; cursor: pointer; border: none; transition: 0.2s; }
         .btn-hard-reset { background: #c0392b; color: white; }
@@ -63,15 +57,13 @@
         .btn-speak { background: #9b59b6; color: white; padding: 10px 20px; }
         .btn-speak:hover { background: #8e44ad; }
         .btn-stop { background: #7f8c8d; color: white; padding: 10px 20px; }
-
         /* Layout oefeningen */
         .oefening-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 10px; }
         @media (max-width: 900px) { .oefening-layout { grid-template-columns: 1fr; } }
-
         .pdf-panel { background: #fff; border: 3px solid #333; border-radius: 12px; overflow: hidden; height: 720px; display: flex; flex-direction: column; }
         .pdf-panel h3 { margin: 0; padding: 10px 15px; background: #2c3e50; color: #fff; font-size: 1rem; letter-spacing: 1px; }
-        .pdf-panel iframe { flex: 1; width: 100%; border: 0; }
-
+        .pdf-panel embed, .pdf-panel iframe { flex: 1; width: 100%; border: 0; }
+        .pdf-fallback { padding: 20px; font-size: 0.9rem; color: #555; }
         .questions-panel { background: #f8f9fa; border: 3px solid #333; border-radius: 12px; padding: 20px; height: 720px; overflow-y: auto; }
         .questions-panel h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid #ccc; padding-bottom: 8px; }
         .question-item { margin-bottom: 14px; }
@@ -79,7 +71,6 @@
         .question-item textarea { width: 100%; min-height: 55px; padding: 8px 10px; border: 2px solid #ccc; border-radius: 8px; font-family: inherit; font-size: 0.95rem; resize: vertical; box-sizing: border-box; }
         .question-item textarea:focus { outline: none; border-color: var(--accent); }
         .save-status { font-size: 0.8rem; color: #27ae60; font-style: italic; margin-top: 8px; }
-
         /* OC-melding */
         .oc-panel { background: #fff; border: 3px solid #333; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
         .oc-header { background: #c0392b; color: #fff; padding: 12px 18px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
@@ -89,17 +80,16 @@
         .oc-controls { padding: 12px 18px; background: #ecf0f1; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-top: 2px solid #ddd; }
         .oc-controls .speed-label { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #555; margin-left: auto; }
         .oc-controls input[type=range] { width: 120px; }
-
+        /* ─── Afbeelding in OC-paneel ─── */
         .oc-image { padding: 12px 18px; background: #ecf0f1; border-top: 2px solid #ddd; text-align: center; }
         .oc-image img { max-width: 100%; max-height: 340px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: zoom-in; transition: transform 0.2s; display: inline-block; }
         .oc-image img:hover { transform: scale(1.01); }
         .oc-image .caption { font-size: 0.85rem; color: #7f8c8d; margin-top: 8px; font-style: italic; }
-
+        /* ─── Lightbox voor fullscreen weergave ─── */
         .img-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 30px; cursor: zoom-out; }
         .img-lightbox.open { display: flex; }
         .img-lightbox img { max-width: 95vw; max-height: 95vh; border-radius: 6px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
         .img-lightbox .close-hint { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 0.9rem; opacity: 0.7; }
-
         /* Chatbot */
         .chat-panel { background: #fff; border: 3px solid #333; border-radius: 12px; height: 720px; display: flex; flex-direction: column; overflow: hidden; }
         .chat-header { background: #2c3e50; color: #fff; padding: 12px 18px; display: flex; align-items: center; gap: 12px; }
@@ -126,7 +116,6 @@
         .chat-hints { padding: 10px 14px; background: #f8f9fa; border-top: 1px solid #eee; display: flex; flex-wrap: wrap; gap: 6px; }
         .chat-hints button { background: #ecf0f1; color: #2c3e50; padding: 6px 12px; font-size: 0.82rem; border-radius: 14px; border: 1px solid #d5dbdb; font-weight: 500; }
         .chat-hints button:hover { background: #dfe6e9; }
-
         /* Livefeed */
         .feed-section { margin-top: 25px; border-top: 3px solid #eee; padding-top: 15px; }
         .feed-section h3 { color: var(--primary); }
@@ -139,10 +128,23 @@
         .review-area { margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
         .reviewers { font-size: 0.8rem; color: #7f8c8d; }
         .reviewers strong { color: #27ae60; }
+
+        /* ─── LOGIKWIS (SCHERM 6) ─── */
+        .kwis-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
+        @media (max-width: 900px) { .kwis-container { grid-template-columns: 1fr; } }
+        .kwis-box { background: #fff; border: 3px solid #333; border-radius: 12px; padding: 20px; }
+        .kwis-box h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid #ccc; padding-bottom: 8px; }
+        .hint-list { padding-left: 20px; line-height: 1.6; font-size: 0.95rem; }
+        .grid-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
+        .grid-table th, .grid-table td { border: 1px solid #bdc3c7; text-align: center; padding: 6px; }
+        .grid-table th { background: #2c3e50; color: white; font-weight: 600; }
+        .grid-table td.cell { cursor: pointer; font-weight: bold; font-size: 1.1rem; width: 32px; height: 32px; user-select: none; }
+        .grid-table td.cell:hover { background: #ecf0f1; }
+        .grid-table td.cell.vink { color: #27ae60; background: #e8f8f5; }
+        .grid-table td.cell.kruis { color: #e74c3c; background: #fadbd8; }
     </style>
 </head>
 <body>
-
     <!-- ═══════════ SCHERM 0: INLOGGEN ═══════════ -->
     <div id="screen0" class="screen">
         <div class="login-wrap">
@@ -162,7 +164,6 @@
             <p class="hint">Je naam en klas worden onthouden op dit apparaat.</p>
         </div>
     </div>
-
     <!-- ═══════════ SCHERM 1 ═══════════ -->
     <div id="screen1" class="screen hidden">
         <div class="topbar">
@@ -179,19 +180,17 @@
             <div><label>MV</label><input type="text" onkeydown="handleWordSync(event, 3)"></div>
             <div><label>Gez.</label><input type="text" onkeydown="handleWordSync(event, 4)"></div>
         </div>
-
+        <!-- Preview van de bak (direct zichtbaar op scherm 1) -->
         <div class="bak-preview" id="bak-preview">
             <span class="preview-label">Toegevoegd aan de bak:</span>
             <span class="preview-empty" id="preview-empty">Nog geen woorden. Typ een woord of woordgroep in een van de velden hierboven en druk op Enter.</span>
             <div class="preview-chips" id="preview-chips"></div>
         </div>
-
         <div class="nav-bar">
             <button class="btn-hard-reset" onclick="hardReset()">HARDE RESET (eigen klas)</button>
             <button class="btn-next" onclick="showScreen(3)">NAAR HET SPEELVELD (HUSSelen) →</button>
         </div>
     </div>
-
     <!-- ═══════════ SCHERM 3 ═══════════ -->
     <div id="screen3" class="screen hidden">
         <div class="topbar">
@@ -211,8 +210,7 @@
             <button class="btn-next" onclick="showScreen(4)">NAAR OEFENING 2: MUTATIE →</button>
         </div>
     </div>
-
-    <!-- ═══════════ SCHERM 4: MET PDF ZOEK & UPLOAD FUNCTIONALITEIT ═══════════ -->
+    <!-- ═══════════ SCHERM 4 ═══════════ -->
     <div id="screen4" class="screen hidden">
         <div class="topbar">
             <div>Ingelogd als <strong id="tb-name-4">—</strong> · Klas <strong id="tb-class-4">—</strong></div>
@@ -222,28 +220,10 @@
         <p>Lees de mutatie in het PDF-venster en beantwoord de 6 vragen. Je antwoorden verschijnen live bij je klasgenoten.</p>
         <div class="oefening-layout">
             <div class="pdf-panel">
-                <h3>📄 Mutatie & Geüploade PDF's</h3>
-                
-                <!-- Upload & Zoeksectie voor schijf/USB-stick -->
-                <div style="padding: 10px 15px; background: #ecf0f1; border-bottom: 2px solid #ccc; display: flex; flex-direction: column; gap: 8px;">
-                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                        <label style="font-weight: bold; font-size: 0.85rem;">Upload vanaf schijf/USB:</label>
-                        <input type="file" id="pdf-file-input" accept="application/pdf" style="font-size: 0.85rem;" />
-                        <button class="btn-next" style="padding: 6px 12px; font-size: 0.85rem;" onclick="uploadPDF()">Upload naar klas</button>
-                    </div>
-                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 5px;">
-                        <label style="font-weight: bold; font-size: 0.85rem;">Beschikbare PDF's:</label>
-                        <select id="pdf-select" onchange="changePDF(this.value)" style="flex: 1; padding: 4px; font-size: 0.85rem;">
-                            <option value="default">Standaard Mutatie PDF</option>
-                        </select>
-                        <button class="btn-warning" style="padding: 4px 8px; font-size: 0.8rem;" onclick="resetPDFs()">Wis PDF's</button>
-                    </div>
-                </div>
-
-                <!-- PDF Viewer -->
-                <iframe id="pdf-viewer" src="mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf"></iframe>
+                <h3>📄 Mutatie 29-1-2026 — Artikel 130</h3>
+                <embed src="mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf" type="application/pdf" />
+                <div class="pdf-fallback">Werkt de PDF niet? <a href="mutatie 29-1-2026 artikel 130corrdjdebie2feb2026 (1).pdf" target="_blank" rel="noopener">Open de PDF in een nieuw tabblad</a>.</div>
             </div>
-            
             <div class="questions-panel">
                 <h3>Beantwoord de vragen</h3>
                 <div class="question-item"><label>Wie?</label><textarea id="q-wie" placeholder="Wie is betrokken?"></textarea></div>
@@ -266,8 +246,7 @@
             <button class="btn-next" onclick="showScreen(5)">NAAR OEFENING 3: MUTATIE OPSTELLEN →</button>
         </div>
     </div>
-
-    <!-- ═══════════ SCHERM 5: Oefening 3 — Verhoor dader + Mutatie ═══════════ -->
+    <!-- ═══════════ SCHERM 5: Oefening 3 — Verhoor verdachte + Mutatie ═══════════ -->
     <div id="screen5" class="screen hidden">
         <div class="topbar">
             <div>Ingelogd als <strong id="tb-name-5">—</strong> · Klas <strong id="tb-class-5">—</strong></div>
@@ -275,7 +254,6 @@
         </div>
         <h2>5. Oefening 3: Mutatie opstellen</h2>
         <p>Je hoort zo een OC-melding. <strong>Jij bent de agent en ondervraagt de verdachte in de chat</strong> om alle informatie te verzamelen. Stel daarna zelf een complete mutatie op volgens de ASTMA-structuur.</p>
-
         <div class="oc-panel">
             <div class="oc-header"><span class="dot"></span> OPERATIONEEL CENTRUM — LIVE MELDING</div>
             <div class="oc-text" id="oc-tekst">Bezig met laden van melding...</div>
@@ -293,7 +271,6 @@
                 <label class="speed-label">Snelheid <input type="range" id="oc-speed" min="0.5" max="1.5" step="0.1" value="0.95" /></label>
             </div>
         </div>
-
         <div class="oefening-layout">
             <div class="chat-panel">
                 <div class="chat-header">
@@ -310,7 +287,6 @@
                     <button id="chat-send" onclick="sendChat()">Verstuur</button>
                 </div>
             </div>
-
             <div class="questions-panel">
                 <h3>Jouw mutatie</h3>
                 <div class="question-item"><label>Aanleiding</label><textarea id="m-aanleiding" placeholder="Wie ben je, wat is je bevoegdheid, wat is je taak en wat kreeg je binnen?"></textarea></div>
@@ -321,17 +297,72 @@
                 <div class="save-status" id="mutatie-save-status"></div>
             </div>
         </div>
-
         <div class="feed-section">
             <h3>📡 Live mutaties van klas <span id="feed-class-name-5"></span></h3>
             <div class="answers-feed" id="mutaties-feed"><p style="color:#888;">Nog geen mutaties...</p></div>
         </div>
-
         <div class="nav-bar">
             <button onclick="showScreen(4)">← Terug naar Oefening 2</button>
             <button onclick="showScreen(1)">← Naar Whiteboard</button>
             <button class="btn-warning" onclick="resetMutaties()">Wis mutaties (eigen klas)</button>
             <button class="btn-hard-reset" onclick="resetMyClass()">Reset klas (alles)</button>
+            <button class="btn-next" onclick="showScreen(6)">NAAR AFSLUITING: LOGIKWIS →</button>
+        </div>
+    </div>
+
+    <!-- ═══════════ SCHERM 6: AFSLUITENDE LOGIKWIS ═══════════ -->
+    <div id="screen6" class="screen hidden">
+        <div class="topbar">
+            <div>Ingelogd als <strong id="tb-name-6">—</strong> · Klas <strong id="tb-class-6">—</strong></div>
+            <button class="btn-logout" onclick="doLogout()">Uitloggen</button>
+        </div>
+        <h2>6. Afsluitende Opdracht: Logikwis (Casus-analyse)</h2>
+        <p>Gebruik de aanwijzingen om de juiste combinatie tussen <strong>Naam</strong>, <strong>Locatie incident</strong>, <strong>Oorzaak</strong> en <strong>Beschikking</strong> te vinden. Klik 1x voor een kruisje (❌) en 2x voor een vinkje (✔️).</p>
+        
+        <div class="kwis-container">
+            <!-- Aanwijzingen (Uitdagende editie) -->
+            <div class="kwis-box">
+                <h3>💡 Aanwijzingen</h3>
+                <ol class="hint-list">
+                    <li>De verdachte op het <strong>Eemplein</strong> handelde niet uit onwil, maar door een aantoonbare lichamelijke conditie; zijn dossier leidt uiteindelijk niet tot een bekeuring.</li>
+                    <li><strong>K. Bakker</strong> veroorzaakte een incident op de <strong>Muurhuizen</strong> omdat hij fysiek uithaalde na te zijn getriggerd door een voorbijganger, wat leidde tot een strafbaar feit gericht tegen de functionaris in functie.</li>
+                    <li>De verdachte in de <strong>Veenestraat</strong> plaste niet vanwege een uitgaansnacht, maar omdat hij nergens binnen kon slapen; zijn beschikking kan niet op een woonadres worden bezorgd.</li>
+                    <li><strong>M. Jansen</strong> plaste op de <strong>Langestraat / Kamp</strong> puur omdat zijn blaas vol was na een avondje stappen; hij krijgt de bekeuring direct in handen.</li>
+                    <li>Het incident in de <strong>Utrechtsestraat</strong> ontstond niet door een blaasprobleem of medische oorzaak, maar door extreme invloed van verdovende middelen, wat leidde tot een aanhouding op basis van openbare orde verstoring.</li>
+                </ol>
+                <button onclick="resetKwisGrid()" class="btn-warning" style="margin-top: 15px;">Wis raster</button>
+                <button onclick="checkKwisOplossing()" class="btn-next" style="margin-top: 15px;">Controleer oplossing</button>
+                <div id="kwis-feedback" style="margin-top: 10px; font-weight: bold;"></div>
+            </div>
+
+            <!-- Matrix Raster: Naam vs Locatie -->
+            <div class="kwis-box" style="overflow-x: auto;">
+                <h3>🧩 Logisch Raster (Naam vs. Locatie & Beschikking)</h3>
+                <table class="grid-table" id="kwis-grid">
+                    <thead>
+                        <tr>
+                            <th colspan="2"></th>
+                            <th>Langestraat / Kamp</th>
+                            <th>Utrechtsestraat</th>
+                            <th>Veenestraat</th>
+                            <th>Eemplein</th>
+                            <th>Muurhuizen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><th rowspan="5">Naam</th><th>M. Jansen</th><td class="cell" data-r="0" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
+                        <tr><th>R. de Jong</th><td class="cell" data-r="1" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
+                        <tr><th>G. Willems</th><td class="cell" data-r="2" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
+                        <tr><th>H. van Dijk</th><td class="cell" data-r="3" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
+                        <tr><th>K. Bakker</th><td class="cell" data-r="4" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="nav-bar">
+            <button onclick="showScreen(5)">← Terug naar Oefening 3</button>
+            <button onclick="showScreen(1)">← Terug naar Whiteboard</button>
         </div>
     </div>
 
@@ -339,11 +370,9 @@
         <span class="close-hint">Klik om te sluiten ✕</span>
         <img id="img-lightbox-img" src="" alt="Vergrote afbeelding" />
     </div>
-
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getDatabase, ref, set, onValue, push, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
     const firebaseConfig = {
         apiKey: "AIzaSyC-Of0AUOd-kVo2RKxYc-68Gr-RO4HdRk0",
         authDomain: "q2aangifteles2.firebaseapp.com",
@@ -353,23 +382,18 @@
         messagingSenderId: "696806554615",
         appId: "1:696806554615:web:bd877b1caee23c5283ccf2"
     };
-
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-
     let userName = localStorage.getItem('kl_name') || '';
     let userClass = localStorage.getItem('kl_class') || '';
     let unsubscribers = [];
     let activeListeners = null;
-    let loadedPDFs = {};
-
     function basePath() { return `shared/${encodeKey(userClass)}`; }
     function encodeKey(s) { return String(s || '').replace(/[.#$\[\]\/]/g, '_'); }
     function escapeHtml(s) {
         return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
             .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
-
     // ════════════ INLOG ════════════
     window.doLogin = function() {
         const name = document.getElementById('login-name').value.trim();
@@ -379,15 +403,14 @@
         userName = name; userClass = cls;
         localStorage.setItem('kl_name', name);
         localStorage.setItem('kl_class', cls);
-        ['tb-name','tb-name-3','tb-name-4','tb-name-5'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = name; });
-        ['tb-class','tb-class-3','tb-class-4','tb-class-5'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = cls; });
+        ['tb-name','tb-name-3','tb-name-4','tb-name-5','tb-name-6'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = name; });
+        ['tb-class','tb-class-3','tb-class-4','tb-class-5','tb-class-6'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = cls; });
         const fc = document.getElementById('feed-class-name'); if (fc) fc.textContent = cls;
         const fc5 = document.getElementById('feed-class-name-5'); if (fc5) fc5.textContent = cls;
         startAllListeners();
         assignCasus();
         showScreen(1);
     };
-
     window.doLogout = function() {
         if (!confirm('Weet je zeker dat je wilt uitloggen?')) return;
         stopOC();
@@ -399,7 +422,6 @@
         document.getElementById('login-class').value = '';
         showScreen(0);
     };
-
     function tryAutoLogin() {
         if (userName && userClass) {
             document.getElementById('login-name').value = userName;
@@ -409,7 +431,6 @@
             showScreen(0);
         }
     }
-
     // ════════════ LISTENERS ════════════
     function addListener(unsub) { if (typeof unsub === 'function') unsubscribers.push(unsub); }
     function stopAllListeners() {
@@ -428,7 +449,7 @@
         const mfeed = document.getElementById('mutaties-feed');
         if (mfeed) mfeed.innerHTML = '<p style="color:#888;">Nog geen mutaties...</p>';
     }
-
+    // ─── Hulpfunctie: update preview op scherm 1 ───
     function updateBakPreview(data) {
         const chips = document.getElementById('preview-chips');
         const empty = document.getElementById('preview-empty');
@@ -457,11 +478,9 @@
             chips.appendChild(chip);
         });
     }
-
     function startAllListeners() {
         if (activeListeners) return;
         activeListeners = true;
-        
         addListener(onValue(ref(db, basePath() + '/sentences'), s => {
             const div = document.getElementById('displaySentence'); if (!div) return;
             div.innerHTML = '';
@@ -470,7 +489,6 @@
                 const z = document.createElement('div'); z.innerText = t; div.appendChild(z);
             });
         }));
-
         addListener(onValue(ref(db, basePath() + '/drawing'), s => {
             const data = s.val() || {};
             ['canvas1','canvas3'].forEach(id => {
@@ -486,7 +504,6 @@
                 });
             });
         }));
-
         addListener(onValue(ref(db, basePath() + '/words'), (snapshot) => {
             const data = snapshot.val();
             document.querySelectorAll('.word-card').forEach(el => { if (!data || !data[el.id]) el.remove(); });
@@ -528,35 +545,6 @@
             }
             updateBakPreview(data);
         }));
-
-        // Listener voor geüploade PDF's in de klas
-        addListener(onValue(ref(db, basePath() + '/uploaded_pdfs'), (snap) => {
-            const data = snap.val();
-            const select = document.getElementById('pdf-select');
-            if (!select) return;
-
-            const currentVal = select.value;
-            select.innerHTML = '<option value="default">Standaard Mutatie PDF</option>';
-            loadedPDFs = {};
-
-            if (data) {
-                Object.entries(data).forEach(([id, item]) => {
-                    loadedPDFs[id] = item.data;
-                    const opt = document.createElement('option');
-                    opt.value = id;
-                    opt.textContent = item.name + ' (door ' + (item.uploadedBy || 'Onbekend') + ')';
-                    select.appendChild(opt);
-                });
-            }
-
-            if (loadedPDFs[currentVal]) {
-                select.value = currentVal;
-            } else if (currentVal !== 'default' && !loadedPDFs[currentVal]) {
-                select.value = 'default';
-                changePDF('default');
-            }
-        }));
-
         addListener(onValue(ref(db, basePath() + '/answers'), (snap) => {
             const feed = document.getElementById('answers-feed'); if (!feed) return;
             const data = snap.val();
@@ -595,7 +583,6 @@
                 });
             });
         }));
-
         addListener(onValue(ref(db, basePath() + '/mutaties'), (snap) => {
             const feed = document.getElementById('mutaties-feed'); if (!feed) return;
             const data = snap.val();
@@ -643,62 +630,6 @@
             });
         }));
     }
-
-    // ════════════ PDF LOGICA ════════════
-    window.changePDF = function(val) {
-        const viewer = document.getElementById('pdf-viewer');
-        if (!viewer) return;
-        if (val === 'default') {
-            viewer.src = "mutatie%2029-1-2026%20artikel%20130corrdjdebie2feb2026%20%281%29.pdf";
-        } else if (loadedPDFs[val]) {
-            viewer.src = loadedPDFs[val];
-        }
-    };
-
-    window.uploadPDF = function() {
-        const fileInput = document.getElementById('pdf-file-input');
-        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            alert('Selecteer eerst een PDF-bestand op je computer of USB-stick.');
-            return;
-        }
-        const file = fileInput.files[0];
-        if (file.type !== 'application/pdf') {
-            alert('Selecteer een geldig PDF-bestand.');
-            return;
-        }
-        if (file.size > 5 * 1024 * 1024) {
-            alert('Het bestand is te groot. Kies een PDF kleiner dan 5 MB.');
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const base64Data = e.target.result;
-            const pdfRef = push(ref(db, basePath() + '/uploaded_pdfs'));
-            set(pdfRef, {
-                name: file.name,
-                data: base64Data,
-                uploadedBy: userName,
-                timestamp: Date.now()
-            }).then(() => {
-                alert('PDF succesvol geüpload naar de klas!');
-                fileInput.value = '';
-            }).catch(err => {
-                alert('Fout bij uploaden: ' + err.message);
-            });
-        };
-        reader.readAsDataURL(file);
-    };
-
-    window.resetPDFs = function() {
-        if (!userClass) return;
-        if (confirm(`Weet je zeker dat je alle geüploade PDF-bestanden van klas ${userClass} wilt wissen uit de database?`)) {
-            remove(ref(db, basePath() + '/uploaded_pdfs')).then(() => {
-                changePDF('default');
-            });
-        }
-    };
-
     // ════════════ PEN ════════════
     const setupCanvas = (id) => {
         const canvas = document.getElementById(id); if (!canvas) return;
@@ -722,7 +653,6 @@
         };
     };
     setupCanvas('canvas1'); setupCanvas('canvas3');
-
     // ════════════ DRAG & DROP ════════════
     let draggedId = null;
     let dragOffset = { x: 0, y: 0 };
@@ -750,7 +680,6 @@
         update(ref(db, basePath() + '/words/' + id), { location: targetLoc, x: x, y: y });
         draggedId = null;
     };
-
     // ════════════ INPUT ════════════
     window.handleSentenceEnter = (e) => {
         if (e.key === "Enter" && e.target.value && userClass) {
@@ -764,11 +693,10 @@
             e.target.value = "";
         }
     };
-
     // ════════════ RESET ════════════
     window.hardReset = function() {
         if (!userClass) return;
-        if (confirm(`ALLES van klas ${userClass} wissen? (bord, woorden, tekeningen, antwoorden, mutaties, PDF's)`)) remove(ref(db, basePath()));
+        if (confirm(`ALLES van klas ${userClass} wissen? (bord, woorden, tekeningen, antwoorden, mutaties)`)) remove(ref(db, basePath()));
     };
     window.clearWords = function() {
         if (!userClass) return;
@@ -790,7 +718,6 @@
         if (!userClass) return;
         if (confirm(`Reset klas ${userClass}? ALLES wordt gewist.`)) remove(ref(db, basePath()));
     };
-
     // ════════════ NAVIGATIE ════════════
     window.showScreen = (n) => {
         document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
@@ -798,7 +725,6 @@
         if (n === 4) attachAnswerListeners();
         if (n === 5) initChatbot();
     };
-
     // ════════════ OEFENING 2 ════════════
     const QUESTION_KEYS = ['wie', 'wat', 'waar', 'wanneer', 'waarom', 'wijze'];
     let saveTimer = null;
@@ -834,7 +760,6 @@
             .then(() => { document.getElementById('save-status').textContent = '✓ Opgeslagen om ' + new Date().toLocaleTimeString('nl-NL'); })
             .catch(err => { document.getElementById('save-status').textContent = '⚠️ Fout: ' + err.message; });
     }
-
     // ════════════ OEFENING 3 — OC-MELDING VOORLEZEN ════════════
     let ocUtterance = null;
     window.speakOC = function() {
@@ -854,7 +779,6 @@
         if ('speechSynthesis' in window) speechSynthesis.cancel();
         ocUtterance = null;
     };
-
     // ════════════ OEFENING 3 — 5 CASUSSEN ROND WILDPLASSEN ════════════
     const CASUSSEN = [
         {
@@ -940,7 +864,7 @@ Einde bericht.`,
             sub: "verdachte wildplassen · medische noodzaak (diabetes)",
             ocText: `Hier het Operationeel Centrum.
 Eenheid 21-05, melding bij het parkeerterrein van het Eemplein te Amersfoort.
-Een oudere heer is gesignaleerd die achter de heg staat te plassen.
+Een oudere heer is gesignaleerd die achter de heg stond te plassen.
 Signalement: man, ca. 60-65 jaar, net grijs pak, bril, keurige uitstraling.
 Betrokkene geeft aan een medisch probleem te hebben. Willen jullie dit verifiëren?
 Einde bericht.`,
@@ -982,11 +906,9 @@ Einde bericht.`,
             fallback: ["Vlieg op man! Waar bemoei je je mee?!", "Ik zeg niks meer tegen jou, vieze mongool!"]
         }
     ];
-
     let currentCasus = null;
     let chatbotInitialized = false;
     let botTypingTimer = null;
-
     function assignCasus() {
         if (!userName || !userClass) return;
         const str = (userName + '_' + userClass).toLowerCase();
@@ -999,21 +921,16 @@ Einde bericht.`,
         currentCasus = CASUSSEN[idx];
         applyCasusToUI();
     }
-
     function applyCasusToUI() {
         if (!currentCasus) return;
         const ocEl = document.getElementById('oc-tekst');
         if (ocEl) ocEl.innerText = currentCasus.ocText;
-
         const avatarEl = document.getElementById('chat-avatar');
         if (avatarEl) avatarEl.innerText = currentCasus.avatar;
-
         const nameEl = document.getElementById('chat-name');
         if (nameEl) nameEl.innerText = currentCasus.name;
-
         const subEl = document.getElementById('chat-sub');
         if (subEl) subEl.innerText = currentCasus.sub;
-
         const hintsEl = document.getElementById('chat-hints');
         if (hintsEl) {
             hintsEl.innerHTML = '';
@@ -1024,13 +941,11 @@ Einde bericht.`,
                 hintsEl.appendChild(btn);
             });
         }
-
         const body = document.getElementById('chat-body');
         if (body && body.children.length === 0) {
             addChatMessage('bot', currentCasus.welcomeMsg);
         }
     }
-
     function zoekAntwoord(vraag) {
         if (!currentCasus) assignCasus();
         const q = vraag.toLowerCase().trim();
@@ -1045,7 +960,6 @@ Einde bericht.`,
         }
         return currentCasus.fallback[Math.floor(Math.random() * currentCasus.fallback.length)];
     }
-
     function addChatMessage(role, text) {
         const body = document.getElementById('chat-body'); if (!body) return;
         const div = document.createElement('div');
@@ -1054,7 +968,6 @@ Einde bericht.`,
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
     }
-
     function showTyping() {
         const body = document.getElementById('chat-body'); if (!body) return;
         const div = document.createElement('div');
@@ -1064,12 +977,10 @@ Einde bericht.`,
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
     }
-
     function hideTyping() {
         const el = document.getElementById('typing-indicator');
         if (el) el.remove();
     }
-
     window.sendChat = function() {
         const input = document.getElementById('chat-input');
         const text = input.value.trim();
@@ -1085,13 +996,11 @@ Einde bericht.`,
             addChatMessage('bot', antwoord);
         }, delay);
     };
-
     window.quickAsk = function(vraag) {
         const input = document.getElementById('chat-input');
         if (input) input.value = vraag;
         window.sendChat();
     };
-
     function initChatbot() {
         assignCasus();
         if (chatbotInitialized) return;
@@ -1122,7 +1031,6 @@ Einde bericht.`,
             });
         });
     }
-
     function saveMyMutatie() {
         if (!userName || !userClass || !currentCasus) return;
         const parts = {};
@@ -1147,6 +1055,82 @@ Einde bericht.`,
             });
     }
 
+    // ════════════ LOGIKWIS FUNCTIONALITEIT ════════════
+    window.toggleKwisCell = function(cell) {
+        if (cell.classList.contains('kruis')) {
+            cell.classList.remove('kruis');
+            cell.classList.add('vink');
+            cell.innerText = '✔️';
+            autoCrossRowAndCol(cell);
+        } else if (cell.classList.contains('vink')) {
+            cell.classList.remove('vink');
+            cell.innerText = '';
+        } else {
+            cell.classList.add('kruis');
+            cell.innerText = '❌';
+        }
+    };
+
+    function autoCrossRowAndCol(targetCell) {
+        const row = targetCell.parentElement;
+        const cellsInRow = Array.from(row.querySelectorAll('.cell'));
+        const cellIndex = cellsInRow.indexOf(targetCell);
+
+        cellsInRow.forEach(c => {
+            if (c !== targetCell && !c.classList.contains('vink')) {
+                c.classList.remove('vink');
+                c.classList.add('kruis');
+                c.innerText = '❌';
+            }
+        });
+
+        const allRows = targetCell.closest('tbody').querySelectorAll('tr');
+        allRows.forEach(r => {
+            const c = r.querySelectorAll('.cell')[cellIndex];
+            if (c && c !== targetCell && !c.classList.contains('vink')) {
+                c.classList.remove('vink');
+                c.classList.add('kruis');
+                c.innerText = '❌';
+            }
+        });
+    }
+
+    window.resetKwisGrid = function() {
+        document.querySelectorAll('#kwis-grid .cell').forEach(cell => {
+            cell.className = 'cell';
+            cell.innerText = '';
+        });
+        document.getElementById('kwis-feedback').innerText = '';
+    };
+
+    window.checkKwisOplossing = function() {
+        const feedback = document.getElementById('kwis-feedback');
+        const correctPairs = [[0,0], [1,1], [2,2], [3,3], [4,4]];
+        
+        let correct = true;
+        let vinkjesCount = 0;
+
+        document.querySelectorAll('#kwis-grid .cell').forEach(cell => {
+            const r = parseInt(cell.getAttribute('data-r'));
+            const c = parseInt(cell.getAttribute('data-c'));
+            const isVink = cell.classList.contains('vink');
+            const isCorrectPair = correctPairs.some(p => p[0] === r && p[1] === c);
+
+            if (isVink) {
+                vinkjesCount++;
+                if (!isCorrectPair) correct = false;
+            }
+        });
+
+        if (vinkjesCount === 5 && correct) {
+            feedback.style.color = '#27ae60';
+            feedback.innerText = '🎉 Uitstekend! Je hebt alle casussen en beschikkingen correct geanalyseerd.';
+        } else {
+            feedback.style.color = '#e74c3c';
+            feedback.innerText = '❌ Nog niet helemaal juist. Controleer de aanwijzingen en beschikkingen nog eens!';
+        }
+    };
+
     // ════════════ LIGHTBOX ════════════
     window.openLightbox = function(src) {
         const lb = document.getElementById('img-lightbox');
@@ -1162,7 +1146,6 @@ Einde bericht.`,
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') window.closeLightbox();
     });
-
     // ════════════ INIT ════════════
     setTimeout(() => {
         if ('speechSynthesis' in window) speechSynthesis.getVoices();
@@ -1172,5 +1155,3 @@ Einde bericht.`,
 </script>
 </body>
 </html>
-
-```
