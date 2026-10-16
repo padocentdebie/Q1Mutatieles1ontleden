@@ -128,19 +128,43 @@
         .review-area { margin-top: 10px; padding-top: 8px; border-top: 1px dashed #ddd; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
         .reviewers { font-size: 0.8rem; color: #7f8c8d; }
         .reviewers strong { color: #27ae60; }
-        /* ─── LOGIKWIS (SCHERM 6) ─── */
+        
+        /* ─── LOGIKWIS CROSS-GRID (SCHERM 6) ─── */
         .kwis-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
-        @media (max-width: 900px) { .kwis-container { grid-template-columns: 1fr; } }
+        @media (max-width: 1000px) { .kwis-container { grid-template-columns: 1fr; } }
         .kwis-box { background: #fff; border: 3px solid #333; border-radius: 12px; padding: 20px; }
         .kwis-box h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid #ccc; padding-bottom: 8px; }
         .hint-list { padding-left: 20px; line-height: 1.6; font-size: 0.95rem; }
-        .grid-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
-        .grid-table th, .grid-table td { border: 1px solid #bdc3c7; text-align: center; padding: 6px; }
-        .grid-table th { background: #2c3e50; color: white; font-weight: 600; }
-        .grid-table td.cell { cursor: pointer; font-weight: bold; font-size: 1.1rem; width: 32px; height: 32px; user-select: none; }
-        .grid-table td.cell:hover { background: #ecf0f1; }
-        .grid-table td.cell.vink { color: #27ae60; background: #e8f8f5; }
-        .grid-table td.cell.kruis { color: #e74c3c; background: #fadbd8; }
+
+        /* Het Geocachers Cross-Grid style */
+        .geo-matrix { border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; font-family: sans-serif; }
+        .geo-matrix th, .geo-matrix td { border: 2px solid #000; text-align: center; padding: 0; position: relative; }
+        .geo-matrix .cat-head { background: #ffff00; color: #000; font-weight: bold; font-size: 0.9rem; text-align: left; padding: 4px 8px; }
+        
+        /* Verticale kolomkoppen */
+        .geo-matrix th.col-label { height: 110px; vertical-align: bottom; padding-bottom: 6px; width: 28px; min-width: 28px; }
+        .geo-matrix th.col-label span {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            white-space: nowrap;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 0.82rem;
+        }
+        
+        /* Horizontale rijkoppen */
+        .geo-matrix td.row-label { font-weight: bold; text-align: left; padding: 4px 8px; white-space: nowrap; font-size: 0.82rem; background: #fff; }
+        .geo-matrix .empty-corner { border: none; background: transparent; }
+        
+        /* Dikke scheidingslijnen voor blokken */
+        .geo-matrix .thick-right { border-right: 4px solid #000 !important; }
+        .geo-matrix .thick-bottom { border-bottom: 4px solid #000 !important; }
+        
+        /* Ingebouwde cel functionaliteit */
+        .geo-matrix td.cell { width: 28px; height: 28px; cursor: pointer; font-size: 1.1rem; font-weight: bold; user-select: none; background: #fff; }
+        .geo-matrix td.cell:hover { background: #e0e0e0; }
+        .geo-matrix td.cell.vink { color: #27ae60; background: #e8f8f5; }
+        .geo-matrix td.cell.kruis { color: #e74c3c; background: #fadbd8; }
     </style>
 </head>
 <body>
@@ -179,7 +203,7 @@
             <div><label>MV</label><input type="text" onkeydown="handleWordSync(event, 3)"></div>
             <div><label>Gez.</label><input type="text" onkeydown="handleWordSync(event, 4)"></div>
         </div>
-        <!-- Preview van de bak (direct zichtbaar op scherm 1) -->
+        <!-- Preview van de bak op scherm 1 -->
         <div class="bak-preview" id="bak-preview">
             <span class="preview-label">Toegevoegd aan de bak:</span>
             <span class="preview-empty" id="preview-empty">Nog geen woorden. Typ een woord of woordgroep in een van de velden hierboven en druk op Enter.</span>
@@ -296,7 +320,7 @@
                 <div class="question-item"><label>Situatie</label><textarea id="m-situatie" placeholder="Beschrijf kort de situatie ter plaatse."></textarea></div>
                 <div class="question-item"><label>Toedracht</label><textarea id="m-toedracht" placeholder="Wat zag, hoorde, rook je? Beantwoord de Gouden W's."></textarea></div>
                 <div class="question-item"><label>Maatregelen</label><textarea id="m-maatregelen" placeholder="Welke acties, maatregelen of afspraken heb je ondernomen?"></textarea></div>
-                <div class="question-item"><label>Afhandeling</label><textarea id="m-afhandeling" placeholder="Wat heb je na afronding gedaan?"></textarea></div>
+                <div class="question-item"><label>Afhandeling</label><textarea id="m-afhandeling" placeholder="What heb je na afronding gedaan?"></textarea></div>
                 <div class="save-status" id="mutatie-save-status"></div>
             </div>
         </div>
@@ -312,17 +336,17 @@
             <button class="btn-next" onclick="showScreen(6)">NAAR AFSLUITING: LOGIKWIS →</button>
         </div>
     </div>
-    <!-- ═══════════ SCHERM 6: AFSLUITENDE LOGIKWIS ═══════════ -->
+    <!-- ═══════════ SCHERM 6: AFSLUITENDE LOGIKWIS (GEOCACHERS KRUISTRATSTER) ═══════════ -->
     <div id="screen6" class="screen hidden">
         <div class="topbar">
             <div>Ingelogd als <strong id="tb-name-6">—</strong> · Klas <strong id="tb-class-6">—</strong></div>
             <button class="btn-logout" onclick="doLogout()">Uitloggen</button>
         </div>
         <h2>6. Afsluitende Opdracht: Logikwis (Casus-analyse Wildplassen)</h2>
-        <p>Gebruik de driesterren-aanwijzingen om de juiste combinaties te vinden in het logisch raster (Regel 1: Achternaam, Locatie incident, Beschikking; Regel 2: Voornaam, Oorzaak; Regel 3: Beschikking). Klik 1x voor een kruisje (❌) en 2x voor een vinkje (✔️).</p>
+        <p>Gebruik de aanwijzingen om het logisch raster (geocachers-model) op te lossen. Klik 1x voor een kruisje (❌) en 2x voor een vinkje (✔️).</p>
         
         <div class="kwis-container">
-            <!-- Aanwijzingen (3-sterrenniveau op basis van casussen) -->
+            <!-- Aanwijzingen -->
             <div class="kwis-box">
                 <h3>💡 Aanwijzingen (Driesterrenniveau)</h3>
                 <ol class="hint-list">
@@ -336,33 +360,128 @@
                 <button onclick="checkKwisOplossing()" class="btn-next" style="margin-top: 15px;">Controleer oplossing</button>
                 <div id="kwis-feedback" style="margin-top: 10px; font-weight: bold;"></div>
             </div>
-            <!-- Matrix Raster: 3 niveaus / regels -->
+            
+            <!-- Geocachers Cross-Grid Matrix -->
             <div class="kwis-box" style="overflow-x: auto;">
-                <h3>🧩 Logisch Raster (Regel 1, 2 & 3)</h3>
-                <table class="grid-table" id="kwis-grid">
+                <h3>🧩 Logisch Raster</h3>
+                <table class="geo-matrix" id="kwis-grid">
                     <thead>
                         <tr>
-                            <th>Niveau / Regel</th>
-                            <th>Onderdeel</th>
-                            <th>Optie 1</th>
-                            <th>Optie 2</th>
-                            <th>Optie 3</th>
-                            <th>Optie 4</th>
-                            <th>Optie 5</th>
+                            <td colspan="2" class="empty-corner thick-right thick-bottom"></td>
+                            <td colspan="5" class="cat-head thick-right thick-bottom">Achternaam</td>
+                            <td colspan="5" class="cat-head thick-right thick-bottom">Locatie Incident</td>
+                            <td colspan="5" class="cat-head thick-right thick-bottom">Beschikking</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="empty-corner thick-right thick-bottom"></td>
+                            <th class="col-label"><span>Bakker</span></th>
+                            <th class="col-label"><span>van Dijk</span></th>
+                            <th class="col-label"><span>Jansen</span></th>
+                            <th class="col-label"><span>de Jong</span></th>
+                            <th class="col-label thick-right"><span>Willems</span></th>
+                            <th class="col-label"><span>Eemplein</span></th>
+                            <th class="col-label"><span>Langestraat/Kamp</span></th>
+                            <th class="col-label"><span>Muurhuizen</span></th>
+                            <th class="col-label"><span>Utrechtsestraat</span></th>
+                            <th class="col-label thick-right"><span>Veenestraat</span></th>
+                            <th class="col-label"><span>Aanhouding (Art. 267)</span></th>
+                            <th class="col-label"><span>Aanhouding (Art. 453)</span></th>
+                            <th class="col-label"><span>Bekeuring in handen</span></th>
+                            <th class="col-label"><span>Postbus (GVVP)</span></th>
+                            <th class="col-label thick-right"><span>Sepot (Medisch)</span></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Regel 1: 3 boxen (Achternaam, Locatie Incident, Beschikking) -->
-                        <tr><th rowspan="3">Regel 1</th><th>Achternaam</th><td class="cell" data-r="0" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                        <tr><th>Locatie Incident</th><td class="cell" data-r="1" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                        <tr><th>Beschikking</th><td class="cell" data-r="2" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                        
-                        <!-- Regel 2: Voornaam, Oorzaak -->
-                        <tr><th rowspan="2">Regel 2</th><th>Voornaam</th><td class="cell" data-r="3" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="3" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                        <tr><th>Oorzaak</th><td class="cell" data-r="4" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="4" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                        
-                        <!-- Regel 3: Beschikking -->
-                        <tr><th>Regel 3</th><th>Beschikking</th><td class="cell" data-r="5" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="5" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="5" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="5" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="5" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
+                        <tr>
+                            <td rowspan="5" class="cat-head thick-right thick-bottom">Voornaam</td>
+                            <td class="row-label thick-right">Gerrit</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right">Henk</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right">Kevin</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right">Martijn</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right thick-bottom">Remco</td>
+                            <td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-right thick-bottom" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-right thick-bottom" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-right thick-bottom" onclick="toggleKwisCell(this)"></td>
+                        </tr>
+
+                        <tr>
+                            <td rowspan="5" class="cat-head thick-right thick-bottom">Oorzaak</td>
+                            <td class="row-label thick-right">Agressie / uitdagen</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td colspan="5" class="empty-corner thick-right"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right">Alcohol / Dronkenschap</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td colspan="5" class="empty-corner thick-right"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right">Dakloos / Nachtopvang dicht</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td colspan="5" class="empty-corner thick-right"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right">Medisch (Diabetes/Plaspil)</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td colspan="5" class="empty-corner thick-right"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right thick-bottom">Volle blaas na stappen</td>
+                            <td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-right thick-bottom" onclick="toggleKwisCell(this)"></td>
+                            <td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-right thick-bottom" onclick="toggleKwisCell(this)"></td>
+                            <td colspan="5" class="empty-corner thick-right thick-bottom"></td>
+                        </tr>
+
+                        <tr>
+                            <td rowspan="5" class="cat-head thick-right thick-bottom">Beschikking</td>
+                            <td class="row-label thick-right">Aanhouding (Art. 267)</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td colspan="10" class="empty-corner thick-right"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right">Aanhouding (Art. 453)</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td colspan="10" class="empty-corner thick-right"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right">Bekeuring in handen</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td colspan="10" class="empty-corner thick-right"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right">Postbus (GVVP)</td>
+                            <td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell" onclick="toggleKwisCell(this)"></td><td class="cell thick-right" onclick="toggleKwisCell(this)"></td>
+                            <td colspan="10" class="empty-corner thick-right"></td>
+                        </tr>
+                        <tr>
+                            <td class="row-label thick-right thick-bottom">Sepot (Medisch)</td>
+                            <td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-bottom" onclick="toggleKwisCell(this)"></td><td class="cell thick-right thick-bottom" onclick="toggleKwisCell(this)"></td>
+                            <td colspan="10" class="empty-corner thick-right thick-bottom"></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -1103,7 +1222,6 @@ Einde bericht.`,
             cell.classList.remove('kruis');
             cell.classList.add('vink');
             cell.innerText = '✔️';
-            autoCrossRowAndCol(cell);
         } else if (cell.classList.contains('vink')) {
             cell.classList.remove('vink');
             cell.innerText = '';
@@ -1112,30 +1230,9 @@ Einde bericht.`,
             cell.innerText = '❌';
         }
     };
-    function autoCrossRowAndCol(targetCell) {
-        const row = targetCell.parentElement;
-        const cellsInRow = Array.from(row.querySelectorAll('.cell'));
-        const cellIndex = cellsInRow.indexOf(targetCell);
-        cellsInRow.forEach(c => {
-            if (c !== targetCell && !c.classList.contains('vink')) {
-                c.classList.remove('vink');
-                c.classList.add('kruis');
-                c.innerText = '❌';
-            }
-        });
-        const allRows = targetCell.closest('tbody').querySelectorAll('tr');
-        allRows.forEach(r => {
-            const c = r.querySelectorAll('.cell')[cellIndex];
-            if (c && c !== targetCell && !c.classList.contains('vink')) {
-                c.classList.remove('vink');
-                c.classList.add('kruis');
-                c.innerText = '❌';
-            }
-        });
-    }
     window.resetKwisGrid = function() {
         document.querySelectorAll('#kwis-grid .cell').forEach(cell => {
-            cell.className = 'cell';
+            cell.className = cell.className.replace(/vink|kruis/g, '').trim();
             cell.innerText = '';
         });
         document.getElementById('kwis-feedback').innerText = '';
