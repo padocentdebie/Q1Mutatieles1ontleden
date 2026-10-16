@@ -318,25 +318,25 @@
             <div>Ingelogd als <strong id="tb-name-6">—</strong> · Klas <strong id="tb-class-6">—</strong></div>
             <button class="btn-logout" onclick="doLogout()">Uitloggen</button>
         </div>
-        <h2>6. Afsluitende Opdracht: Logikwis (Casus-analyse)</h2>
-        <p>Gebruik de aanwijzingen om de juiste combinaties te vinden volgens de gevatte structuur (Regel 1: 3 boxen - achternaam, straat overtreding, beschikking; Regel 2: voornaam, oorzaak; Regel 3: beschikking)[cite: 1]. Klik 1x voor een kruisje (❌) en 2x voor een vinkje (✔️).</p>
+        <h2>6. Afsluitende Opdracht: Logikwis (Casus-analyse Wildplassen)</h2>
+        <p>Gebruik de driesterren-aanwijzingen om de juiste combinaties te vinden in het logisch raster (Regel 1: Achternaam, Locatie incident, Beschikking; Regel 2: Voornaam, Oorzaak; Regel 3: Beschikking). Klik 1x voor een kruisje (❌) en 2x voor een vinkje (✔️).</p>
         
         <div class="kwis-container">
-            <!-- Aanwijzingen -->
+            <!-- Aanwijzingen (3-sterrenniveau op basis van casussen) -->
             <div class="kwis-box">
-                <h3>💡 Aanwijzingen</h3>
+                <h3>💡 Aanwijzingen (Driesterrenniveau)</h3>
                 <ol class="hint-list">
-                    <li>De verdachte op het <strong>Eemplein</strong> handelde niet uit onwil, maar door een aantoonbare lichamelijke conditie; zijn dossier leidt uiteindelijk niet tot een bekeuring.</li>
-                    <li><strong>K. Bakker</strong> veroorzaakte een incident op de <strong>Muurhuizen</strong> omdat hij fysiek uithaalde na te zijn getriggerd door een voorbijganger, wat leidde tot een strafbaar feit gericht tegen de functionaris in functie.</li>
-                    <li>De verdachte in de <strong>Veenestraat</strong> plaste niet vanwege een uitgaansnacht, maar omdat hij nergens binnen kon slapen; zijn beschikking kan niet op een woonadres worden bezorgd.</li>
-                    <li><strong>M. Jansen</strong> plaste op de <strong>Langestraat / Kamp</strong> puur omdat zijn blaas vol was na een avondje stappen; hij krijgt de bekeuring direct in handen.</li>
-                    <li>Het incident in de <strong>Utrechtsestraat</strong> ontstond niet door een blaasprobleem of medische oorzaak, maar door extreme invloed van verdovende middelen, wat leidde tot een aanhouding op basis van openbare orde verstoring.</li>
+                    <li>De verdachte op het <strong>Eemplein</strong> handelde niet uit onwil of stappen, maar werd gedreven door een aantoonbare medische conditie (diabetes en plaspillen); zijn dossier leidt uiteindelijk niet tot een bekeuring.</li>
+                    <li><strong>K. Bakker</strong> veroorzaakte een incident op de <strong>Muurhuizen</strong> omdat hij agressief reageerde en uithaalde naar een voorbijganger, wat leidde tot een strafbaar feit en aanhouding wegens belediging van een ambtenaar.</li>
+                    <li>De verdachte in de <strong>Veenestraat</strong> plaste niet vanwege een uitgaansnacht, maar omdat hij geen vaste woon- of verblijfplaats had en de nachtopvang gesloten was; zijn beschikking kan niet op een woonadres worden bezorgd en loopt via een postbusadres.</li>
+                    <li><strong>M. Jansen</strong> plaste op de <strong>Langestraat / Kamp</strong> puur omdat zijn blaas vol was na een gezellig avondje stappen met een paar biertjes; hij krijgt de bekeuring direct in handen.</li>
+                    <li>Het incident op de <strong>Utrechtsestraat</strong> ontstond door extreme invloed van verdovende middelen en alcohol, wat resulteerde in een aanhouding op basis van openbare orde verstoring, waarbij de betrokkene (van wie de achternaam **de Jong** is) geen voornaam deelt met Martijn of Henk.</li>
                 </ol>
                 <button onclick="resetKwisGrid()" class="btn-warning" style="margin-top: 15px;">Wis raster</button>
                 <button onclick="checkKwisOplossing()" class="btn-next" style="margin-top: 15px;">Controleer oplossing</button>
                 <div id="kwis-feedback" style="margin-top: 10px; font-weight: bold;"></div>
             </div>
-            <!-- Matrix Raster: Aangepast naar 3 niveaus / regels -->
+            <!-- Matrix Raster: 3 niveaus / regels -->
             <div class="kwis-box" style="overflow-x: auto;">
                 <h3>🧩 Logisch Raster (Regel 1, 2 & 3)</h3>
                 <table class="grid-table" id="kwis-grid">
@@ -352,9 +352,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Regel 1: 3 boxen (Achternaam, Straat Overtreding, Beschikking) -->
+                        <!-- Regel 1: 3 boxen (Achternaam, Locatie Incident, Beschikking) -->
                         <tr><th rowspan="3">Regel 1</th><th>Achternaam</th><td class="cell" data-r="0" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="0" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
-                        <tr><th>Straat Overtreding</th><td class="cell" data-r="1" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
+                        <tr><th>Locatie Incident</th><td class="cell" data-r="1" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="1" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
                         <tr><th>Beschikking</th><td class="cell" data-r="2" data-c="0" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="1" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="2" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="3" onclick="toggleKwisCell(this)"></td><td class="cell" data-r="2" data-c="4" onclick="toggleKwisCell(this)"></td></tr>
                         
                         <!-- Regel 2: Voornaam, Oorzaak -->
@@ -862,7 +862,7 @@ Een man loopt hevig zwalkend over straat en staat nu openlijk tegen een etalager
 Signalement: man, ca. 28 jaar, rode hoodie, grijze joggingbroek, kort bruin haar, zwalkende gang.
 Mogelijke aanhouding voor openbare dronkenschap + wildplassen.
 Einde bericht.`,
-            welcomeMsg: "Lal... hallooo *hiks*... Wie ben jijjj? Ikuh... Remco de Jong... 28 ofzo... uit Soest... Waارissumun bier?! *zwalkt*",
+            welcomeMsg: "Lal... hallooo *hiks*... Wie ben jijjj? Ikuh... Remco de Jong... 28 ofzo... uit Soest... Waarissumun bier?! *zwalkt*",
             hints: [
                 "Mag ik uw ID zien?", "Waar woont u?", "Hoeveel heeft u gedronken?", "Waarom plast u tegen de etalage?", "U bent aangehouden voor dronkenschap!"
             ],
