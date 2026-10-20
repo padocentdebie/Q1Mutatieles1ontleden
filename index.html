@@ -730,7 +730,7 @@
                 const reviewers = item.reviews ? Object.keys(item.reviews) : [];
                 const isMine = (item.name === userName);
                 const iReviewed = item.reviews && userName && item.reviews[encodeKey(userName)];
-                let html = `<span class="student-name">${escapeHtml(item.name || 'Onbekend')}${isMine ? ' (jij)' : ''}</span>`;
+                let html = `<span class="student-name">escapeHtml(item.name||'Onbekend'){isMine ? ' (jij)' : ''}</span>`;
                 if (item.casus) {
                     html += `<div style="font-size:0.82rem; color:#e74c3c; font-weight:bold; margin-bottom:6px;">📋 Verdachte: ${escapeHtml(item.casus)}</div>`;
                 }
@@ -941,7 +941,7 @@
         if ('speechSynthesis' in window) speechSynthesis.cancel();
         ocUtterance = null;
     };
-    // ════════════ OEFENING 3 — 5 CASUSSEN ROND WILDPLASSEN ════════════
+    // ════════════ OEFENING 3 — 5 CASUSSEN ROND WILDPLASSEN (GEOPTIMALISEERD) ════════════
     const CASUSSEN = [
         {
             id: 0,
@@ -954,21 +954,71 @@ Op de hoek van de Langestraat met de Kamp in Amersfoort wordt een persoon gesign
 Signalement: man, rond 1 meter 80, lichtblauwe spijkerbroek, donker jack, kaal hoofd.
 Verdachte toont spijt en werkt mee. Willen jullie poolshoogte nemen?
 Einde bericht.`,
-            welcomeMsg: "Ja... hallo. Ik ben M. Jansen, 23 jaar en woonachtig in Amersfoort. De agent heeft me net staande gehouden voor wildplassen. Wat wilt u weten?",
+            welcomeMsg: "Ja... goedenavond agenten. Ik zie dat u naar me toe komt... Het ziet er stom uit hè? Ik ben M. Jansen, 23 jaar. Kan dit alsjeblieft even discreet?",
             hints: [
-                "Mag ik uw ID zien?", "Waar woont u?", "Wat is er gebeurd?", "Waarom deed u dat?", "Hebt u gedronken?", "Wist u dat het verboden is?", "Wilt u nog wat verklaren?"
+                "Mag ik uw ID zien?",
+                "Waarom plast u hier tegen de gevel?",
+                "Heeft u alcohol gedronken?",
+                "Ik vorder uw legitimatiebewijs op grond van de WID!",
+                "Krijgt u de bekeuring direct mee?",
+                "Wilt u nog een verklaring afleggen?"
             ],
             kb: [
-                { keys: ['id', 'identiteitsbewijs', 'paspoort', 'rijbewijs', 'mag ik uw id'], answers: ["Ja, moment. Hier is mijn rijbewijs. M. Jansen, woonachtig in Amersfoort."] },
-                { keys: ['naam', 'wie bent u', 'wie ben je', 'hoe heet'], answers: ["M. Jansen. Martijn Jansen, 23 jaar en woonachtig in Amersfoort."] },
-                { keys: ['woonplaats', 'waar woont', 'adres'], answers: ["Ik ben woonachtig in Amersfoort. Gewoon hier in het centrum."] },
-                { keys: ['gebeurd', 'geplast', 'wat deed u'], answers: ["Ik moest heel nodig plassen. Ik heb het niet meer gehaald tot een toilet."] },
-                { keys: ['waarom', 'reden'], answers: ["Ik had een paar biertjes op en kon nergens een wc vinden."] },
-                { keys: ['gedronken', 'alcohol', 'bier'], answers: ["Drie of vier biertjes, niet overdreven veel."] },
-                { keys: ['verboden', 'wist u dat'], answers: ["Ja, dat weet ik. Het was gewoon een stomme actie, het spijt me."] },
-                { keys: ['verklaren', 'nog wat'], answers: ["Alleen dat ik er erg veel spijt van heb. Verder niets."] }
+                {
+                    keys: ['id', 'identiteit', 'rijbewijs', 'paspoort', 'legitima', 'naam', 'heet', 'wie ben', 'wie bent', 'adres', 'woon', 'leeftijd', 'geboortedatum', 'pasje'],
+                    stages: [
+                        "Moet dat echt per se, agent? Ik schaam me werkelijk dood... Kan het niet gewoon bij een waarschuwing blijven? Ik doe dit echt nóóit.",
+                        "Oké, u heeft gelijk, stom van me... Ik zal me legitimeren. *haalt zenuwachtig zijn pasjeshouder uit zijn binnenzak* U gaat dit toch niet overal publiceren?",
+                        "Alsjeblieft, hier heeft u mijn rijbewijs. Martijn Jansen, 23 jaar oud. Ik woon gewoon hier in het centrum van Amersfoort, aan de Langestraat.",
+                        "U heeft mijn gegevens toch al genoteerd? Martijn Jansen, 23 jaar, woonachtig in de Langestraat te Amersfoort. Als u nog iets nodig heeft voor het rapport, vraag het maar."
+                    ]
+                },
+                {
+                    keys: ['plas', 'zeik', 'wildplas', 'gebeurd', 'gedaan', 'daad', 'betrapt', 'gezien', 'hoek', 'muur', 'gevel', 'kamp'],
+                    stages: [
+                        "Nou ja... u zag het toch zelf toen u aan kwam lopen? Ik stond even in een donker hoekje. Ik dacht echt dat er niemand langsliep.",
+                        "Ja... zucht... ik stond daar tegen de gevel op de hoek van de Kamp te plassen. Het was ontzettend stom en asociaal, maar mijn blaas deed zóveel pijn.",
+                        "Ik liep net het café uit en werd overvallen door enorme aandrang. Ik kon het geen seconde meer binnenhouden. Ik ben tegen de blinde muur gaan staan, met m'n rits half dichtgeschoven."
+                    ]
+                },
+                {
+                    keys: ['waarom', 'reden', 'oorzaak', 'wc', 'toilet', 'ophouden', 'nood', 'hoge nood', 'blaas', 'dicht', 'gesloten'],
+                    stages: [
+                        "Omdat ik ontzettend nodig moest! Waar had ik anders heen gemoeten op dit tijdstip?",
+                        "Ik heb eerst nog bij een café op de Kamp op het raam geklopt, maar de uitsmijter zei dat ze sloten en liet me niet meer naar binnen voor het toilet.",
+                        "Er zijn 's nachts in het centrum gewoon geen openbare toiletten open. Ik had de keuze tussen tegen de muur plassen of voor schut in mijn broek plassen. Maar ik snap dat de wet daar geen uitzondering voor maakt."
+                    ]
+                },
+                {
+                    keys: ['alcohol', 'bier', 'drank', 'dronken', 'gedronken', 'pils', 'shot', 'wodka', 'stappen', 'kroeg', 'feest', 'horeca', 'terras'],
+                    stages: [
+                        "Nou ja, gewoon gezellig een biertje gedronken met twee maten. Dat mag toch wel in het weekend?",
+                        "We zaten vanaf een uur of negen in de kroeg. Ik heb denk ik een pilsje of vier, vijf op. Maar ik ben echt niet laveloos hoor, ik weet prima wat ik doe.",
+                        "Eerlijk is eerlijk: door die vijf biertjes liep m'n blaas sneller vol en heb ik een domme beslissing genomen. Maar ik ben niet vervelend of agressief geweest."
+                    ]
+                },
+                {
+                    keys: ['boete', 'bekeuring', 'bon', 'beschikking', 'proces-verbaal', 'pv', 'euro', 'kosten', 'betalen', 'cjib'],
+                    stages: [
+                        "Krijg ik hier nu écht een boete voor? Hoe hoog is zo'n bekeuring tegenwoordig eigenlijk?",
+                        "Zo hé... 160 euro plus administratiekosten? Dat is echt een rib uit mijn lijf... Maar goed, eigen schuld, dikke bult.",
+                        "Schrijf de beschikking maar direct uit als het moet. Krijg ik 'm meteen op straat in mijn handen mee of stuurt het CJIB 'm naar mijn adres?"
+                    ]
+                },
+                {
+                    keys: ['verklaren', 'verklaring', 'spijt', 'excuses', 'zeggen', 'toevoegen', 'opmerking', 'bekennen'],
+                    stages: [
+                        "Ik wil alleen maar zeggen dat ik het echt niet stoer of lollig bedoelde. Ik schaam me kapot.",
+                        "Wilt u alstublieft in uw proces-verbaal zetten dat ik meteen heb meegewerkt en oprecht spijt heb betuigd aan de verbalisanten?",
+                        "Mijn officiële verklaring: 'Ik beken dat ik op straat heb geplast omdat de horeca dicht was en mijn blaas vol zat na vijf bier. Ik bied mijn excuses aan en accepteer de bekeuring direct.'"
+                    ]
+                }
             ],
-            fallback: ["Dat weet ik niet precies. Kunt u de vraag anders stellen?", "Ik begrijp de vraag niet helemaal. Wat bedoelt u?"]
+            fallback: [
+                "Sorry agent, ik begrijp de vraag niet helemaal... Gaat dit over het wildplassen of wilt u nog iets anders weten?",
+                "Poeh, ik ben er nogal door overvallen. Kunt u die vraag iets duidelijker stellen?",
+                "Ik wil echt netjes meewerken aan uw proces-verbaal hoor, maar wat bedoelt u nu precies?"
+            ]
         },
         {
             id: 1,
@@ -981,19 +1031,69 @@ Een man loopt hevig zwalkend over straat en staat nu openlijk tegen een etalager
 Signalement: man, ca. 28 jaar, rode hoodie, grijze joggingbroek, kort bruin haar, zwalkende gang.
 Mogelijke aanhouding voor openbare dronkenschap + wildplassen.
 Einde bericht.`,
-            welcomeMsg: "Lal... hallooo *hiks*... Wie ben jijjj? Ikuh... Remco de Jong... 28 ofzo... uit Soest... Waarissumun bier?! *zwalkt*",
+            welcomeMsg: "Lal... hallooo *hiks*... Wie ben jijjj met je blauwe pakkie? Ikuh... Remco de Jong... 28 ofzo... uit Soest... Waarissumun bier?! *zwalkt gevaarlijk naar voren*",
             hints: [
-                "Mag ik uw ID zien?", "Waar woont u?", "Hoeveel heeft u gedronken?", "Waarom plast u tegen de etalage?", "U bent aangehouden voor dronkenschap!"
+                "Mag ik uw ID zien?",
+                "Waarom plast u tegen de etalageruit?",
+                "Hoeveel alcohol heeft u gedronken?",
+                "U bent aangehouden ter zake openbare dronkenschap (art. 453 Sr)!",
+                "Blijf stilstaan en werk mee aan de controle!",
+                "Wat is uw adres in Soest?"
             ],
             kb: [
-                { keys: ['id', 'naam', 'wie', 'rijbewijs'], answers: ["*hiks* Remco de Jong... 28 jaar... uit Soest... rijbewijs zit ergens in m'n zak... *valt bijna om*"] },
-                { keys: ['woont', 'adres', 'woonplaats'], answers: ["Soest... of Amersfoort... ergens in Soest woongik... *brabbelt*"] },
-                { keys: ['gedronken', 'bier', 'hoeveel', 'alcohol', 'dronken'], answers: ["Gewoon... kistje bier... paar liter wodka... ik ben helemaal niet dronken man! *zwalkt hevig*"] },
-                { keys: ['etalage', 'geplast', 'waarom', 'wildplassen'], answers: ["Moest plassen jonguh! Etalage leek net op een plei... wc... *hiks*"] },
-                { keys: ['aangehouden', 'dronkenschap', 'bureau', 'mee'], answers: ["Aangehouden?! Waarvoor?! Ik loop gewoon rustig naar huis toch... *valt tegen muur*"] },
-                { keys: ['verklaren', 'nog wat'], answers: ["Ik wil nog een bier! Geef me een bier! *brabbelt onverstaanbaar*"] }
+                {
+                    keys: ['id', 'naam', 'wie', 'rijbewijs', 'paspoort', 'legitima', 'heet', 'geboortedatum', 'leeftijd', 'pasje'],
+                    stages: [
+                        "*hiks* Wiee... wie ben jíj nou weer? Waarom mot je mun naam wetuh? Laat me gewoooon... *valt bijna tegen een lantaarnpaal*",
+                        "Pasje? Uhhh... *graait met trillende vingers in zijn hoodie en laat een aansteker vallen* Wacht effe... zit hierergens... linkerzak... of toch achterzak...",
+                        "Kijk nou... *houdt pasje wiebelend op de kop vast* ...Remco... Remco de Jong... 28 jaar... uit Soest... Zie je wel dat ik gewoon een toffe peer ben! *zakt door knieën*",
+                        "Je hebt m'n pasje toch al lang gezien man... Remco de Jong, 28, Soest... Mag ik 'm nou terug? Ik wil slapen..."
+                    ]
+                },
+                {
+                    keys: ['etalage', 'ruit', 'geplast', 'plassen', 'zeiken', 'winkel', 'utrechtsestraat', 'gedaan', 'wat deed'],
+                    stages: [
+                        "Plassen? Waaat?! Ik stond gewoon... effe uit te rustuh tegen de muur... Mooie kleren in die etalage toch? *giechelt wazig*",
+                        "Ooo... is die natte plas op dat glas van mij? Hahaha... Oepsie... Ik dacht serieus dat 't een boom of een donker steegje was joh! Was dat een winkelruit?!",
+                        "Ja oké oké! Ik moest zó ontzettend nodig zeiken dat het zeer deed! M'n gulp stond nog wagenwijd open! Tevreden nou?! De regen spoelt het wel weer schoon man!"
+                    ]
+                },
+                {
+                    keys: ['alcohol', 'dronken', 'bier', 'wodka', 'hoeveel', 'gedronken', 'stank', 'drank', 'middelen', 'drugs', 'shotjes'],
+                    stages: [
+                        "Ikke dronken?! Ben je helemaal betoeterd joh! Twee pilsjes... hooguit drie... Ik kan prima kaarsrecht lopen kijk maar! *doet twee zwalkende stappen en grijpt naar de agent*",
+                        "Nou vooruit... we begonnen vanmiddag om vier uur al... kratje bier, shotjes dropshot, wat wodka... M'n maag draait helemaal rondjes. Heb je water voor me?",
+                        "Ik geef toe... ik ben stront- en strontlazarus. Alles golft op en neer. Ik kan amper op m'n poten blijven staan... *leunt zwaar tegen de muur*"
+                    ]
+                },
+                {
+                    keys: ['aanhouding', 'aangehouden', '453', 'dronkenschap', 'bureau', 'mee', 'boei', 'handboei', 'politiebureau', 'cel'],
+                    stages: [
+                        "Mee naar het bureau?! Ben je helemaal gek geworden! Ik ga gewoon lopen naar Soest... laat me met rust! *zwaait wild met armen*",
+                        "Ho ho ho, rustig aan met die boeien! Ik doe niks kwaad hoor! Ik ben alleen een beetje... feestelijk wankel. Waarvoor hou je me aan dan?!",
+                        "Openbare dronkenschap én wildplassen? Pfff... *zucht diep en laat schouders hangen* Vooruit dan maar... Mag ik achterin die politiebus liggen? M'n kop ontploft..."
+                    ]
+                },
+                {
+                    keys: ['woon', 'adres', 'woonplaats', 'soest', 'waar'],
+                    stages: [
+                        "Ik woon ergens in Soest... of was 't nou Amersfoort? Ergens vlakbij het spoor... Alles lijkt op elkaar vanavond...",
+                        "Smitsweg in Soest, daar woon ik. Maar de trein ging niet meer, dus ik dacht: ik loop wel effe over de Utrechtsestraat naar huis."
+                    ]
+                },
+                {
+                    keys: ['verklaring', 'zeggen', 'spijt', 'verklaren'],
+                    stages: [
+                        "Ik verklaar dat bier veel te lekker smaakt en die winkelruit in de weg stond! *lacht luid en boert lomp*",
+                        "*kijkt met glazige ogen* Noteer maar voor de rechter: 'Remco was zwaar onder invloed, zag het verschil niet meer tussen een toilet en een kledingwinkel, en heeft geen bezwaar zolang hij mag pitten in de cel.'"
+                    ]
+                }
             ],
-            fallback: ["*brabbelt onverstaanbaar*... Wat zeg je nouuu?", "Ik snap er niks van... *hiks*... geef bier man!"]
+            fallback: [
+                "*zwalkt hevig en kijkt je met waterige ogen aan* ...Watte? Praat 'ns niet zo moeilijk man, m'n oren suizen...",
+                "*hiks* Ik snap er geen snars van... Zeg 't nog eens een keer, maar dan rustig...",
+                "Huhhh? Politie? Waar hebben jullie het nou weer over... Geef me effe een peukie joh..."
+            ]
         },
         {
             id: 2,
@@ -1006,18 +1106,70 @@ Bekende dakloze staat opnieuw te plassen in het portiek van een winkelpand.
 Signalement: man, ca. 54 jaar, grijze baard, versleten donkere jas, grote lege rugzak.
 Dit is reeds de 100e controle/melding voor wildplassen op naam van betrokkene.
 Einde bericht.`,
-            welcomeMsg: "Dag agent. Tja, Gerrit Willems weer, 54 jaar, Geen Vaste Woon- of Verblijfplaats. Het is mijn 100e keer geloof ik... De opvang was al dicht. Schrijf de bon maar uit...",
+            welcomeMsg: "Dag agenten. Tja, Gerrit Willems weer, 54 jaar, Geen Vaste Woon- of Verblijfplaats. De teller staat op 100 vandaag geloof ik... Schrijf de bon maar weer uit voor de prullenbak.",
             hints: [
-                "Heeft u een ID bij u?", "Waarom plast u in het portiek?", "Waar slaapt u vanacht?", "Weet u dat dit de 100e keer is?", "Wilt u hulp van de opvang?"
+                "Heeft u een identiteitsbewijs bij u?",
+                "Waarom plast u in dit winkelportiek?",
+                "Waarom slaapt u niet in de nachtopvang?",
+                "Weet u dat dit uw 100e registratie is?",
+                "Waar kan de beschikking naartoe gestuurd worden?",
+                "Wilt u nog iets laten opnemen in de mutatie?"
             ],
             kb: [
-                { keys: ['id', 'naam', 'wie', 'adres', 'woont'], answers: ["Gerrit Willems, 54 jaar. Geen Vaste Woon- of Verblijfplaats. Postadres is bij de Maatschappelijke Opvang Amersfoort."] },
-                { keys: ['100', 'honderd', 'veelpleger', 'vroeger'], answers: ["Ja, de teller staat op 100 vandaag. Jullie collega's kennen me onderhand wel. Schrijf de bon maar uit, geld heb ik toch niet."] },
-                { keys: ['portiek', 'waarom', 'geplast', 'wc'], answers: ["Alle wc's in het centrum zijn 's nachts dicht. Waar moet ik anders heen, agent? In m'n broek?"] },
-                { keys: ['opvang', 'slapen', 'hulp'], answers: ["De nachtopvang zat om 22:00 uur al vol. Ik sliep op straat."] },
-                { keys: ['verklaren', 'nog wat'], answers: ["Schrijf de bekeuring maar op mijn postbusadres. Ik zoek wel weer een droge plek."] }
+                {
+                    keys: ['id', 'naam', 'wie', 'rijbewijs', 'paspoort', 'legitima', 'leeftijd', 'geboortedatum', 'adres', 'woont'],
+                    stages: [
+                        "Kom nou toch, agent. Kijk me eens aan. Jullie wijkteam kent mijn kop al vijftien jaar uit het hoofd. Moeten we dit formele riedeltje echt wéér opvoeren?",
+                        "Als je het dan zo nodig in je computertje moet kloppen: Gerrit Willems. Vierenvijftig jaar oud. Geen Vaste Woon- of Verblijfplaats. Dat staat al honderd keer in jullie systeem.",
+                        "Vooruit dan maar weer, hier is mijn opvangpas en mijn verlopen ID-kaart. Gerrit Willems, geboren 14 mei 1971. Postadres: Maatschappelijke Opvang Amersfoort. Schrijf het maar weer over.",
+                        "Je hebt m'n gegevens nu toch wel genoteerd? Gerrit Willems, 54 jaar, GVWV. Maak je rapportje maar compleet."
+                    ]
+                },
+                {
+                    keys: ['portiek', 'gebeurd', 'geplast', 'plassen', 'winkel', 'veenestraat', 'gedaan', 'wat deed'],
+                    stages: [
+                        "Wat denk je zelf dat ik deed in dat donkere portiek van die winkel in de Veenestraat? Een schilderij ophangen om twee uur 's nachts?",
+                        "Ik stond te wateren ja. Netjes in de hoek van het portiek bij die leegstaande winkel. Uit de wind en met mijn rug naar de straat gekeerd.",
+                        "Ik heb mijn behoefte gedaan tegen de muur in het portiek. Ik ontken het toch ook helemaal niet? Ik ga niet liegen tegen jullie, daar schiet niemand wat mee op."
+                    ]
+                },
+                {
+                    keys: ['waarom', 'reden', 'wc', 'toilet', 'dicht', 'opvang', 'nachtopvang', 'dakloos', 'slapen', 'straat', 'zwerver'],
+                    stages: [
+                        "Waarom vraag je dat nou, diender? Waar moet ik dan heen om twee uur 's nachts in Amersfoort? Vertel het me maar!",
+                        "Ik stond om tien uur voor de deur bij de nachtopvang. 'Vol, Gerrit. Geen bedden meer vrij.' Dus dan sta je op straat in de kou met je rugzak.",
+                        "Alle openbare toiletten in de binnenstad worden om acht uur 's avonds hermetisch afgesloten. De cafés weigeren me bij de deur omdat ik er onverzorgd uitzie. Wat moet een mens dan? Het in zijn broek laten lopen op mijn 54e? Zeg het maar!"
+                    ]
+                },
+                {
+                    keys: ['100', 'honderd', 'veelpleger', 'vroeger', 'keer', 'jubileum', 'vaak', 'teller'],
+                    stages: [
+                        "Ja, proficiat! Krijg ik nu een bos bloemen of een taart van de korpschef? Nummer honderd schijnt een jubileum te zijn.",
+                        "Honderd keer staande gehouden voor rondhangen en wildplassen. Weet je hoeveel van die bekeuringen ik heb betaald? Geen cent. Van een kale kip kun je niet plukken.",
+                        "De hele postbus bij mijn maatschappelijk werker puilt uit van de ongeopende acceptgiro's van het CJIB. Jullie verspillen papier, belastinggeld en je eigen diensttijd aan mij."
+                    ]
+                },
+                {
+                    keys: ['boete', 'bekeuring', 'bon', 'beschikking', 'postbus', 'postadres', 'betalen', 'afhandeling'],
+                    stages: [
+                        "Trek je bonnenboekje maar gewoon tevoorschijn, collega. Hoe sneller jij tikt, hoe sneller ik weer een droge hoek kan zoeken om te slapen.",
+                        "Stuur die beschikking maar weer braaf naar mijn postbus bij de Maatschappelijke Opvang Amersfoort. Ik gooi hem morgenochtend meteen bij het oud papier.",
+                        "Schrijf maar op: 'Bekeurd ter zake wildplassen, beschikking verzonden naar postadres GVWV.' Dan heeft jullie chef ook weer zijn cijfertjes binnen."
+                    ]
+                },
+                {
+                    keys: ['verklaren', 'verklaring', 'zeggen', 'opnemen'],
+                    stages: [
+                        "Mijn verklaring? Dat Nederland een steenrijk land is waar daklozen worden bekeurd omdat ze moeten plassen.",
+                        "Noteer maar letterlijk in je mutatie: 'Verdachte verklaart: Ik ben dakloos, de opvang was vol, er zijn 's nachts geen sanitaire voorzieningen in de stad en ik had geen andere menswaardige optie.'"
+                    ]
+                }
             ],
-            fallback: ["Dat weet u beter dan ik, agent. Ik ben gewoon dakloos.", "Tja, het is niet anders. Vraag maar wat u moet vragen voor uw rapportje."]
+            fallback: [
+                "Tja... vraag maar wat je moet vragen voor de statistieken, jonge collega. Ik loop nergens heen.",
+                "Wat wil je nou horen? Ik leef op straat, meer spannends is er niet over te vertellen.",
+                "Praat gewoon Nederlands met me, ik ben geen zware crimineel, ik ben gewoon dakloos."
+            ]
         },
         {
             id: 3,
@@ -1030,18 +1182,69 @@ Een oudere heer is gesignaleerd die achter de heg stond te plassen.
 Signalement: man, ca. 60-65 jaar, net grijs pak, bril, keurige uitstraling.
 Betrokkene geeft aan een medisch probleem te hebben. Willen jullie dit verifiëren?
 Einde bericht.`,
-            welcomeMsg: "Goedendag agent... Mijn excuses, ik schaam me kapot. Ik ben Henk van Dijk, 61 jaar, uit Amersfoort-Noord. Ik heb ernstige diabetes en slik plaspillen, ik kon het echt niet meer ophouden...",
+            welcomeMsg: "Goedendag agenten... Mijn excuses, duizendmaal excuses, ik schaam me werkelijk kapot. Ik ben Henk van Dijk, 61 jaar. Kan dit alstublieft discreet blijven?",
             hints: [
-                "Mag ik uw ID zien?", "Heeft u een medische verklaring?", "Waarom kon u niet naar een wc?", "Voelt u zich verder goed?", "Wilt u nog wat verklaren?"
+                "Mag ik uw identiteitsbewijs zien?",
+                "Waarom plast u hier achter de heg?",
+                "Heeft u een medische verklaring?",
+                "Heeft u alcohol gedronken?",
+                "Kunt u aantonen dat het overmacht betrof?",
+                "Wat wilt u dat ik opneem in de mutatie?"
             ],
             kb: [
-                { keys: ['id', 'naam', 'wie', 'adres', 'woont'], answers: ["Henk van Dijk, 61 jaar. Ik woon aan de Ringweg in Amersfoort-Noord. Hier is mijn identiteitskaart."] },
-                { keys: ['medisch', 'suiker', 'diabetes', 'ziek', 'plaspillen'], answers: ["Ik heb diabetes type 1 en slik zware vochtdrijvers op doktersvoorschrift. Als de drang komt, heb ik hooguit 60 seconden voordat het misgaat."] },
-                { keys: ['waarom', 'heg', 'geplast', 'wc'], answers: ["Ik was op weg naar mijn auto op het Eemplein. Alle horeca was dicht en ik kon het echt niet meer redden. Ik ben achter de heg gekropen uit schaamte."] },
-                { keys: ['excuses', 'spijt', 'politie'], answers: ["Het spijt me verschrikkelijk. Ik ben nog nooit met de politie in aanraking geweest. Ik hoop dat u begrip heeft voor mijn situatie."] },
-                { keys: ['verklaren', 'nog wat'], answers: ["Ik wil graag laten opnemen in het verslag dat het om een medische noodsituatie ging vanwege mijn suikerziekte."] }
+                {
+                    keys: ['id', 'naam', 'wie', 'rijbewijs', 'paspoort', 'legitima', 'leeftijd', 'geboortedatum', 'adres', 'woont', 'ringweg'],
+                    stages: [
+                        "Goedenavond agenten... Is er... iets ernstigs aan de hand? Ik was zojuist op weg naar mijn auto op het parkeerterrein...",
+                        "Mijn identiteitsbewijs? Jazeker, natuurlijk, ik werk uiteraard mee. Alstublieft, mijn rijbewijs en identiteitskaart. Henk van Dijk is de naam.",
+                        "Henk van Dijk, 61 jaar oud. Ik woon aan de Ringweg in Amersfoort-Noord. Ik ben werkzaam in het onderwijs en ben werkelijk nog nooit met de politie in aanraking geweest. Dit is vreselijk gênant voor mij...",
+                        "U heeft mijn gegevens genoteerd toch? Henk van Dijk, Ringweg Amersfoort. Kan dit alstublieft discreet worden afgehandeld?"
+                    ]
+                },
+                {
+                    keys: ['heg', 'geplast', 'plassen', 'struik', 'eemplein', 'gedaan', 'wat deed', 'gebeurd'],
+                    stages: [
+                        "Nou... ik stond even achter de coniferenhaag bij het parkeerterrein van het Eemplein. Mijn veters zaten los... nou ja, ik voelde me niet goed.",
+                        "Mijn hemel... U heeft het natuurlijk gezien. Duizendmaal excuses! Ik stond inderdaad te plassen achter die coniferenhaag. Ik schaam me diep.",
+                        "Het is de zuivere waarheid: ik werd overmand door een plotselinge, onhoudbare aandrang. Ik ben achter de dichtste heg gekropen om zoveel mogelijk uit het zicht van omstanders te blijven."
+                    ]
+                },
+                {
+                    keys: ['medisch', 'suiker', 'diabetes', 'ziek', 'plaspil', 'plaspillen', 'furosemide', 'medicijn', 'waarom', 'nood', 'dokter', 'arts', 'overmacht'],
+                    stages: [
+                        "Het betreft een nogal delicate medische kwestie... Moet dat echt tot in detail in uw politierapport worden opgenomen?",
+                        "Ik lijd al ruim twintig jaar aan diabetes type 1. Daarnaast slik ik sinds kort zware vochtdrijvers op doktersvoorschrift, plaspillen. Als het seintje komt, heb ik hooguit zestig seconden voor het misgaat.",
+                        "Kijkt u alstublieft even in mijn portefeuille: hier is mijn medisch paspoort en het afsprakenkaartje van mijn internist bij het Meander Medisch Centrum. Het was acute medische overmacht. Ik had de openbare horeca op het Eemplein nooit meer op tijd kunnen bereiken zonder een beschamend ongeluk in mijn pantalon."
+                    ]
+                },
+                {
+                    keys: ['alcohol', 'bier', 'gedronken', 'dronken', 'drank', 'uitgaan'],
+                    stages: [
+                        "Alcohol?! Welnee, in de verste verte niet! Ik kom net vandaan bij een lezing in het Eemhuis.",
+                        "Met mijn suikerziekte en medicatie mag ik pertinent geen alcohol consumeren. Ik drink uitsluitend water en thee. U mag gerust een blaastest bij mij afnemen als u twijfelt."
+                    ]
+                },
+                {
+                    keys: ['boete', 'bekeuring', 'bon', 'beschikking', 'sepot', 'kosten', 'rechter', 'officier'],
+                    stages: [
+                        "Krijg ik hier nu een proces-verbaal voor? Komt er dan een justitiële aantekening achter mijn naam te staan?",
+                        "Ik hoop van harte dat u als politieambtenaar de bevoegdheid heeft om overmacht en medische noodzaak mee te wegen. Een boete van honderden euro's voor een zieke man voelt zo onrechtvaardig...",
+                        "Mocht u een beschikking uitschrijven, dan zal ik genoodzaakt zijn bezwaar aan te tekenen bij de officier van justitie met doktersattesten. Maar ik hoop dat u in uw mutatie al adviseert tot sepot wegens overmacht."
+                    ]
+                },
+                {
+                    keys: ['verklaren', 'verklaring', 'spijt', 'excuses', 'zeggen', 'opnemen'],
+                    stages: [
+                        "Ik wil verklaren dat ik altijd een fatsoenlijke burger ben geweest en dat dit handelen absoluut niet uit onwil of balorigheid is voortgekomen.",
+                        "Zou u letterlijk willen opnemen: 'Betrokkene verklaart dat sprake was van acute medische noodzaak ten gevolge van diabetes mellitus type 1 en voorgeschreven vochtdrijvers, waarbij geen enkel toilet tijdig bereikbaar was en betrokkene zich maximaal aan het zicht heeft onttrokken.'"
+                    ]
+                }
             ],
-            fallback: ["Excuses, ik ben een beetje van de kaart. Wat vroeg u precies?", "Mijn excuses, ik probeer gewoon heel netjes antwoord te geven op uw vraag."]
+            fallback: [
+                "Neemt u mij niet kwalijk, door de schaamte en de spanning ontgaat uw vraag mij even. Kunt u dat herhalen?",
+                "Mijn excuses, ik probeer u zo nauwkeurig mogelijk te antwoorden. Wat wenst u exact te weten?",
+                "Ik wil graag alle medewerking verlenen aan uw rapportage. Zou u die vraag nog eens kunnen toelichten?"
+            ]
         },
         {
             id: 4,
@@ -1054,23 +1257,77 @@ Verdachte plaste tegen een monumentale muur. Toen een passant er wat van zei, we
 Signalement: man, ca. 22 jaar, zwarte hoodie, petje, agressieve houding.
 Mogelijke aanhouding voor belediging ('mongool') + wildplassen.
 Einde bericht.`,
-            welcomeMsg: "What moet je man?! Ik heb helemaal niet geplast! Je ziet ze vliegen man, mongool! Ik keek gewoon op mijn mobiel! Rot op!",
+            welcomeMsg: "Wat moet je man?! Ik heb helemaal niet geplast! Je ziet ze vliegen man, mongool! Ik keek gewoon op mijn mobiel! Rot op!",
             hints: [
-                "Werk mee en laat je ID zien!", "Waarom noemt u mij mongool?", "U bent aangehouden voor belediging!", "Waar woont u?", "Bekent u dat u geplast heeft?"
+                "Toon onmiddellijk uw identiteitsbewijs!",
+                "Ik vorder uw ID op grond van artikel 8 Politiewet / WID!",
+                "Waarom plast u tegen deze monumentale muur?",
+                "Waarom beledigt u mij met 'mongool'?",
+                "U bent aangehouden ter zake artikel 267 Sr!",
+                "Wat zijn uw persoonsgegevens?"
             ],
             kb: [
-                { keys: ['id', 'naam', 'wie', 'adres', 'woont'], answers: ["Kevin Bakker, 22 uit Leusden! En nou opzouten! Je krijgt helemaal niks van me te zien, vuile wout!"] },
-                { keys: ['mongool', 'beledig', 'uitschelden', 'schelden'], answers: ["Je bent ook een mongool! Je beschuldigt me zomaar van iets wat ik niet gedaan heb! Vlieg op man!"] },
-                { keys: ['geplast', 'wildplassen', 'ontken', 'gezien'], answers: ["Ik heb niet geplast sukkel! Ik stond mijn riem goed te doen en een appje te sturen! Je hebt stront in je ogen!"] },
-                { keys: ['aangehouden', 'bureau', 'boei', 'handboeien'], answers: ["Raak me niet aan man! Aangehouden?! Waarvoor?! Ik pik dit niet, ik klaag je aan!"] },
-                { keys: ['verklaren', 'nog wat'], answers: ["Ik verklaar dat jullie waardeloze wouten zijn en dat ik niks gedaan heb!"] }
+                {
+                    keys: ['id', 'naam', 'wie', 'rijbewijs', 'paspoort', 'legitima', 'heet', 'geboortedatum', 'leeftijd', 'vorder', 'tonen', 'laten zien'],
+                    stages: [
+                        "Rot lekker op man! Ik geef jou helemaal niks! Wie denk je wel niet dat je bent met je stoere petje?! Ga echte boeven vangen sukkel!",
+                        "Vorderen? Je vordert je oma maar! Ik heb helemaal niks geflikt, dus ik hoef jou volgens de wet helemaal niks te laten zien! Raak me niet aan!",
+                        "Wacht even... blijf met je tengels van m'n arm af! Geen fysiek geweld gebruiken ja! ... Tssss, vooruit dan man, stelletje fascisten! *rukt nijdend zijn ID-kaart uit zijn zak* Kevin Bakker! Tweeëntwintig! Uit Leusden! Ben je nou tevreden, flapdrol?!",
+                        "Je hebt m'n ID toch al gezien?! Kevin Bakker uit Leusden! Geef dat ding terug en sodemieter een eind op!"
+                    ]
+                },
+                {
+                    keys: ['muur', 'muurhuizen', 'monument', 'geplast', 'plassen', 'zeiken', 'gedaan', 'wat deed', 'gebeurd'],
+                    stages: [
+                        "Ik heb helemaal niet staan pissen man! Je verzint het gewoon ter plekke! Ik stond m'n veters vast te knopen en een voice memo in te spreken!",
+                        "O, en daarom stond ik met m'n handen bij m'n kruis zeker?! M'n rits zat gewoon klem van m'n trainingsbroek! En die natte plek op die muur zat er al uren, die muur is honderden jaren oud en altijd vochtig!",
+                        "Nou en, al had ik gezeken?! Het is gewoon een stel ouwe bakstenen! Heel Amersfoort pist daar in het weekend tegenaan! Waarom pak je die dronken studenten niet aan?!"
+                    ]
+                },
+                {
+                    keys: ['mongool', 'beledig', 'uitschelden', 'schelden', '267', 'ambtenaar', 'respect', 'wout', 'bek', 'mond', 'taalgebruik'],
+                    stages: [
+                        "Je bént toch ook een mongool als je mij hiervoor lastigvalt?! Vrijheid van meningsuiting vriend! Heb je op de politieschool nooit over gehoord zeker?!",
+                        "Oei oei oei, zijn de teentjes van meneer de agent getrapt? Ga je me nu arresteren voor een woordje?! Je bewijst alleen maar dat ik gelijk heb!",
+                        "Aangehouden voor belediging van een ambtenaar in functie, artikel 267 Wetboek van Strafrecht?! Doe even normaal man! Ik neem 'mongool' terug als je nu gewoon wegloopt en stopt met die onzin!"
+                    ]
+                },
+                {
+                    keys: ['aanhouding', 'aangehouden', 'bureau', 'cel', 'boei', 'handboei', 'handboeien', 'mee', 'politiebureau'],
+                    stages: [
+                        "Als je me aanraakt klaag ik je aan voor politiegeweld en mishandeling! M'n vrienden staan alles te filmen!",
+                        "Handboeien?! Voor een woordje en een natte muur?! Jullie zijn echt helemaal doorgedraaid hier in Amersfoort!",
+                        "Kankerpolitie ook altijd... *steekt met een woedende blik met tegenzin zijn polsen uit* Doe dan! Boei me dan vuile lafaard! M'n advocaat sloopt jullie op het politiebureau!"
+                    ]
+                },
+                {
+                    keys: ['alcohol', 'drugs', 'gedronken', 'wiet', 'drank'],
+                    stages: [
+                        "Gaat jou geen ene moer aan wat ik gedronken of gerookt heb! Ik blaas in helemaal niks!",
+                        "Gewoon paar biertjes en wat energy drank. Ik ben nuchterder dan jij man. Ik weet dondersgoed wat m'n rechten zijn!"
+                    ]
+                },
+                {
+                    keys: ['verklaring', 'zeggen', 'verklaren', 'bekennen'],
+                    stages: [
+                        "Mijn verklaring is dat jullie waardeloze wouten zijn die burgers treiteren in plaats van echte criminelen op te pakken!",
+                        "Zet maar letterlijk in je kut-rapport: 'Verdachte ontkent wildplassen, is van mening dat de verbalisanten misbruik maken van hun positie en eist onmiddellijke seponering van alle aanklachten.'"
+                    ]
+                }
             ],
-            fallback: ["Vlieg op man! Waar bemoei je je mee?!", "Ik zeg niks meer tegen jou, vieze mongool!"]
+            fallback: [
+                "Wat bazel je nou allemaal interessant?! Ga echte boeven vangen man!",
+                "Boeie! Waar bemoei je je mee?! Stel een normale vraag of donder op!",
+                "Ik ga echt niet op elke domme opmerking van jou in hoor! Kom ter zake of laat me gaan!"
+            ]
         }
     ];
+
     let currentCasus = null;
     let chatbotInitialized = false;
     let botTypingTimer = null;
+    let casusStages = {}; // Houdt bij hoeveel keer er per onderwerp is doorgevraagd
+
     function assignCasus() {
         if (!userName || !userClass) return;
         const str = (userName + '_' + userClass).toLowerCase();
@@ -1081,6 +1338,7 @@ Einde bericht.`,
         }
         const idx = Math.abs(hash) % CASUSSEN.length;
         currentCasus = CASUSSEN[idx];
+        casusStages = {};
         applyCasusToUI();
     }
     function applyCasusToUI() {
@@ -1112,15 +1370,47 @@ Einde bericht.`,
         if (!currentCasus) assignCasus();
         const q = vraag.toLowerCase().trim();
         if (!q) return null;
-        for (const entry of currentCasus.kb) {
+
+        // Detectie van ambtelijke dwang, wetgeving of aandringen door de agent
+        const isInsistent = /(vorder|ambtelijk|bevel|krachtens|artikel|art\b|politiewet|strafrecht|strafvordering|wid\b|waarschuw|aanhoud|arresteer|meekomen|verplicht|handboeien|handboei|meewerken|bureau|cel\b|ophouden|gevolgen|consequenties)/i.test(q);
+
+        for (let i = 0; i < currentCasus.kb.length; i++) {
+            const entry = currentCasus.kb[i];
+            let matched = false;
             for (const key of entry.keys) {
                 if (q.includes(key)) {
-                    const answers = entry.answers;
-                    return answers[Math.floor(Math.random() * answers.length)];
+                    matched = true;
+                    break;
+                }
+            }
+            if (matched) {
+                const trackKey = (currentCasus.id || 0) + '_' + i;
+                let stage = casusStages[trackKey] || 0;
+
+                if (entry.stages && entry.stages.length > 0) {
+                    // Bij formeel ambtelijk aandringen direct een stap verder
+                    if (isInsistent && stage < entry.stages.length - 1) {
+                        stage = Math.min(stage + 1, entry.stages.length - 1);
+                    }
+                    const answer = entry.stages[stage];
+                    // Volgende keer dat over dit onderwerp gevraagd wordt, geeft verdachte meer info
+                    if (stage < entry.stages.length - 1) {
+                        casusStages[trackKey] = stage + 1;
+                    }
+                    if (Array.isArray(answer)) {
+                        return answer[Math.floor(Math.random() * answer.length)];
+                    }
+                    return answer;
+                } else if (entry.answers && entry.answers.length > 0) {
+                    return entry.answers[Math.floor(Math.random() * entry.answers.length)];
                 }
             }
         }
-        return currentCasus.fallback[Math.floor(Math.random() * currentCasus.fallback.length)];
+
+        if (currentCasus.fallback && currentCasus.fallback.length > 0) {
+            return currentCasus.fallback[Math.floor(Math.random() * currentCasus.fallback.length)];
+        }
+        return "Ik weet niet zo goed wat ik daarop moet zeggen, agent.";
     }
     function addChatMessage(role, text) {
         const body = document.getElementById('chat-body'); if (!body) return;
