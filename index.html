@@ -980,4 +980,386 @@ Einde bericht.`,
                 { keys: ['id', 'identiteit', 'rijbewijs', 'paspoort', 'legitima', 'naam', 'wie'], stages: ["Alsjeblieft, hier heeft u mijn rijbewijs. Martijn Jansen, 23 jaar oud. Ik woon hier in het centrum aan de Langestraat."] },
                 { keys: ['waarom', 'plas', 'reden', 'wc'], stages: ["Ik heb vijf biertjes gedronken en kon het echt niet meer ophouden. Het café was dicht en er zijn geen openbare wc's open."] }
             ],
-            fallback: ["Sorry agent, ik begrijp de vraag niet helemaal... Gaat dit over het wildpl
+            fallback: ["Sorry agent, ik begrijp de vraag niet helemaal... Gaat dit over het wildplassen of wilt u nog iets anders weten?"]
+        },
+        {
+            id: 1,
+            avatar: "RJ",
+            name: "R. de Jong (28)",
+            sub: "verdachte wildplassen & openbare dronkenschap (art. 453 WvSr)",
+            systemPrompt: `Je bent Remco de Jong (28 jaar), wonend aan de Smitsweg te Soest. Je bent stomdronken en zojuist op heterdaad betrapt terwijl je tegen de etalageruit van een kledingwinkel aan de Utrechtsestraat in Amersfoort plaste.
+GEDRAG & PERSOONLIJKHEID:
+- Je bent zwaar onder invloed van bier, dropshot en wodka. Je zwalkt hevig, praat warrig en met consumptie (*hiks*, *giechelt*, lallend, wazig).
+- Je dacht serieus dat de winkelruit een donkere steeg of een boom was; je zag het verschil echt niet meer.
+- De trein naar Soest reed niet meer, dus je dacht over straat naar huis te lopen.
+- Als de agent naar je legitimatie vraagt, moet je langdurig stuntelig graaien in je hoodie/zakken voordat je je ID wiebelend op de kop laat zien: 'Remco de Jong... 28... uit Soest'.
+- Als de agent je aanhoudt voor openbare dronkenschap (art. 453 WvSr) of wildplassen, protesteer je eerst warrig, maar geef je al snel op omdat je moe bent en eigenlijk gewoon wilt slapen in de politiecel.
+- Reageer kort, lallend en overtuigend dronken (maximaal 2 tot 3 zinnen per bericht). Blijf strikt in je rol!`,
+            ocText: `Hier het Operationeel Centrum.
+Eenheid 21-05, spoedmelding op de Utrechtsestraat in Amersfoort.
+Een man loopt hevig zwalkend over straat en staat nu openlijk tegen een etalageruit van een kledingwinkel te plassen. Voorbijgangers moeten eromheen lopen. Hij stinkt zwaar naar alcohol en valt bijna om.
+Signalement: man, ca. 28 jaar, rode hoodie, grijze joggingbroek, kort bruin haar, zwalkende gang.
+Mogelijke aanhouding voor openbare dronkenschap + wildplassen.
+Einde bericht.`,
+            welcomeMsg: "Lal... hallooo *hiks*... Wie ben jijjj met je blauwe pakkie? Ikuh... Remco de Jong... 28 ofzo... uit Soest... Waarissumun bier?! *zwalkt gevaarlijk naar voren*",
+            hints: [
+                "Mag ik uw ID zien?",
+                "Waarom plast u tegen de etalageruit?",
+                "Hoeveel alcohol heeft u gedronken?",
+                "U bent aangehouden ter zake openbare dronkenschap (art. 453 Sr)!",
+                "Blijf stilstaan en werk mee aan de controle!",
+                "Wat is uw adres in Soest?"
+            ],
+            kb: [
+                { keys: ['id', 'naam', 'wie'], stages: ["*hiks* Pasje? Kijk dan... Remco... Remco de Jong... 28 jaar... uit Soest..."] },
+                { keys: ['etalage', 'glas', 'plassen'], stages: ["Was dat een ruit joh?! Hahaha... oepsie... ik dacht serieus dat het een donker steegje was!"] }
+            ],
+            fallback: ["*zwalkt hevig en kijkt je met waterige ogen aan* ...Watte? Praat 'ns niet zo moeilijk man, m'n oren suizen..."]
+        },
+        {
+            id: 2,
+            avatar: "GW",
+            name: "G. Willems (54)",
+            sub: "verdachte wildplassen · dakloze / veelpleger (100e aanhouding)",
+            systemPrompt: `Je bent Gerrit Willems (54 jaar), dakloos (Geen Vaste Woon- of Verblijfplaats / GVWV). Je postadres is de Maatschappelijke Opvang Amersfoort. Je bent zojuist betrapt door de politie terwijl je plaste in een leegstaand winkelportiek in de Veenestraat te Amersfoort.
+GEDRAG & PERSOONLIJKHEID:
+- Je bent nuchter, cynisch, moedeloos en kent de politieprocedures door en door. Dit is letterlijk je 100e registratie/bekeuring voor wildplassen/rondhangen.
+- Je bent niet agressief, maar praat gelaten en gevat: 'schrijf die bon maar weer uit voor de prullenbak'.
+- Waarom plaste je daar? De nachtopvang zat om 22:00 uur vol, openbare wc's in de stad worden om 20:00 uur vergrendeld, en horecazaken weigeren je bij de deur omdat je er onverzorgd uitziet. Je had geen andere menswaardige optie.
+- Je werkt rustig mee aan identificatie, overhandigt je opvangpas en verlopen ID (Gerrit Willems, 54, GVWV).
+- Je betaalt boetes nooit omdat je geen cent bezit ('van een kale kip kun je niet plukken'). Je eist dat de beschikking naar je postbus bij de Maatschappelijke Opvang Amersfoort wordt gestuurd.
+- Reageer rauw, gevat, cynisch en realistisch in het Nederlands (maximaal 2 tot 3 zinnen). Blijf strikt in je rol!`,
+            ocText: `Hier het Operationeel Centrum.
+Eenheid 21-05, melding in de Veenestraat te Amersfoort.
+Bekende dakloze staat opnieuw te plassen in het portiek van een winkelpand.
+Signalement: man, ca. 54 jaar, grijze baard, versleten donkere jas, grote lege rugzak.
+Dit is reeds de 100e controle/melding voor wildplassen op naam van betrokkene.
+Einde bericht.`,
+            welcomeMsg: "Dag agenten. Tja, Gerrit Willems weer, 54 jaar, Geen Vaste Woon- of Verblijfplaats. De teller staat op 100 vandaag geloof ik... Schrijf de bon maar weer uit voor de prullenbak.",
+            hints: [
+                "Heeft u een identiteitsbewijs bij u?",
+                "Waarom plast u in dit winkelportiek?",
+                "Waarom slaapt u niet in de nachtopvang?",
+                "Weet u dat dit uw 100e registratie is?",
+                "Waar kan de beschikking naartoe gestuurd worden?",
+                "Wilt u nog iets laten opnemen in de mutatie?"
+            ],
+            kb: [
+                { keys: ['id', 'naam', 'wie'], stages: ["Gerrit Willems, 54 jaar, GVWV. Postadres Maatschappelijke Opvang Amersfoort. Schrijf het maar weer over."] },
+                { keys: ['waarom', 'portiek'], stages: ["De nachtopvang zat vol, openbare toiletten zijn dicht en cafés laten me niet binnen. Waar had ik dan heen gemoeten?"] }
+            ],
+            fallback: ["Tja... vraag maar wat je moet vragen voor de statistieken, jonge collega. Ik loop nergens heen."]
+        },
+        {
+            id: 3,
+            avatar: "HD",
+            name: "H. van Dijk (61)",
+            sub: "verdachte wildplassen · medische noodzaak (diabetes)",
+            systemPrompt: `Je bent Henk van Dijk (61 jaar), docent, wonend aan de Ringweg in Amersfoort-Noord. Je bent keurig gekleed in een grijs pak met bril en staat bij het parkeerterrein van het Eemplein in Amersfoort. Je bent betrapt terwijl je achter een coniferenhaag stond te plassen.
+GEDRAG & PERSOONLIJKHEID:
+- Je bent uiterst beleefd, welbespraakt, netjes en diep beschaamd. Je bent nog nooit met de politie in aanraking geweest.
+- MEDISCHE NOODZAAK: Je hebt al 20 jaar Diabetes Mellitus type 1 en slikt sinds kort zware plaspillen (vochtdrijvers/furosemide). Als de aandrang komt, heb je hooguit 60 seconden voordat het misgaat. Er was geen toilet tijdig bereikbaar zonder een vernederend ongeluk in je pantalon.
+- Je hebt GEEN alcohol gedronken; je komt net van een culturele lezing in het Eemhuis en drinkt uitsluitend water en thee. De agent mag gerust een blaastest afnemen.
+- Je werkt onmiddellijk mee: toont je ID-kaart en laat je medisch paspoort en afsprakenkaartje van het Meander Medisch Centrum zien.
+- Je beroept je op overmacht en medische noodzaak en verzoekt beleefd of de verbalisant in de mutatie wil adviseren tot sepot.
+- Spreek formeel, netjes en beleefd Nederlands (maximaal 2 tot 3 zinnen). Blijf strikt in je rol!`,
+            ocText: `Hier het Operationeel Centrum.
+Eenheid 21-05, melding bij het parkeerterrein van het Eemplein te Amersfoort.
+Een oudere heer is gesignaleerd die achter de heg stond te plassen.
+Signalement: man, ca. 60-65 jaar, net grijs pak, bril, keurige uitstraling.
+Betrokkene geeft aan een medisch probleem te hebben. Willen jullie dit verifiëren?
+Einde bericht.`,
+            welcomeMsg: "Goedendag agenten... Mijn excuses, duizendmaal excuses, ik schaam me werkelijk kapot. Ik ben Henk van Dijk, 61 jaar. Kan dit alstublieft discreet blijven?",
+            hints: [
+                "Mag ik uw identiteitsbewijs zien?",
+                "Waarom plast u hier achter de heg?",
+                "Heeft u een medische verklaring?",
+                "Heeft u alcohol gedronken?",
+                "Kunt u aantonen dat het overmacht betrof?",
+                "Wat wilt u dat ik opneem in de mutatie?"
+            ],
+            kb: [
+                { keys: ['id', 'naam', 'wie'], stages: ["Alstublieft, mijn legitimatie. Henk van Dijk, 61 jaar oud, woonachtig aan de Ringweg te Amersfoort."] },
+                { keys: ['medisch', 'diabetes', 'waarom'], stages: ["Ik lijd aan zware diabetes en slik vochtdrijvers. Ik had acute overmacht; binnen 60 seconden moest ik plassen en kon geen toilet bereiken."] }
+            ],
+            fallback: ["Neemt u mij niet kwalijk, door de schaamte en de spanning ontgaat uw vraag mij even. Kunt u dat herhalen?"]
+        },
+        {
+            id: 4,
+            avatar: "KB",
+            name: "K. Bakker (22)",
+            sub: "verdachte wildplassen & belediging ambtenaar (art. 267 WvSr)",
+            systemPrompt: `Je bent Kevin Bakker (22 jaar), wonend in Leusden. Zwarte hoodie, petje. Je bent zojuist betrapt terwijl je tegen een monumentale stadsmuur plaste in de Muurhuizen te Amersfoort.
+GEDRAG & PERSOONLIJKHEID:
+- Je bent opvliegend, brutaal, recalcitrant en zeer respectloos tegenover de politie.
+- Je ontkent in eerste instantie glashard dat je geplast hebt ('ik stond gewoon m'n veters vast te knopen en naar m'n telefoon te kijken').
+- Je scheldt de verbalisanten uit voor 'mongool', 'fascisten' of 'kut-wouten'. Daarmee pleeg je belediging van een ambtenaar in functie (art. 267 Sr).
+- Als de agent om je legitimatie vraagt, weiger je eerst botweg ('je vordert je oma maar!'). Pas wanneer de agent formeel vordert op grond van de WID/Politiewet of dreigt met aanhouding/handboeien, ruk je nijdend je ID uit je zak en gooi je je gegevens op tafel: 'Kevin Bakker! Tweeëntwintig! Uit Leusden!'.
+- Je dreigt dat vrienden alles filmen en dat je advocaat gehakt van ze maakt wegens machtsmisbruik.
+- Reageer kort, agressief, straattaal/brutaal (maximaal 2 tot 3 zinnen). Blijf strikt in je rol!`,
+            ocText: `Hier het Operationeel Centrum.
+Eenheid 21-05, assistentie gevraagd in de Muurhuizen te Amersfoort.
+Verdachte plaste tegen een monumentale muur. Toen een passant er wat van zei, werd hij agressief. Blijft ontkennen en scheldt agenten uit.
+Signalement: man, ca. 22 jaar, zwarte hoodie, petje, agressieve houding.
+Mogelijke aanhouding voor belediging ('mongool') + wildplassen.
+Einde bericht.`,
+            welcomeMsg: "Wat moet je man?! Ik heb helemaal niet geplast! Je ziet ze vliegen man, mongool! Ik keek gewoon op mijn mobiel! Rot op!",
+            hints: [
+                "Toon onmiddellijk uw identiteitsbewijs!",
+                "Ik vorder uw ID op grond van artikel 8 Politiewet / WID!",
+                "Waarom plast u tegen deze monumentale muur?",
+                "Waarom beledigt u mij met 'mongool'?",
+                "U bent aangehouden ter zake artikel 267 Sr!",
+                "Wat zijn uw persoonsgegevens?"
+            ],
+            kb: [
+                { keys: ['id', 'naam', 'wie'], stages: ["Tssss, vooruit dan man, stelletje fascisten! *rukt nijdend ID uit zak* Kevin Bakker! Tweeëntwintig! Uit Leusden!"] },
+                { keys: ['mongool', 'beledig'], stages: ["Je bént toch ook een mongool als je mij hiervoor lastigvalt?! Vrijheid van meningsuiting vriend!"] }
+            ],
+            fallback: ["Wat bazel je nou allemaal interessant?! Ga echte boeven vangen man!"]
+        }
+    ];
+
+    let currentCasus = null;
+    let chatbotInitialized = false;
+    let botTypingTimer = null;
+    let chatHistory = [];
+
+    function assignCasus() {
+        if (!userName || !userClass) return;
+        const str = (userName + '_' + userClass).toLowerCase();
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = (hash << 5) - hash + str.charCodeAt(i);
+            hash |= 0;
+        }
+        const idx = Math.abs(hash) % CASUSSEN.length;
+        currentCasus = CASUSSEN[idx];
+        chatHistory = [];
+        applyCasusToUI();
+    }
+    
+    function applyCasusToUI() {
+        if (!currentCasus) return;
+        const ocEl = document.getElementById('oc-tekst');
+        if (ocEl) ocEl.innerText = currentCasus.ocText;
+        const avatarEl = document.getElementById('chat-avatar');
+        if (avatarEl) avatarEl.innerText = currentCasus.avatar;
+        const nameEl = document.getElementById('chat-name');
+        if (nameEl) nameEl.innerText = currentCasus.name;
+        const subEl = document.getElementById('chat-sub');
+        if (subEl) subEl.innerText = currentCasus.sub + " · 🤖 AI Actief";
+        const hintsEl = document.getElementById('chat-hints');
+        if (hintsEl) {
+            hintsEl.innerHTML = '';
+            currentCasus.hints.forEach(hintText => {
+                const btn = document.createElement('button');
+                btn.innerText = hintText;
+                btn.onclick = () => window.quickAsk(hintText);
+                hintsEl.appendChild(btn);
+            });
+        }
+        const body = document.getElementById('chat-body');
+        if (body && body.children.length === 0) {
+            addChatMessage('bot', currentCasus.welcomeMsg);
+            chatHistory = [
+                { role: 'model', parts: [{ text: currentCasus.welcomeMsg }] }
+            ];
+        }
+    }
+
+    function zoekLokaalAntwoord(vraag) {
+        if (!currentCasus) return "Geen commentaar.";
+        const q = vraag.toLowerCase().trim();
+        for (let i = 0; i < (currentCasus.kb || []).length; i++) {
+            const entry = currentCasus.kb[i];
+            if (entry.keys.some(k => q.includes(k))) {
+                return entry.stages[0];
+            }
+        }
+        return currentCasus.fallback[0];
+    }
+
+    function addChatMessage(role, text) {
+        const body = document.getElementById('chat-body'); if (!body) return;
+        const div = document.createElement('div');
+        div.className = 'chat-msg ' + role;
+        div.textContent = text;
+        body.appendChild(div);
+        body.scrollTop = body.scrollHeight;
+    }
+    function showTyping() {
+        const body = document.getElementById('chat-body'); if (!body) return;
+        const div = document.createElement('div');
+        div.className = 'chat-msg typing';
+        div.id = 'typing-indicator';
+        div.innerHTML = '<span></span><span></span><span></span>';
+        body.appendChild(div);
+        body.scrollTop = body.scrollHeight;
+    }
+    function hideTyping() {
+        const el = document.getElementById('typing-indicator');
+        if (el) el.remove();
+    }
+
+    window.sendChat = async function() {
+        const input = document.getElementById('chat-input');
+        const text = input.value.trim();
+        if (!text) return;
+        input.value = '';
+        addChatMessage('user', text);
+        showTyping();
+
+        chatHistory.push({ role: 'user', parts: [{ text: text }] });
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    systemInstruction: {
+                        parts: [{ text: currentCasus.systemPrompt }]
+                    },
+                    contents: chatHistory,
+                    generationConfig: {
+                        temperature: 0.75,
+                        maxOutputTokens: 250
+                    }
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (botReply) {
+                    hideTyping();
+                    chatHistory.push({ role: 'model', parts: [{ text: botReply }] });
+                    addChatMessage('bot', botReply);
+                    return;
+                }
+            }
+            throw new Error('API gaf geen bruikbaar antwoord');
+        } catch (err) {
+            console.warn('AI Chatbot fetch mislukt of offline, fallback naar lokaal profiel:', err);
+            setTimeout(() => {
+                hideTyping();
+                const fallbackReply = zoekLokaalAntwoord(text);
+                chatHistory.push({ role: 'model', parts: [{ text: fallbackReply }] });
+                addChatMessage('bot', fallbackReply);
+            }, 600);
+        }
+    };
+
+    window.quickAsk = function(vraag) {
+        const input = document.getElementById('chat-input');
+        if (input) input.value = vraag;
+        window.sendChat();
+    };
+
+    function initChatbot() {
+        assignCasus();
+        if (chatbotInitialized) return;
+        chatbotInitialized = true;
+        const input = document.getElementById('chat-input');
+        if (input) {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); window.sendChat(); }
+            });
+        }
+        ['m-aanleiding', 'm-situatie', 'm-toedracht', 'm-maatregelen', 'm-afhandeling'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el || el._bound) return;
+            el._bound = true;
+            el.addEventListener('input', () => {
+                if (!userName || !userClass) return;
+                const status = document.getElementById('mutatie-save-status');
+                if (status) status.textContent = 'Bezig met opslaan...';
+                if (saveTimer) clearTimeout(saveTimer);
+                saveTimer = setTimeout(saveMyMutatie, 500);
+            });
+        });
+        onValue(ref(db, basePath() + '/mutaties/' + encodeKey(userName)), (snap) => {
+            const data = snap.val(); if (!data || !data.parts) return;
+            ['aanleiding','situatie','toedracht','maatregelen','afhandeling'].forEach(k => {
+                const el = document.getElementById('m-' + k);
+                if (el && document.activeElement !== el) el.value = data.parts[k] || '';
+            });
+        });
+    }
+
+    function saveMyMutatie() {
+        if (!userName || !userClass || !currentCasus) return;
+        const parts = {};
+        ['aanleiding','situatie','toedracht','maatregelen','afhandeling'].forEach(k => {
+            const el = document.getElementById('m-' + k);
+            parts[k] = (el && el.value) ? el.value : '';
+        });
+        const payload = { 
+            name: userName, 
+            casus: currentCasus.name, 
+            timestamp: Date.now(), 
+            parts: parts 
+        };
+        set(ref(db, basePath() + '/mutaties/' + encodeKey(userName)), payload)
+            .then(() => {
+                const status = document.getElementById('mutatie-save-status');
+                if (status) status.textContent = '✓ Opgeslagen om ' + new Date().toLocaleTimeString('nl-NL');
+            })
+            .catch(err => {
+                const status = document.getElementById('mutatie-save-status');
+                if (status) status.textContent = '⚠️ Fout: ' + err.message;
+            });
+    }
+
+    // ════════════ LOGIKWIS FUNCTIONALITEIT ════════════
+    window.toggleKwisCell = function(cell) {
+        if (cell.classList.contains('kruis')) {
+            cell.classList.remove('kruis');
+            cell.classList.add('vink');
+            cell.innerText = '✔️';
+        } else if (cell.classList.contains('vink')) {
+            cell.classList.remove('vink');
+            cell.innerText = '';
+        } else {
+            cell.classList.add('kruis');
+            cell.innerText = '❌';
+        }
+    };
+    window.resetKwisGrid = function() {
+        document.querySelectorAll('#kwis-grid .cell').forEach(cell => {
+            cell.className = cell.className.replace(/vink|kruis/g, '').trim();
+            cell.innerText = '';
+        });
+        document.getElementById('kwis-feedback').innerText = '';
+    };
+    window.checkKwisOplossing = function() {
+        const feedback = document.getElementById('kwis-feedback');
+        feedback.style.color = '#27ae60';
+        feedback.innerText = '✅ Raster gecontroleerd! Controleer handmatig of de rijen en opties correct overeenkomen met je aanwijzingen.';
+    };
+
+    // ════════════ LIGHTBOX ════════════
+    window.openLightbox = function(src) {
+        const lb = document.getElementById('img-lightbox');
+        const img = document.getElementById('img-lightbox-img');
+        if (!lb || !img) return;
+        img.src = src;
+        lb.classList.add('open');
+    };
+    window.closeLightbox = function() {
+        const lb = document.getElementById('img-lightbox');
+        if (lb) lb.classList.remove('open');
+    };
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') window.closeLightbox();
+    });
+
+    // ════════════ INIT ════════════
+    setTimeout(() => {
+        if ('speechSynthesis' in window) speechSynthesis.getVoices();
+    }, 100);
+    tryAutoLogin();
+    window.ref = ref; window.db = db; window.remove = remove;
+</script>
+</body>
+</html>
