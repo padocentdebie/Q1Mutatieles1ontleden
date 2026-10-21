@@ -730,7 +730,7 @@
                 const reviewers = item.reviews ? Object.keys(item.reviews) : [];
                 const isMine = (item.name === userName);
                 const iReviewed = item.reviews && userName && item.reviews[encodeKey(userName)];
-                let html = `<span class="student-name">escapeHtml(item.name||'Onbekend'){isMine ? ' (jij)' : ''}</span>`;
+                let html = `<span class="student-name">${escapeHtml(item.name || 'Onbekend')}${isMine ? ' (jij)' : ''}</span>`;
                 if (item.casus) {
                     html += `<div style="font-size:0.82rem; color:#e74c3c; font-weight:bold; margin-bottom:6px;">📋 Verdachte: ${escapeHtml(item.casus)}</div>`;
                 }
@@ -1000,7 +1000,7 @@ Einde bericht.`,
                 {
                     keys: ['boete', 'bekeuring', 'bon', 'beschikking', 'proces-verbaal', 'pv', 'euro', 'kosten', 'betalen', 'cjib'],
                     stages: [
-                        "Krijg ik hier nu écht een boete voor? Hoe hoog is zo'n bekeuring tegenwoordig eigenlijk?",
+                        "Krijg ik hier nu écht een boete voor? Hoe hoog is zon bekeuring tegenwoordig eigenlijk?",
                         "Zo hé... 160 euro plus administratiekosten? Dat is echt een rib uit mijn lijf... Maar goed, eigen schuld, dikke bult.",
                         "Schrijf de beschikking maar direct uit als het moet. Krijg ik 'm meteen op straat in mijn handen mee of stuurt het CJIB 'm naar mijn adres?"
                     ]
